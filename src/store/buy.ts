@@ -21,6 +21,7 @@ import {
   BI,
   CLASS_PRIEST, CLASS_PALADIN, CLASS_DRUID, CLASS_RANGER, CLASS_MAGE, CLASS_ROGUE,
 } from "../trait/trait-index.js";
+import { getDerived } from "../trait/state.js";
 import { hasFlag } from "../trait/item-util.js";
 import { TV, SVAL } from "../item/svals.js";
 import {
@@ -35,6 +36,7 @@ import {
   canBrowse,
   borgMinItemQuantity,
   borgFirstEmptyInventorySlot,
+  borgUsesSwaps,
   borgPrimarilyCaster,
   packSlots,
   homeWares,
@@ -536,8 +538,8 @@ export function borgThinkHomeGrabUseless(
 
 /* ------------------------------------------------------------------ *
  * Steps 7A / 7B -- buy a weapon / armour swap from the home.
- * The swap subsystem is out of scope (as in trait/power.ts), so these fire only
- * when a *SwapEval seam is supplied; default 0 -> never.
+ * Weapon backup uses the notice-produced current value as its baseline;
+ * armour remains inert unless its separate valuation seam is supplied.
  * ------------------------------------------------------------------ */
 
 function borgThinkHomeBuySwap(
@@ -545,12 +547,19 @@ function borgThinkHomeBuySwap(
   weapon: boolean,
   d?: StoreDeps,
 ): boolean {
+  if (weapon && !borgUsesSwaps(ctx, d)) return false;
   const evalFn = weapon ? d?.weaponSwapEval : d?.armourSwapEval;
   if (!evalFn) return false; /* no swap valuation -> never buys a swap. */
 
   const wares = homeWares(ctx);
   let bN = -1;
-  let bP = 0;
+  const current = weapon ? getDerived(ctx.world).weaponSwap : null;
+  // FORK: C's score simulation replaces an occupied backup slot, but API2
+  // shop-buy cannot atomically remove it. No real hole means a zero-energy
+  // no-room refusal, so this leaf does not queue an impossible retrieval.
+  // This is a host-capacity limit, not evidence of a native C defect.
+  if (weapon && borgFirstEmptyInventorySlot(ctx, d) === -1) return false;
+  let bP = current?.value ?? 0;
 
   for (let n = 0; n < wares.length; n++) {
     const item = wares[n]!;

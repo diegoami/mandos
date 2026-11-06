@@ -13,8 +13,8 @@
  *   in to enable it.
  * - The spellbook reward (power.c:1770-1829) needs borg_get_spell_entry (the
  *   magic subsystem); omitted with a caveat (amt_book stays 0 by default).
- * - Swap values (weapon_swap_value/armour_swap_value) are 0 (swap subsystem out
- *   of scope).
+ * - Weapon-backup value is produced by borgNotice. Armour backups and tactical
+ *   swap actions remain outside this leaf.
  * - spell_chance / spell_stat come from the spell seam / class map.
  */
 
@@ -68,7 +68,9 @@ export function borgPower(ctx: BorgContext, opts: BorgTraitOpts = {}): number {
   }
   value += (i - 1) * 40000;
 
-  /* Swap values: swap subsystem out of scope (0). */
+  /* borg-power.c:1907: include the selected carried weapon-backup value.
+   * C uses -1 when no useful backup exists; armour remains unported. */
+  value += d.weaponSwap.value;
 
   ctx.world.self.power = value;
   return value;

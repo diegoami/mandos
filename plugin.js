@@ -3867,6 +3867,75 @@ function deviceFail(ctx, lev) {
   return Math.trunc(100 * numerator / denominator);
 }
 
+// src/trait/config.ts
+function defaultCfg() {
+  return {
+    worshipsDamage: false,
+    worshipsSpeed: false,
+    worshipsHp: false,
+    worshipsMana: false,
+    worshipsAc: false,
+    worshipsGold: false,
+    playsRisky: false,
+    killsUniques: false,
+    usesSwaps: true,
+    selfScum: true,
+    usesDynamicCalcs: false,
+    noDeeper: 127,
+    munchkinStart: false,
+    munchkinLevel: 12,
+    enchantLimit: 12
+  };
+}
+var activeCfg = defaultCfg();
+function setBorgCfg(cfg = {}) {
+  activeCfg = { ...defaultCfg(), ...cfg };
+}
+function borgCfg() {
+  return activeCfg;
+}
+var buffTimerSafetyNetOn = true;
+function setBuffTimerSafetyNet(on2) {
+  buffTimerSafetyNetOn = on2;
+}
+function buffTimerSafetyNetEnabled() {
+  return buffTimerSafetyNetOn;
+}
+function defaultSpellSeam() {
+  return {
+    spellLegal: () => false,
+    spellLegalFail: () => false,
+    equipsItem: () => false,
+    equipsRing: () => false,
+    spellChance: () => 100,
+    playerHas: () => false
+  };
+}
+function defaultHomeSeam() {
+  return {
+    numHealTrue: 0,
+    numEzhealTrue: 0,
+    numLifeTrue: 0,
+    numHeal: 0,
+    numEzheal: 0,
+    numLife: 0,
+    numSpeed: 0
+  };
+}
+function defaultFrame() {
+  return {};
+}
+function resolveOpts(opts = {}) {
+  return {
+    cfg: { ...borgCfg(), ...opts.cfg },
+    spells: opts.spells ?? defaultSpellSeam(),
+    home: opts.home ?? defaultHomeSeam(),
+    frame: opts.frame ?? defaultFrame(),
+    svals: opts.svals ?? flatSvals(),
+    uncursable: opts.uncursable ?? ((item) => item.curses.length > 0)
+  };
+}
+
 // src/trait/item-util.ts
 function hasFlag2(item, name) {
   return item.flags.includes(name);
@@ -3895,6 +3964,573 @@ function slayMult(item, race) {
 }
 function present(item) {
   return !!item && item.number > 0;
+}
+
+// src/item/magic.ts
+var BORG_MAGIC_LOST = 1;
+var BORG_MAGIC_HIGH = 2;
+var BORG_MAGIC_OKAY = 3;
+var BORG_MAGIC_TEST = 4;
+var BORG_MAGIC_KNOW = 5;
+var R = (rating, spell) => ({ rating, spell });
+var RATINGS_MAGE = [
+  R(95, 0 /* MAGIC_MISSILE */),
+  R(65, 1 /* LIGHT_ROOM */),
+  R(85, 2 /* FIND_TRAPS_DOORS_STAIRS */),
+  R(95, 3 /* PHASE_DOOR */),
+  R(85, 4 /* ELECTRIC_ARC */),
+  R(85, 5 /* DETECT_MONSTERS */),
+  R(75, 6 /* FIRE_BALL */),
+  R(65, 7 /* RECHARGING */),
+  R(95, 8 /* IDENTIFY_RUNE */),
+  R(5, 9 /* TREASURE_DETECTION */),
+  R(75, 10 /* FROST_BOLT */),
+  R(85, 11 /* REVEAL_MONSTERS */),
+  R(75, 12 /* ACID_SPRAY */),
+  R(95, 13 /* DISABLE_TRAPS_DESTROY_DOORS */),
+  R(95, 14 /* TELEPORT_SELF */),
+  R(75, 15 /* TELEPORT_OTHER */),
+  R(90, 16 /* RESISTANCE */),
+  R(5, 17 /* TAP_MAGICAL_ENERGY */),
+  R(95, 18 /* MANA_CHANNEL */),
+  R(65, 19 /* DOOR_CREATION */),
+  R(95, 20 /* MANA_BOLT */),
+  R(65, 21 /* TELEPORT_LEVEL */),
+  R(95, 22 /* DETECTION */),
+  R(95, 23 /* DIMENSION_DOOR */),
+  R(55, 24 /* THRUST_AWAY */),
+  R(85, 25 /* SHOCK_WAVE */),
+  R(85, 26 /* EXPLOSION */),
+  R(75, 27 /* BANISHMENT */),
+  R(65, 28 /* MASS_BANISHMENT */),
+  R(75, 29 /* MANA_STORM */)
+];
+var RATINGS_DRUID = [
+  R(95, 30 /* DETECT_LIFE */),
+  R(5, 31 /* FOX_FORM */),
+  R(85, 32 /* REMOVE_HUNGER */),
+  R(95, 33 /* STINKING_CLOUD */),
+  R(55, 34 /* CONFUSE_MONSTER */),
+  R(65, 35 /* SLOW_MONSTER */),
+  R(55, 36 /* CURE_POISON */),
+  R(60, 37 /* RESIST_POISON */),
+  R(80, 38 /* TURN_STONE_TO_MUD */),
+  R(80, 39 /* SENSE_SURROUNDINGS */),
+  R(85, 40 /* LIGHTNING_STRIKE */),
+  R(70, 41 /* EARTH_RISING */),
+  R(55, 42 /* TRANCE */),
+  R(80, 43 /* MASS_SLEEP */),
+  R(5, 44 /* BECOME_PUKEL_MAN */),
+  R(5, 45 /* EAGLES_FLIGHT */),
+  R(5, 46 /* BEAR_FORM */),
+  R(80, 47 /* TREMOR */),
+  R(90, 48 /* HASTE_SELF */),
+  R(95, 49 /* REVITALIZE */),
+  R(55, 50 /* RAPID_REGENERATION */),
+  R(90, 51 /* HERBAL_CURING */),
+  R(90, 52 /* METEOR_SWARM */),
+  R(90, 53 /* RIFT */),
+  R(85, 54 /* ICE_STORM */),
+  R(60, 55 /* VOLCANIC_ERUPTION */),
+  R(90, 56 /* RIVER_OF_LIGHTNING */)
+];
+var RATINGS_PRIEST = [
+  R(65, 57 /* CALL_LIGHT */),
+  R(85, 58 /* DETECT_EVIL */),
+  R(65, 59 /* MINOR_HEALING */),
+  R(85, 60 /* BLESS */),
+  R(75, 61 /* SENSE_INVISIBLE */),
+  R(75, 62 /* HEROISM */),
+  R(95, 63 /* ORB_OF_DRAINING */),
+  R(75, 64 /* SPEAR_OF_LIGHT */),
+  R(65, 65 /* DISPEL_UNDEAD */),
+  R(65, 66 /* DISPEL_EVIL */),
+  R(85, 67 /* PROTECTION_FROM_EVIL */),
+  R(85, 68 /* REMOVE_CURSE */),
+  R(85, 69 /* PORTAL */),
+  R(75, 70 /* REMEMBRANCE */),
+  R(95, 71 /* WORD_OF_RECALL */),
+  R(95, 72 /* HEALING */),
+  R(75, 73 /* RESTORATION */),
+  R(85, 74 /* CLAIRVOYANCE */),
+  R(75, 75 /* ENCHANT_WEAPON */),
+  R(75, 76 /* ENCHANT_ARMOUR */),
+  R(75, 77 /* SMITE_EVIL */),
+  R(95, 78 /* GLYPH_OF_WARDING */),
+  R(85, 79 /* DEMON_BANE */),
+  R(85, 80 /* BANISH_EVIL */),
+  R(75, 81 /* WORD_OF_DESTRUCTION */),
+  R(85, 82 /* HOLY_WORD */),
+  R(85, 83 /* SPEAR_OF_OROME */),
+  R(85, 84 /* LIGHT_OF_MANWE */)
+];
+var RATINGS_NECROMANCER = [
+  R(95, 85 /* NETHER_BOLT */),
+  R(85, 61 /* SENSE_INVISIBLE */),
+  R(5, 86 /* CREATE_DARKNESS */),
+  R(5, 87 /* BAT_FORM */),
+  R(85, 88 /* READ_MINDS */),
+  R(85, 89 /* TAP_UNLIFE */),
+  R(95, 90 /* CRUSH */),
+  R(85, 91 /* SLEEP_EVIL */),
+  R(95, 92 /* SHADOW_SHIFT */),
+  R(25, 93 /* DISENCHANT */),
+  R(85, 94 /* FRIGHTEN */),
+  R(75, 95 /* VAMPIRE_STRIKE */),
+  R(65, 96 /* DISPEL_LIFE */),
+  R(65, 97 /* DARK_SPEAR */),
+  R(5, 98 /* WARG_FORM */),
+  R(65, 99 /* BANISH_SPIRITS */),
+  R(95, 100 /* ANNIHILATE */),
+  R(85, 101 /* GRONDS_BLOW */),
+  R(85, 102 /* UNLEASH_CHAOS */),
+  R(75, 103 /* FUME_OF_MORDOR */),
+  R(65, 104 /* STORM_OF_DARKNESS */),
+  R(5, 105 /* POWER_SACRIFICE */),
+  R(5, 106 /* ZONE_OF_UNMAGIC */),
+  R(5, 107 /* VAMPIRE_FORM */),
+  R(65, 108 /* CURSE */),
+  R(5, 109 /* COMMAND */)
+];
+var RATINGS_PALADIN = [
+  R(95, 60 /* BLESS */),
+  R(85, 58 /* DETECT_EVIL */),
+  R(85, 57 /* CALL_LIGHT */),
+  R(95, 59 /* MINOR_HEALING */),
+  R(65, 61 /* SENSE_INVISIBLE */),
+  R(85, 62 /* HEROISM */),
+  R(85, 67 /* PROTECTION_FROM_EVIL */),
+  R(65, 68 /* REMOVE_CURSE */),
+  R(95, 71 /* WORD_OF_RECALL */),
+  R(95, 72 /* HEALING */),
+  R(85, 74 /* CLAIRVOYANCE */),
+  R(55, 77 /* SMITE_EVIL */),
+  R(55, 79 /* DEMON_BANE */),
+  R(75, 75 /* ENCHANT_WEAPON */),
+  R(85, 76 /* ENCHANT_ARMOUR */),
+  R(95, 110 /* SINGLE_COMBAT */)
+];
+var RATINGS_ROGUE = [
+  R(85, 5 /* DETECT_MONSTERS */),
+  R(95, 3 /* PHASE_DOOR */),
+  R(55, 111 /* OBJECT_DETECTION */),
+  R(55, 112 /* DETECT_STAIRS */),
+  R(85, 7 /* RECHARGING */),
+  R(85, 11 /* REVEAL_MONSTERS */),
+  R(95, 14 /* TELEPORT_SELF */),
+  R(15, 113 /* HIT_AND_RUN */),
+  R(85, 15 /* TELEPORT_OTHER */),
+  R(75, 21 /* TELEPORT_LEVEL */)
+];
+var RATINGS_RANGER = [
+  R(95, 32 /* REMOVE_HUNGER */),
+  R(85, 30 /* DETECT_LIFE */),
+  R(95, 51 /* HERBAL_CURING */),
+  R(85, 37 /* RESIST_POISON */),
+  R(85, 38 /* TURN_STONE_TO_MUD */),
+  R(75, 39 /* SENSE_SURROUNDINGS */),
+  R(25, 114 /* COVER_TRACKS */),
+  R(85, 115 /* CREATE_ARROWS */),
+  R(95, 48 /* HASTE_SELF */),
+  R(5, 116 /* DECOY */),
+  R(95, 117 /* BRAND_AMMUNITION */)
+];
+var RATINGS_BLACKGUARD = [
+  R(55, 118 /* SEEK_BATTLE */),
+  R(95, 119 /* BERSERK_STRENGTH */),
+  R(85, 120 /* WHIRLWIND_ATTACK */),
+  R(95, 121 /* SHATTER_STONE */),
+  R(65, 122 /* LEAP_INTO_BATTLE */),
+  R(65, 123 /* GRIM_PURPOSE */),
+  R(75, 124 /* MAIM_FOE */),
+  R(55, 125 /* HOWL_OF_THE_DAMNED */),
+  R(5, 126 /* RELENTLESS_TAUNTING */),
+  R(55, 127 /* VENOM */),
+  R(5, 128 /* WEREWOLF_FORM */),
+  R(5, 129 /* BLOODLUST */),
+  R(95, 130 /* UNHOLY_REPRIEVE */),
+  R(5, 131 /* FORCEFUL_BLOW */),
+  R(95, 132 /* QUAKE */)
+];
+function ratingsForClass(cls) {
+  switch (cls) {
+    case CLASS_MAGE:
+      return RATINGS_MAGE;
+    case CLASS_DRUID:
+      return RATINGS_DRUID;
+    case CLASS_PRIEST:
+      return RATINGS_PRIEST;
+    case CLASS_NECROMANCER:
+      return RATINGS_NECROMANCER;
+    case CLASS_PALADIN:
+      return RATINGS_PALADIN;
+    case CLASS_ROGUE:
+      return RATINGS_ROGUE;
+    case CLASS_RANGER:
+      return RATINGS_RANGER;
+    case CLASS_BLACKGUARD:
+      return RATINGS_BLACKGUARD;
+    default:
+      return null;
+  }
+}
+function classOf(ctx) {
+  const t = ctx.world.self.trait[25 /* CLASS */];
+  if (t !== void 0 && t !== 0) return t;
+  return classIndexFromName(ctx.view.player().cls);
+}
+function borgGetSpellNumber(ctx, spell) {
+  const ratings = ratingsForClass(classOf(ctx));
+  if (!ratings) return -1;
+  return ratings.findIndex((r) => r.spell === spell);
+}
+function spellViewBySidx(ctx, sidx) {
+  for (const book of ctx.view.spellbooks()) {
+    for (const s of book.spells) if (s.sidx === sidx) return s;
+  }
+  return null;
+}
+function borgSpellStatus(ctx, s) {
+  const clevel = trait3(ctx, 35 /* CLEVEL */) || ctx.view.player().level;
+  if (s.forgotten) return BORG_MAGIC_LOST;
+  if (clevel < s.level) return BORG_MAGIC_HIGH;
+  if (!s.learned) return BORG_MAGIC_OKAY;
+  if (!s.worked) return BORG_MAGIC_TEST;
+  return BORG_MAGIC_KNOW;
+}
+function borgBookPossessed(ctx, bidx) {
+  return borgBookHandle(ctx, bidx) !== null;
+}
+function borgBookHandle(ctx, bidx) {
+  const book = ctx.view.spellbooks()[bidx];
+  if (!book) return null;
+  const kind = ctx.bookKind?.(book.tval, book.name);
+  if (!kind) return null;
+  let handle = null;
+  for (const item of ctx.view.inventory()) {
+    if (item.number <= 0) continue;
+    if (item.tval === kind.tval && item.sval === kind.sval) handle = item.handle;
+  }
+  return handle;
+}
+function borgGetSpellPower(ctx, spell) {
+  const sidx = borgGetSpellNumber(ctx, spell);
+  if (sidx < 0) return -1;
+  const s = spellViewBySidx(ctx, sidx);
+  return s ? s.mana : -1;
+}
+function borgHeroismLevel(ctx) {
+  const cls = classOf(ctx);
+  if (cls === CLASS_PRIEST) return 20;
+  if (cls === CLASS_PALADIN) return 15;
+  return 99;
+}
+function borgSpellLegal(ctx, spell) {
+  const sidx = borgGetSpellNumber(ctx, spell);
+  if (sidx < 0) return false;
+  const s = spellViewBySidx(ctx, sidx);
+  if (!s) return false;
+  if (!borgBookPossessed(ctx, s.bidx)) return false;
+  if (borgSpellStatus(ctx, s) < BORG_MAGIC_TEST) return false;
+  if (s.mana > trait3(ctx, 31 /* MAXSP */)) return false;
+  return true;
+}
+function spellHasNourish(spell) {
+  return spell === 32 /* REMOVE_HUNGER */ || spell === 51 /* HERBAL_CURING */;
+}
+function spellHasTeleport(spell) {
+  switch (spell) {
+    case 3 /* PHASE_DOOR */:
+    case 14 /* TELEPORT_SELF */:
+    case 69 /* PORTAL */:
+    case 23 /* DIMENSION_DOOR */:
+    case 92 /* SHADOW_SHIFT */:
+    case 113 /* HIT_AND_RUN */:
+    case 21 /* TELEPORT_LEVEL */:
+      return true;
+    default:
+      return false;
+  }
+}
+function borgSpellOkay(ctx, spell) {
+  const sidx = borgGetSpellNumber(ctx, spell);
+  if (sidx < 0) return false;
+  const s = spellViewBySidx(ctx, sidx);
+  if (!s) return false;
+  if (noLight(ctx)) return false;
+  let reserveMana = 0;
+  switch (classOf(ctx)) {
+    case CLASS_MAGE:
+      reserveMana = 6;
+      break;
+    case CLASS_RANGER:
+      reserveMana = 22;
+      break;
+    case CLASS_ROGUE:
+      reserveMana = 20;
+      break;
+    case CLASS_NECROMANCER:
+      reserveMana = 10;
+      break;
+    case CLASS_PRIEST:
+      reserveMana = 8;
+      break;
+    case CLASS_PALADIN:
+      reserveMana = 20;
+      break;
+    case CLASS_BLACKGUARD:
+      reserveMana = 0;
+      break;
+  }
+  if (trait3(ctx, 35 /* CLEVEL */) < 35) reserveMana = 0;
+  if (!borgSpellLegal(ctx, spell)) return false;
+  if (trait3(ctx, 112 /* ISBLIND */) || trait3(ctx, 114 /* ISCONFUSED */)) return false;
+  if (s.mana > trait3(ctx, 30 /* CURSP */)) return false;
+  if (trait3(ctx, 30 /* CURSP */) - s.mana < reserveMana) {
+    if (spellHasNourish(spell)) return true;
+    if (spellHasTeleport(spell)) return true;
+    if (spell === 0 /* MAGIC_MISSILE */ && trait3(ctx, 105 /* CDEPTH */) <= 35) return true;
+    return false;
+  }
+  return true;
+}
+function borgSpellFailRate(ctx, spell, playerHas2) {
+  const sidx = borgGetSpellNumber(ctx, spell);
+  if (sidx < 0) return 100;
+  const s = spellViewBySidx(ctx, sidx);
+  if (!s) return 100;
+  let chance = s.fail;
+  chance -= 3 * (trait3(ctx, 35 /* CLEVEL */) - s.level);
+  chance -= trait3(ctx, 33 /* FAIL1 */);
+  if (trait3(ctx, 113 /* ISAFRAID */)) chance += 20;
+  let minfail = trait3(ctx, 34 /* FAIL2 */);
+  const zeroFail = playerHas2 ? playerHas2("ZERO_FAIL") : (ctx.view.player().classFlags ?? []).includes("ZERO_FAIL");
+  if (!zeroFail) {
+    if (minfail < 5) minfail = 5;
+  }
+  if (classOf(ctx) === CLASS_NECROMANCER && borgOnLitGrid(ctx)) {
+    chance += 25;
+  }
+  if (chance < minfail) chance = minfail;
+  if (chance > 50) chance = 50;
+  if (trait3(ctx, 118 /* ISHEAVYSTUN */)) chance += 25;
+  if (trait3(ctx, 117 /* ISSTUN */)) chance += 15;
+  if (trait3(ctx, 121 /* ISFORGET */)) chance *= 2;
+  if (chance > 95) chance = 95;
+  return chance;
+}
+function borgOnLitGrid(ctx) {
+  const { x, y } = ctx.world.self.c;
+  if (!ctx.world.map.inBounds(x, y)) return false;
+  return (ctx.world.map.at(x, y).info & BORG_LIGHT) !== 0;
+}
+function borgSpellOkayFail(ctx, spell, allowFail, playerHas2) {
+  if (borgSpellFailRate(ctx, spell, playerHas2) > allowFail) return false;
+  return borgSpellOkay(ctx, spell);
+}
+function borgSpellLegalFail(ctx, spell, allowFail, playerHas2) {
+  if (borgSpellFailRate(ctx, spell, playerHas2) > allowFail) return false;
+  return borgSpellLegal(ctx, spell);
+}
+function borgSpell(ctx, spell) {
+  if (!borgSpellOkay(ctx, spell)) return null;
+  const sidx = borgGetSpellNumber(ctx, spell);
+  if (sidx < 0) return null;
+  return ctx.act.cast(sidx);
+}
+function borgSpellFail(ctx, spell, allowFail, playerHas2) {
+  if (borgSpellFailRate(ctx, spell, playerHas2) > allowFail) return null;
+  return borgSpell(ctx, spell);
+}
+
+// src/trait/weapon-swap.ts
+var NONE = () => ({ handle: null, value: -1 });
+var BAD_CURSES = /* @__PURE__ */ new Set([
+  "teleportation",
+  "poison",
+  "siren",
+  "hallucination",
+  "paralysis",
+  "demon summon",
+  "dragon summon",
+  "undead summon",
+  "stone",
+  "anti-teleportation",
+  "treacherous weapon",
+  "unknown"
+]);
+var OTHER_CURSES = /* @__PURE__ */ new Set([
+  "vulnerability",
+  "dullness",
+  "sickliness",
+  "enveloping",
+  "irritation",
+  "weakness",
+  "clumsiness",
+  "slowness",
+  "annoyance",
+  "impair mana recovery",
+  "impair hitpoint recovery",
+  "cowardice",
+  "burning up",
+  "chilled to the bone",
+  "steelskin",
+  "air swing"
+]);
+function borgWeaponSwap(ctx, opts = {}, inventory = ctx.view.inventory()) {
+  const weapons = [TV.HAFTED, TV.POLEARM, TV.SWORD, TV.DIGGING];
+  const wearable = [
+    ...weapons,
+    TV.BOW,
+    TV.RING,
+    TV.AMULET,
+    TV.LIGHT,
+    TV.SOFT_ARMOR,
+    TV.HARD_ARMOR,
+    TV.DRAG_ARMOR,
+    TV.CLOAK,
+    TV.SHIELD,
+    TV.HELM,
+    TV.CROWN,
+    TV.GLOVES,
+    TV.BOOTS
+  ];
+  const R2 = resolveOpts(opts), t = ctx.world.self.trait;
+  const trait4 = (bi) => t[bi] ?? 0;
+  const quiver = new Set(ctx.view.quiver?.().map((item) => item.handle) ?? []);
+  let best = NONE();
+  for (const item of inventory) {
+    if (quiver.has(item.handle) || !present(item) || !item.aware || !wearable.includes(item.tval)) continue;
+    if (trait4(106 /* MAXDEPTH */) < 50 && item.tval !== TV.DIGGING) continue;
+    if ((!R2.cfg.usesSwaps || trait4(106 /* MAXDEPTH */) >= 90) && item.tval !== TV.DIGGING)
+      return NONE();
+    if (!weapons.includes(item.tval)) continue;
+    if (item.curses.length && !opts.weaponSwap?.uncursable) continue;
+    let digger = 0;
+    if (["DIG_1", "DIG_2", "DIG_3"].some((flag) => hasFlag2(item, flag))) {
+      if (perItemValue(item) <= 0 || isCursed(item)) continue;
+      const wielded = ctx.view.equipment()[0];
+      const stoneToMud = opts.spells ? R2.spells.spellLegalFail("TURN_STONE_TO_MUD", 40) : borgSpellLegalFail(ctx, 38 /* TURN_STONE_TO_MUD */, 40);
+      if (!stoneToMud && !(wielded && ["DIG_1", "DIG_2", "DIG_3"].some((flag) => hasFlag2(wielded, flag))))
+        digger = item.pval;
+    }
+    const damage = item.dd * item.ds * 25;
+    let value = -1 + damage * (trait4(146 /* BLOWS */) + 1) + (trait4(134 /* TOHIT */) + item.toH) * 100 + (trait4(135 /* TODAM */) + item.toD) * 75;
+    const slay = (name) => slayMult(item, name);
+    let dam = damage * 2 * trait4(146 /* BLOWS */);
+    if (!trait4(193 /* WS_ANIMAL */) && !trait4(206 /* WB_ELEC */) && slay("ANIMAL"))
+      value += Math.trunc(dam * slay("ANIMAL") / 2);
+    if (!trait4(194 /* WS_EVIL */) && slay("EVIL")) value += Math.trunc(dam * slay("EVIL") / 2);
+    dam = damage * 3 * trait4(146 /* BLOWS */);
+    for (const [name, bi] of [
+      ["ORC", 197 /* WS_ORC */],
+      ["UNDEAD", 195 /* WS_UNDEAD */],
+      ["DEMON", 196 /* WS_DEMON */],
+      ["GIANT", 199 /* WS_GIANT */],
+      ["DRAGON", 200 /* WS_DRAGON */]
+    ]) {
+      if (!trait4(bi) && !(name === "DRAGON" && trait4(203 /* WK_DRAGON */)) && slay(name))
+        value += Math.trunc(dam * slay(name) / 2);
+    }
+    if (!trait4(198 /* WS_TROLL */) && slay("TROLL")) value += dam;
+    for (const [name, bi, factor] of [
+      ["ACID", 205 /* WB_ACID */, 4],
+      ["ELEC", 206 /* WB_ELEC */, 5],
+      ["FIRE", 207 /* WB_FIRE */, 3],
+      ["COLD", 208 /* WB_COLD */, 3],
+      ["POIS", 209 /* WB_POIS */, 3]
+    ])
+      if (!trait4(bi) && hasBrand3(item, name)) value += Math.trunc(dam * factor / 2);
+    for (const [name, bi] of [["ORC", 197 /* WS_ORC */], ["TROLL", 198 /* WS_TROLL */]])
+      if (!trait4(bi) && !trait4(194 /* WS_EVIL */) && slay(name)) value += Math.trunc(dam * slay(name) / 2);
+    if (trait4(106 /* MAXDEPTH */) >= 25 && trait4(106 /* MAXDEPTH */) <= 40 && trait4(45 /* GOLD */) < 1e5 && digger)
+      value += digger * 3500 + 1e3;
+    if (hasFlag2(item, "AGGRAVATE")) value -= 8e3;
+    if (item.curses.some((name) => BAD_CURSES.has(name) || !OTHER_CURSES.has(name))) value -= 1e5;
+    if (item.curses.length && opts.weaponSwap?.uncursable?.(item)) value -= 5e3;
+    for (const [flag, bi, weight] of [
+      ["SLOW_DIGEST", 48 /* SDIG */, 10],
+      ["REGEN", 50 /* REG */, 2e3],
+      ["TELEPATHY", 37 /* ESP */, 5e3],
+      ["SEE_INVIS", 51 /* SINV */, 5e4],
+      ["FEATHER", 49 /* FEATH */, 10],
+      ["FREE_ACT", 86 /* FRACT */, 1e4],
+      ["PROT_CONF", 78 /* RCONF */, 5e3],
+      ["PROT_BLIND", 77 /* RBLIND */, 5e3]
+    ])
+      if (!trait4(bi) && hasFlag2(item, flag)) value += weight;
+    if (!trait4(26 /* LIGHT */) && (hasFlag2(item, "LIGHT_2") || hasFlag2(item, "LIGHT_3"))) value += 2e3;
+    if (!trait4(85 /* HLIFE */) && trait4(36 /* MAXCLEVEL */) < 50 && hasFlag2(item, "HOLD_LIFE")) value += 2e3;
+    for (const [element, bi, weight] of [
+      ["FIRE", 64 /* IFIRE */, 7e4],
+      ["ACID", 65 /* IACID */, 3e4],
+      ["COLD", 66 /* ICOLD */, 5e4],
+      ["ELEC", 67 /* IELEC */, 25e3]
+    ])
+      if (!trait4(bi) && resLevel(item, element) === 3) value += weight;
+    for (const [element, bi, weight] of [
+      ["FIRE", 69 /* RFIRE */, 8e3],
+      ["ACID", 72 /* RACID */, 6e3],
+      ["COLD", 70 /* RCOLD */, 4e3],
+      ["ELEC", 71 /* RELEC */, 3e3],
+      ["POIS", 73 /* RPOIS */, 2e4],
+      ["SOUND", 79 /* RSND */, 2e3],
+      ["LIGHT", 75 /* RLITE */, 800],
+      ["DARK", 76 /* RDARK */, 800],
+      ["CHAOS", 83 /* RKAOS */, 8e3],
+      ["DISEN", 84 /* RDIS */, 5e3],
+      ["SHARD", 80 /* RSHRD */, 100],
+      ["NEXUS", 81 /* RNXUS */, 100],
+      ["NETHER", 82 /* RNTHR */, 5500]
+    ])
+      if (!trait4(bi) && resLevel(item, element) > 0) value += weight;
+    if (["FIRE", "ACID", "ELEC", "COLD"].every((element) => resLevel(item, element) > 0)) value += 1e4;
+    if (trait4(106 /* MAXDEPTH */) >= 75 && !opts.weaponSwap?.tarrasqueDead) {
+      for (const [element, bi] of [["COLD", 66 /* ICOLD */], ["FIRE", 64 /* IFIRE */]])
+        if (!trait4(bi) && resLevel(item, element) === 3) value += 9e4;
+    }
+    for (const [element, bi, depth] of [
+      ["NETHER", 82 /* RNTHR */, 55],
+      ["CHAOS", 83 /* RKAOS */, 60],
+      ["DISEN", 84 /* RDIS */, 60]
+    ])
+      if (!trait4(bi) && trait4(106 /* MAXDEPTH */) + 1 >= depth && resLevel(item, element) > 0) value += 1e5;
+    if (value <= 1e3 || value < best.value) continue;
+    best = { handle: item.handle, value };
+  }
+  return best;
+}
+
+// src/trait/state.ts
+function makeDerived() {
+  return {
+    has: /* @__PURE__ */ new Map(),
+    weaponSwap: { handle: null, value: -1 },
+    weaponSwapOpts: {},
+    needStatgain: new Array(STAT_MAX).fill(false),
+    amtStatgain: new Array(STAT_MAX).fill(0),
+    amtBook: new Array(9).fill(0)
+  };
+}
+var store = /* @__PURE__ */ new WeakMap();
+function getDerived(world) {
+  let d = store.get(world);
+  if (!d) {
+    d = makeDerived();
+    store.set(world, d);
+  }
+  return d;
+}
+function resetDerived(world) {
+  const d = makeDerived();
+  store.set(world, d);
+  return d;
+}
+function has(d, role) {
+  return d.has.get(role) ?? 0;
+}
+function addHas(d, role, n) {
+  d.has.set(role, (d.has.get(role) ?? 0) + n);
 }
 
 // src/store/store.ts
@@ -4727,383 +5363,6 @@ function borgFlowOld(ctx, flow, why) {
     w.self.goal.type = 0;
   }
   return null;
-}
-
-// src/item/magic.ts
-var BORG_MAGIC_LOST = 1;
-var BORG_MAGIC_HIGH = 2;
-var BORG_MAGIC_OKAY = 3;
-var BORG_MAGIC_TEST = 4;
-var BORG_MAGIC_KNOW = 5;
-var R = (rating, spell) => ({ rating, spell });
-var RATINGS_MAGE = [
-  R(95, 0 /* MAGIC_MISSILE */),
-  R(65, 1 /* LIGHT_ROOM */),
-  R(85, 2 /* FIND_TRAPS_DOORS_STAIRS */),
-  R(95, 3 /* PHASE_DOOR */),
-  R(85, 4 /* ELECTRIC_ARC */),
-  R(85, 5 /* DETECT_MONSTERS */),
-  R(75, 6 /* FIRE_BALL */),
-  R(65, 7 /* RECHARGING */),
-  R(95, 8 /* IDENTIFY_RUNE */),
-  R(5, 9 /* TREASURE_DETECTION */),
-  R(75, 10 /* FROST_BOLT */),
-  R(85, 11 /* REVEAL_MONSTERS */),
-  R(75, 12 /* ACID_SPRAY */),
-  R(95, 13 /* DISABLE_TRAPS_DESTROY_DOORS */),
-  R(95, 14 /* TELEPORT_SELF */),
-  R(75, 15 /* TELEPORT_OTHER */),
-  R(90, 16 /* RESISTANCE */),
-  R(5, 17 /* TAP_MAGICAL_ENERGY */),
-  R(95, 18 /* MANA_CHANNEL */),
-  R(65, 19 /* DOOR_CREATION */),
-  R(95, 20 /* MANA_BOLT */),
-  R(65, 21 /* TELEPORT_LEVEL */),
-  R(95, 22 /* DETECTION */),
-  R(95, 23 /* DIMENSION_DOOR */),
-  R(55, 24 /* THRUST_AWAY */),
-  R(85, 25 /* SHOCK_WAVE */),
-  R(85, 26 /* EXPLOSION */),
-  R(75, 27 /* BANISHMENT */),
-  R(65, 28 /* MASS_BANISHMENT */),
-  R(75, 29 /* MANA_STORM */)
-];
-var RATINGS_DRUID = [
-  R(95, 30 /* DETECT_LIFE */),
-  R(5, 31 /* FOX_FORM */),
-  R(85, 32 /* REMOVE_HUNGER */),
-  R(95, 33 /* STINKING_CLOUD */),
-  R(55, 34 /* CONFUSE_MONSTER */),
-  R(65, 35 /* SLOW_MONSTER */),
-  R(55, 36 /* CURE_POISON */),
-  R(60, 37 /* RESIST_POISON */),
-  R(80, 38 /* TURN_STONE_TO_MUD */),
-  R(80, 39 /* SENSE_SURROUNDINGS */),
-  R(85, 40 /* LIGHTNING_STRIKE */),
-  R(70, 41 /* EARTH_RISING */),
-  R(55, 42 /* TRANCE */),
-  R(80, 43 /* MASS_SLEEP */),
-  R(5, 44 /* BECOME_PUKEL_MAN */),
-  R(5, 45 /* EAGLES_FLIGHT */),
-  R(5, 46 /* BEAR_FORM */),
-  R(80, 47 /* TREMOR */),
-  R(90, 48 /* HASTE_SELF */),
-  R(95, 49 /* REVITALIZE */),
-  R(55, 50 /* RAPID_REGENERATION */),
-  R(90, 51 /* HERBAL_CURING */),
-  R(90, 52 /* METEOR_SWARM */),
-  R(90, 53 /* RIFT */),
-  R(85, 54 /* ICE_STORM */),
-  R(60, 55 /* VOLCANIC_ERUPTION */),
-  R(90, 56 /* RIVER_OF_LIGHTNING */)
-];
-var RATINGS_PRIEST = [
-  R(65, 57 /* CALL_LIGHT */),
-  R(85, 58 /* DETECT_EVIL */),
-  R(65, 59 /* MINOR_HEALING */),
-  R(85, 60 /* BLESS */),
-  R(75, 61 /* SENSE_INVISIBLE */),
-  R(75, 62 /* HEROISM */),
-  R(95, 63 /* ORB_OF_DRAINING */),
-  R(75, 64 /* SPEAR_OF_LIGHT */),
-  R(65, 65 /* DISPEL_UNDEAD */),
-  R(65, 66 /* DISPEL_EVIL */),
-  R(85, 67 /* PROTECTION_FROM_EVIL */),
-  R(85, 68 /* REMOVE_CURSE */),
-  R(85, 69 /* PORTAL */),
-  R(75, 70 /* REMEMBRANCE */),
-  R(95, 71 /* WORD_OF_RECALL */),
-  R(95, 72 /* HEALING */),
-  R(75, 73 /* RESTORATION */),
-  R(85, 74 /* CLAIRVOYANCE */),
-  R(75, 75 /* ENCHANT_WEAPON */),
-  R(75, 76 /* ENCHANT_ARMOUR */),
-  R(75, 77 /* SMITE_EVIL */),
-  R(95, 78 /* GLYPH_OF_WARDING */),
-  R(85, 79 /* DEMON_BANE */),
-  R(85, 80 /* BANISH_EVIL */),
-  R(75, 81 /* WORD_OF_DESTRUCTION */),
-  R(85, 82 /* HOLY_WORD */),
-  R(85, 83 /* SPEAR_OF_OROME */),
-  R(85, 84 /* LIGHT_OF_MANWE */)
-];
-var RATINGS_NECROMANCER = [
-  R(95, 85 /* NETHER_BOLT */),
-  R(85, 61 /* SENSE_INVISIBLE */),
-  R(5, 86 /* CREATE_DARKNESS */),
-  R(5, 87 /* BAT_FORM */),
-  R(85, 88 /* READ_MINDS */),
-  R(85, 89 /* TAP_UNLIFE */),
-  R(95, 90 /* CRUSH */),
-  R(85, 91 /* SLEEP_EVIL */),
-  R(95, 92 /* SHADOW_SHIFT */),
-  R(25, 93 /* DISENCHANT */),
-  R(85, 94 /* FRIGHTEN */),
-  R(75, 95 /* VAMPIRE_STRIKE */),
-  R(65, 96 /* DISPEL_LIFE */),
-  R(65, 97 /* DARK_SPEAR */),
-  R(5, 98 /* WARG_FORM */),
-  R(65, 99 /* BANISH_SPIRITS */),
-  R(95, 100 /* ANNIHILATE */),
-  R(85, 101 /* GRONDS_BLOW */),
-  R(85, 102 /* UNLEASH_CHAOS */),
-  R(75, 103 /* FUME_OF_MORDOR */),
-  R(65, 104 /* STORM_OF_DARKNESS */),
-  R(5, 105 /* POWER_SACRIFICE */),
-  R(5, 106 /* ZONE_OF_UNMAGIC */),
-  R(5, 107 /* VAMPIRE_FORM */),
-  R(65, 108 /* CURSE */),
-  R(5, 109 /* COMMAND */)
-];
-var RATINGS_PALADIN = [
-  R(95, 60 /* BLESS */),
-  R(85, 58 /* DETECT_EVIL */),
-  R(85, 57 /* CALL_LIGHT */),
-  R(95, 59 /* MINOR_HEALING */),
-  R(65, 61 /* SENSE_INVISIBLE */),
-  R(85, 62 /* HEROISM */),
-  R(85, 67 /* PROTECTION_FROM_EVIL */),
-  R(65, 68 /* REMOVE_CURSE */),
-  R(95, 71 /* WORD_OF_RECALL */),
-  R(95, 72 /* HEALING */),
-  R(85, 74 /* CLAIRVOYANCE */),
-  R(55, 77 /* SMITE_EVIL */),
-  R(55, 79 /* DEMON_BANE */),
-  R(75, 75 /* ENCHANT_WEAPON */),
-  R(85, 76 /* ENCHANT_ARMOUR */),
-  R(95, 110 /* SINGLE_COMBAT */)
-];
-var RATINGS_ROGUE = [
-  R(85, 5 /* DETECT_MONSTERS */),
-  R(95, 3 /* PHASE_DOOR */),
-  R(55, 111 /* OBJECT_DETECTION */),
-  R(55, 112 /* DETECT_STAIRS */),
-  R(85, 7 /* RECHARGING */),
-  R(85, 11 /* REVEAL_MONSTERS */),
-  R(95, 14 /* TELEPORT_SELF */),
-  R(15, 113 /* HIT_AND_RUN */),
-  R(85, 15 /* TELEPORT_OTHER */),
-  R(75, 21 /* TELEPORT_LEVEL */)
-];
-var RATINGS_RANGER = [
-  R(95, 32 /* REMOVE_HUNGER */),
-  R(85, 30 /* DETECT_LIFE */),
-  R(95, 51 /* HERBAL_CURING */),
-  R(85, 37 /* RESIST_POISON */),
-  R(85, 38 /* TURN_STONE_TO_MUD */),
-  R(75, 39 /* SENSE_SURROUNDINGS */),
-  R(25, 114 /* COVER_TRACKS */),
-  R(85, 115 /* CREATE_ARROWS */),
-  R(95, 48 /* HASTE_SELF */),
-  R(5, 116 /* DECOY */),
-  R(95, 117 /* BRAND_AMMUNITION */)
-];
-var RATINGS_BLACKGUARD = [
-  R(55, 118 /* SEEK_BATTLE */),
-  R(95, 119 /* BERSERK_STRENGTH */),
-  R(85, 120 /* WHIRLWIND_ATTACK */),
-  R(95, 121 /* SHATTER_STONE */),
-  R(65, 122 /* LEAP_INTO_BATTLE */),
-  R(65, 123 /* GRIM_PURPOSE */),
-  R(75, 124 /* MAIM_FOE */),
-  R(55, 125 /* HOWL_OF_THE_DAMNED */),
-  R(5, 126 /* RELENTLESS_TAUNTING */),
-  R(55, 127 /* VENOM */),
-  R(5, 128 /* WEREWOLF_FORM */),
-  R(5, 129 /* BLOODLUST */),
-  R(95, 130 /* UNHOLY_REPRIEVE */),
-  R(5, 131 /* FORCEFUL_BLOW */),
-  R(95, 132 /* QUAKE */)
-];
-function ratingsForClass(cls) {
-  switch (cls) {
-    case CLASS_MAGE:
-      return RATINGS_MAGE;
-    case CLASS_DRUID:
-      return RATINGS_DRUID;
-    case CLASS_PRIEST:
-      return RATINGS_PRIEST;
-    case CLASS_NECROMANCER:
-      return RATINGS_NECROMANCER;
-    case CLASS_PALADIN:
-      return RATINGS_PALADIN;
-    case CLASS_ROGUE:
-      return RATINGS_ROGUE;
-    case CLASS_RANGER:
-      return RATINGS_RANGER;
-    case CLASS_BLACKGUARD:
-      return RATINGS_BLACKGUARD;
-    default:
-      return null;
-  }
-}
-function classOf(ctx) {
-  const t = ctx.world.self.trait[25 /* CLASS */];
-  if (t !== void 0 && t !== 0) return t;
-  return classIndexFromName(ctx.view.player().cls);
-}
-function borgGetSpellNumber(ctx, spell) {
-  const ratings = ratingsForClass(classOf(ctx));
-  if (!ratings) return -1;
-  return ratings.findIndex((r) => r.spell === spell);
-}
-function spellViewBySidx(ctx, sidx) {
-  for (const book of ctx.view.spellbooks()) {
-    for (const s of book.spells) if (s.sidx === sidx) return s;
-  }
-  return null;
-}
-function borgSpellStatus(ctx, s) {
-  const clevel = trait3(ctx, 35 /* CLEVEL */) || ctx.view.player().level;
-  if (s.forgotten) return BORG_MAGIC_LOST;
-  if (clevel < s.level) return BORG_MAGIC_HIGH;
-  if (!s.learned) return BORG_MAGIC_OKAY;
-  if (!s.worked) return BORG_MAGIC_TEST;
-  return BORG_MAGIC_KNOW;
-}
-function borgBookPossessed(ctx, bidx) {
-  return borgBookHandle(ctx, bidx) !== null;
-}
-function borgBookHandle(ctx, bidx) {
-  const book = ctx.view.spellbooks()[bidx];
-  if (!book) return null;
-  const kind = ctx.bookKind?.(book.tval, book.name);
-  if (!kind) return null;
-  let handle = null;
-  for (const item of ctx.view.inventory()) {
-    if (item.number <= 0) continue;
-    if (item.tval === kind.tval && item.sval === kind.sval) handle = item.handle;
-  }
-  return handle;
-}
-function borgGetSpellPower(ctx, spell) {
-  const sidx = borgGetSpellNumber(ctx, spell);
-  if (sidx < 0) return -1;
-  const s = spellViewBySidx(ctx, sidx);
-  return s ? s.mana : -1;
-}
-function borgHeroismLevel(ctx) {
-  const cls = classOf(ctx);
-  if (cls === CLASS_PRIEST) return 20;
-  if (cls === CLASS_PALADIN) return 15;
-  return 99;
-}
-function borgSpellLegal(ctx, spell) {
-  const sidx = borgGetSpellNumber(ctx, spell);
-  if (sidx < 0) return false;
-  const s = spellViewBySidx(ctx, sidx);
-  if (!s) return false;
-  if (!borgBookPossessed(ctx, s.bidx)) return false;
-  if (borgSpellStatus(ctx, s) < BORG_MAGIC_TEST) return false;
-  if (s.mana > trait3(ctx, 31 /* MAXSP */)) return false;
-  return true;
-}
-function spellHasNourish(spell) {
-  return spell === 32 /* REMOVE_HUNGER */ || spell === 51 /* HERBAL_CURING */;
-}
-function spellHasTeleport(spell) {
-  switch (spell) {
-    case 3 /* PHASE_DOOR */:
-    case 14 /* TELEPORT_SELF */:
-    case 69 /* PORTAL */:
-    case 23 /* DIMENSION_DOOR */:
-    case 92 /* SHADOW_SHIFT */:
-    case 113 /* HIT_AND_RUN */:
-    case 21 /* TELEPORT_LEVEL */:
-      return true;
-    default:
-      return false;
-  }
-}
-function borgSpellOkay(ctx, spell) {
-  const sidx = borgGetSpellNumber(ctx, spell);
-  if (sidx < 0) return false;
-  const s = spellViewBySidx(ctx, sidx);
-  if (!s) return false;
-  if (noLight(ctx)) return false;
-  let reserveMana = 0;
-  switch (classOf(ctx)) {
-    case CLASS_MAGE:
-      reserveMana = 6;
-      break;
-    case CLASS_RANGER:
-      reserveMana = 22;
-      break;
-    case CLASS_ROGUE:
-      reserveMana = 20;
-      break;
-    case CLASS_NECROMANCER:
-      reserveMana = 10;
-      break;
-    case CLASS_PRIEST:
-      reserveMana = 8;
-      break;
-    case CLASS_PALADIN:
-      reserveMana = 20;
-      break;
-    case CLASS_BLACKGUARD:
-      reserveMana = 0;
-      break;
-  }
-  if (trait3(ctx, 35 /* CLEVEL */) < 35) reserveMana = 0;
-  if (!borgSpellLegal(ctx, spell)) return false;
-  if (trait3(ctx, 112 /* ISBLIND */) || trait3(ctx, 114 /* ISCONFUSED */)) return false;
-  if (s.mana > trait3(ctx, 30 /* CURSP */)) return false;
-  if (trait3(ctx, 30 /* CURSP */) - s.mana < reserveMana) {
-    if (spellHasNourish(spell)) return true;
-    if (spellHasTeleport(spell)) return true;
-    if (spell === 0 /* MAGIC_MISSILE */ && trait3(ctx, 105 /* CDEPTH */) <= 35) return true;
-    return false;
-  }
-  return true;
-}
-function borgSpellFailRate(ctx, spell, playerHas2) {
-  const sidx = borgGetSpellNumber(ctx, spell);
-  if (sidx < 0) return 100;
-  const s = spellViewBySidx(ctx, sidx);
-  if (!s) return 100;
-  let chance = s.fail;
-  chance -= 3 * (trait3(ctx, 35 /* CLEVEL */) - s.level);
-  chance -= trait3(ctx, 33 /* FAIL1 */);
-  if (trait3(ctx, 113 /* ISAFRAID */)) chance += 20;
-  let minfail = trait3(ctx, 34 /* FAIL2 */);
-  const zeroFail = playerHas2 ? playerHas2("ZERO_FAIL") : (ctx.view.player().classFlags ?? []).includes("ZERO_FAIL");
-  if (!zeroFail) {
-    if (minfail < 5) minfail = 5;
-  }
-  if (classOf(ctx) === CLASS_NECROMANCER && borgOnLitGrid(ctx)) {
-    chance += 25;
-  }
-  if (chance < minfail) chance = minfail;
-  if (chance > 50) chance = 50;
-  if (trait3(ctx, 118 /* ISHEAVYSTUN */)) chance += 25;
-  if (trait3(ctx, 117 /* ISSTUN */)) chance += 15;
-  if (trait3(ctx, 121 /* ISFORGET */)) chance *= 2;
-  if (chance > 95) chance = 95;
-  return chance;
-}
-function borgOnLitGrid(ctx) {
-  const { x, y } = ctx.world.self.c;
-  if (!ctx.world.map.inBounds(x, y)) return false;
-  return (ctx.world.map.at(x, y).info & BORG_LIGHT) !== 0;
-}
-function borgSpellOkayFail(ctx, spell, allowFail, playerHas2) {
-  if (borgSpellFailRate(ctx, spell, playerHas2) > allowFail) return false;
-  return borgSpellOkay(ctx, spell);
-}
-function borgSpellLegalFail(ctx, spell, allowFail, playerHas2) {
-  if (borgSpellFailRate(ctx, spell, playerHas2) > allowFail) return false;
-  return borgSpellLegal(ctx, spell);
-}
-function borgSpell(ctx, spell) {
-  if (!borgSpellOkay(ctx, spell)) return null;
-  const sidx = borgGetSpellNumber(ctx, spell);
-  if (sidx < 0) return null;
-  return ctx.act.cast(sidx);
-}
-function borgSpellFail(ctx, spell, allowFail, playerHas2) {
-  if (borgSpellFailRate(ctx, spell, playerHas2) > allowFail) return null;
-  return borgSpell(ctx, spell);
 }
 
 // src/flow/flow-stairs.ts
@@ -6582,105 +6841,6 @@ function createFlow(hooks = defaultFlowHooks()) {
   };
 }
 
-// src/trait/config.ts
-function defaultCfg() {
-  return {
-    worshipsDamage: false,
-    worshipsSpeed: false,
-    worshipsHp: false,
-    worshipsMana: false,
-    worshipsAc: false,
-    worshipsGold: false,
-    playsRisky: false,
-    killsUniques: false,
-    usesSwaps: true,
-    selfScum: true,
-    usesDynamicCalcs: false,
-    noDeeper: 127,
-    munchkinStart: false,
-    munchkinLevel: 12,
-    enchantLimit: 12
-  };
-}
-var activeCfg = defaultCfg();
-function setBorgCfg(cfg = {}) {
-  activeCfg = { ...defaultCfg(), ...cfg };
-}
-function borgCfg() {
-  return activeCfg;
-}
-var buffTimerSafetyNetOn = true;
-function setBuffTimerSafetyNet(on2) {
-  buffTimerSafetyNetOn = on2;
-}
-function buffTimerSafetyNetEnabled() {
-  return buffTimerSafetyNetOn;
-}
-function defaultSpellSeam() {
-  return {
-    spellLegal: () => false,
-    spellLegalFail: () => false,
-    equipsItem: () => false,
-    equipsRing: () => false,
-    spellChance: () => 100,
-    playerHas: () => false
-  };
-}
-function defaultHomeSeam() {
-  return {
-    numHealTrue: 0,
-    numEzhealTrue: 0,
-    numLifeTrue: 0,
-    numHeal: 0,
-    numEzheal: 0,
-    numLife: 0,
-    numSpeed: 0
-  };
-}
-function defaultFrame() {
-  return {};
-}
-function resolveOpts(opts = {}) {
-  return {
-    cfg: { ...borgCfg(), ...opts.cfg },
-    spells: opts.spells ?? defaultSpellSeam(),
-    home: opts.home ?? defaultHomeSeam(),
-    frame: opts.frame ?? defaultFrame(),
-    svals: opts.svals ?? flatSvals(),
-    uncursable: opts.uncursable ?? ((item) => item.curses.length > 0)
-  };
-}
-
-// src/trait/state.ts
-function makeDerived() {
-  return {
-    has: /* @__PURE__ */ new Map(),
-    needStatgain: new Array(STAT_MAX).fill(false),
-    amtStatgain: new Array(STAT_MAX).fill(0),
-    amtBook: new Array(9).fill(0)
-  };
-}
-var store = /* @__PURE__ */ new WeakMap();
-function getDerived(world) {
-  let d = store.get(world);
-  if (!d) {
-    d = makeDerived();
-    store.set(world, d);
-  }
-  return d;
-}
-function resetDerived(world) {
-  const d = makeDerived();
-  store.set(world, d);
-  return d;
-}
-function has(d, role) {
-  return d.has.get(role) ?? 0;
-}
-function addHas(d, role, n) {
-  d.has.set(role, (d.has.get(role) ?? 0) + n);
-}
-
 // src/trait/buff-timers.ts
 var BUFF_TIMER_FIELDS = [
   "protEvil",
@@ -7098,6 +7258,12 @@ function borgNotice(ctx, opts = {}) {
   borgNoticeInventory(c);
   finishNotice(c);
   ctx.world.self.trait = t;
+  d.weaponSwapOpts = {
+    cfg: { ...R2.cfg },
+    ...opts.spells ? { spells: { ...opts.spells } } : {},
+    ...opts.weaponSwap ? { weaponSwap: { ...opts.weaponSwap } } : {}
+  };
+  d.weaponSwap = borgWeaponSwap(ctx, d.weaponSwapOpts);
   const speed = t[44 /* SPEED */] ?? 110;
   ctx.world.self.gameRatio = speed > 110 ? Math.trunc(1e5 / ((speed - 110) * 10 + 100)) : 1e3;
 }
@@ -8749,6 +8915,7 @@ function borgPower(ctx, opts = {}) {
     if (borgPrepared(ctx, i, opts) !== null) break;
   }
   value += (i - 1) * 4e4;
+  value += d.weaponSwap.value;
   ctx.world.self.power = value;
   return value;
 }
@@ -10083,11 +10250,14 @@ function borgThinkHomeGrabUseless(ctx, d) {
   return false;
 }
 function borgThinkHomeBuySwap(ctx, weapon, d) {
+  if (weapon && !borgUsesSwaps(ctx, d)) return false;
   const evalFn = weapon ? d?.weaponSwapEval : d?.armourSwapEval;
   if (!evalFn) return false;
   const wares = homeWares(ctx);
   let bN = -1;
-  let bP = 0;
+  const current = weapon ? getDerived(ctx.world).weaponSwap : null;
+  if (weapon && borgFirstEmptyInventorySlot(ctx, d) === -1) return false;
+  let bP = current?.value ?? 0;
   for (let n = 0; n < wares.length; n++) {
     const item = wares[n];
     if (iqty(item) === 0) continue;
@@ -15333,7 +15503,15 @@ function buildStoreDeps(session) {
     noteNeedsId: needsIdent,
     worthId: borgItemWorthId,
     isOneRing,
-    itemValue: (item) => analyzedItemValue(session, item)
+    itemValue: (item) => analyzedItemValue(session, item),
+    // borg-store-buy.c:963-1014 replaces the existing backup, or fills a hole.
+    // Only carried-item scoring is needed; no hypothetical worn-loadout query.
+    weaponSwapEval: (ctx, item) => {
+      const derived = getDerived(ctx.world), current = derived.weaponSwap;
+      const pack = ctx.view.inventory().filter((entry) => entry.handle !== current.handle);
+      if (borgFirstEmptyInventorySlot(ctx) === -1) return -1;
+      return borgWeaponSwap(ctx, derived.weaponSwapOpts, [...pack, { ...item, number: 1 }]).value;
+    }
   };
   if (!res.loadoutPower) return common;
   return {
@@ -15371,12 +15549,7 @@ function buildStoreDeps(session) {
     sellHomeBadEval: (ctx, item) => powerOf(session, ctx, {
       release: [{ handle: item.handle, number: 1 }]
     })
-    /* weaponSwapEval / armourSwapEval are deliberately NOT wired. They value a
-     * home ware as the borg's SWAP weapon or armour, and this port has no swap
-     * subsystem: weapon_swap_value and armour_swap_value contribute 0 to
-     * borgPower (trait/power.ts), so an evaluator here would compare two numbers
-     * that are equal by construction and buy on the tiebreak. Unreachable until
-     * the swap subsystem is ported, not merely unwired. */
+    /* Armour-backup value and tactical swapping remain separate unported work. */
   };
 }
 function buildThinkSession(resolvers = {}) {

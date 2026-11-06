@@ -545,16 +545,11 @@ describe("the loadout seam reaches the store decisions", () => {
     ]);
   });
 
-  it("leaves the two SWAP valuations unwired, on purpose", () => {
-    /* weapon_swap_value and armour_swap_value contribute 0 to borgPower in this
-       port (the swap subsystem is not ported), so an evaluator here would compare
-       two numbers equal by construction and buy on the tiebreak. Unreachable, not
-       merely unwired - and this test is what stops somebody wiring it for
-       symmetry. */
+  it("wires weapon-backup value while leaving armour backup separate", () => {
     const { resolvers } = recorder(2000);
     const { session } = primed(resolvers);
     const deps = buildStoreDeps(session);
-    expect(deps.weaponSwapEval).toBeUndefined();
+    expect(typeof deps.weaponSwapEval).toBe("function");
     expect(deps.armourSwapEval).toBeUndefined();
   });
 });

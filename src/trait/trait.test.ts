@@ -284,11 +284,12 @@ describe("borg_power weights (borg-power.c)", () => {
     /* speed@110 = 55000 (power.c:298), low-level blows bonus = 45000
      * (power.c:167, CLEVEL<=10 * BLOWS 1), max-stat rewards = 190000
      * (power.c:1687), deep-prep bonus = 40000 (town ok, dlvl 2 blocked on
-     * light). 55000 + 45000 + 190000 + 40000 = 330000. */
+     * light). 55000 + 45000 + 190000 + 40000, minus the C no-weapon-backup
+     * sentinel1 (power.c:1907), =329999. Armour remains outside this leaf. */
     const ctx = mkCtx({}, [], []);
     ctx.world.self.trait = zeroTrait();
-    expect(borgPower(ctx)).toBe(330000);
-    expect(ctx.world.self.power).toBe(330000);
+    expect(borgPower(ctx)).toBe(329999);
+    expect(ctx.world.self.power).toBe(329999);
   });
 
   it("rewards resist/immunity flags by their exact weights", () => {

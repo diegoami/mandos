@@ -22,11 +22,11 @@
  * host side of all four.
  *
  * The fourth one fans out here rather than at the seam, because ONE hypothetical
- * -loadout evaluator answers seven different questions the ported subsystems ask
- * in seven different shapes (wearEval, buyShopEval, buyHomeEval, sellEval,
- * sellHomeBadEval, and the two swap valuations that this port has nothing to
- * value). Translating each into a loadout change belongs beside the wiring, not
- * in every host that wires it.
+ * -loadout evaluator answers five different questions the ported subsystems ask
+ * in five different shapes (wearEval, buyShopEval, buyHomeEval, sellEval,
+ * sellHomeBadEval). The weapon-backup score is computed directly from public
+ * carried items; armour backup valuation remains unported. Translating each
+ * into a loadout change belongs beside the wiring, not in every host that wires it.
  */
 
 import type { ItemView } from "@rpgm-tools/neo-angband-core";
@@ -45,6 +45,8 @@ import {
 import type { Flow, FlowHooks } from "./flow/index.js";
 import type { WearDeps, SpaceDeps, RechargeDeps, JunkDeps } from "./item/index.js";
 import { guessedValue, hasRandomPower, isAware, isCursed, isIdent, isOneRing, needsIdent, perItemValue } from "./item/deps.js";
+import { borgWeaponSwap } from "./trait/weapon-swap.js";
+import { getDerived } from "./trait/state.js";
 import { borgItemWorthId } from "./item/item-wear.js";
 import { borgCheckRest, createFlow } from "./flow/index.js";
 import { BI } from "./trait/index.js";
@@ -470,6 +472,14 @@ export function buildStoreDeps(session: ThinkSession): StoreDeps {
     worthId: borgItemWorthId,
     isOneRing,
     itemValue: (item) => analyzedItemValue(session, item),
+    // borg-store-buy.c:963-1014 replaces the existing backup, or fills a hole.
+    // Only carried-item scoring is needed; no hypothetical worn-loadout query.
+    weaponSwapEval: (ctx, item) => {
+      const derived = getDerived(ctx.world), current = derived.weaponSwap;
+      const pack = ctx.view.inventory().filter(entry => entry.handle !== current.handle);
+      if (borgFirstEmptyInventorySlot(ctx) === -1) return -1;
+      return borgWeaponSwap(ctx, derived.weaponSwapOpts, [...pack, { ...item, number: 1 }]).value;
+    },
   };
   if (!res.loadoutPower) return common;
   return {
@@ -511,12 +521,7 @@ export function buildStoreDeps(session: ThinkSession): StoreDeps {
       powerOf(session, ctx, {
         release: [{ handle: item.handle, number: 1 }],
       }),
-    /* weaponSwapEval / armourSwapEval are deliberately NOT wired. They value a
-     * home ware as the borg's SWAP weapon or armour, and this port has no swap
-     * subsystem: weapon_swap_value and armour_swap_value contribute 0 to
-     * borgPower (trait/power.ts), so an evaluator here would compare two numbers
-     * that are equal by construction and buy on the tiebreak. Unreachable until
-     * the swap subsystem is ported, not merely unwired. */
+    /* Armour-backup value and tactical swapping remain separate unported work. */
   };
 }
 

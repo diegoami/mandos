@@ -15,6 +15,7 @@
  * borg_cfg[] values come from reference/src/borg/borg.txt (stock defaults).
  */
 
+import type { WeaponSwapKnowledge } from "./weapon-swap.js";
 import { flatSvals } from "../item/svals.js";
 import type { ItemView } from "@rpgm-tools/neo-angband-core";
 
@@ -240,6 +241,8 @@ export type BorgSvals = Partial<Record<string, number>>;
 /** The full seam bundle threaded through notice/power/prepared. */
 export interface BorgTraitOpts {
   cfg?: Partial<BorgCfg>;
+  /** Public backup-weapon knowledge; no hidden engine reads. */
+  weaponSwap?: WeaponSwapKnowledge;
   spells?: BorgSpellSeam;
   home?: BorgHomeSeam;
   frame?: BorgFrame;

@@ -24,3 +24,5 @@ export * from "./trait.js";
 export * from "./power.js";
 export * from "./prepared.js";
 export * from "./simulate.js";
+
+export * from "./weapon-swap.js";

@@ -10,12 +10,17 @@
  */
 
 import type { BorgWorld } from "../world/model.js";
+import type { BorgTraitOpts } from "./config.js";
+import type { WeaponSwap } from "./weapon-swap.js";
 import { STAT_MAX } from "./trait-index.js";
 
 /** Derived side-state produced by borg_notice. */
 export interface BorgDerived {
   /** borg.has[k_idx] modelled as role-name -> count (see BorgSvals roles). */
   has: Map<string, number>;
+  weaponSwap: WeaponSwap;
+  /** Same public scoring inputs for current and hypothetical HOME backups. */
+  weaponSwapOpts: BorgTraitOpts;
   /** borg.need_statgain[STAT_MAX]. */
   needStatgain: boolean[];
   /** borg.amt_statgain[STAT_MAX]. */
@@ -28,6 +33,8 @@ export interface BorgDerived {
 export function makeDerived(): BorgDerived {
   return {
     has: new Map(),
+    weaponSwap: { handle: null, value: -1 },
+    weaponSwapOpts: {},
     needStatgain: new Array<boolean>(STAT_MAX).fill(false),
     amtStatgain: new Array<number>(STAT_MAX).fill(0),
     amtBook: new Array<number>(9).fill(0),
