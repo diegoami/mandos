@@ -4,6 +4,8 @@ Mandos consumes validated Neo Borg bug fixes, keeps their provenance and
 consumer regressions, and records basic run/death/stall facts. Existing control
 and class/race choices remain. [Current scope](MANDOS-SCOPE.md) parks strategy
 research, cohorts, stage/save-ladder work and advanced death/replay analysis.
+For C work, [reviewed native milestones](C-MILESTONE-ADOPTION.md) and203 replace
+per-source mirrors; the port-first gate applies before new implementation.
 The optional compatibility settings below do not define Mandos's active purpose.
 Start with the [repository README](../README.md) for the purpose, evidence
 and desktop lab setup.
