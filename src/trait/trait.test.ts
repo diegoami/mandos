@@ -288,8 +288,9 @@ describe("borg_power weights (borg-power.c)", () => {
      * sentinel1 (power.c:1907), =329999. Armour remains outside this leaf. */
     const ctx = mkCtx({}, [], []);
     ctx.world.self.trait = zeroTrait();
-    expect(borgPower(ctx)).toBe(329999);
-    expect(ctx.world.self.power).toBe(329999);
+    // C adds both missing-backup sentinels (-1 weapon, -1 armour).
+    expect(borgPower(ctx)).toBe(329998);
+    expect(ctx.world.self.power).toBe(329998);
   });
 
   it("rewards resist/immunity flags by their exact weights", () => {

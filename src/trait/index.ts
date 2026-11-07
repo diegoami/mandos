@@ -26,3 +26,5 @@ export * from "./prepared.js";
 export * from "./simulate.js";
 
 export * from "./weapon-swap.js";
+
+export * from "./armour-swap.js";

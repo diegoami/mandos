@@ -25,7 +25,7 @@
  * -loadout evaluator answers five different questions the ported subsystems ask
  * in five different shapes (wearEval, buyShopEval, buyHomeEval, sellEval,
  * sellHomeBadEval). The weapon-backup score is computed directly from public
- * carried items; armour backup valuation remains unported. Translating each
+ * carried items, as does armour backup valuation. Translating each
  * into a loadout change belongs beside the wiring, not in every host that wires it.
  */
 
@@ -45,6 +45,7 @@ import {
 import type { Flow, FlowHooks } from "./flow/index.js";
 import type { WearDeps, SpaceDeps, RechargeDeps, JunkDeps } from "./item/index.js";
 import { guessedValue, hasRandomPower, isAware, isCursed, isIdent, isOneRing, needsIdent, perItemValue } from "./item/deps.js";
+import { borgArmourSwap } from "./trait/armour-swap.js";
 import { borgWeaponSwap } from "./trait/weapon-swap.js";
 import { getDerived } from "./trait/state.js";
 import { borgItemWorthId } from "./item/item-wear.js";
@@ -480,6 +481,15 @@ export function buildStoreDeps(session: ThinkSession): StoreDeps {
       if (borgFirstEmptyInventorySlot(ctx) === -1) return -1;
       return borgWeaponSwap(ctx, derived.weaponSwapOpts, [...pack, { ...item, number: 1 }]).value;
     },
+    // HOME armour scans every ware; a weapon ware can change high-resist anti-dup.
+    armourSwapEval: (ctx, item) => {
+      const derived = getDerived(ctx.world), current = derived.armourSwap;
+      if (borgFirstEmptyInventorySlot(ctx) === -1) return -1;
+      const pack = [...ctx.view.inventory().filter(entry => entry.handle !== current.handle), { ...item, number: 1 }];
+      const weapon = borgWeaponSwap(ctx, derived.armourSwapOpts, pack);
+      const selected = pack.find(entry => entry.handle === weapon.handle) ?? null;
+      return borgArmourSwap(ctx, derived.armourSwapOpts, pack, selected).value;
+    },
   };
   if (!res.loadoutPower) return common;
   return {
@@ -521,7 +531,7 @@ export function buildStoreDeps(session: ThinkSession): StoreDeps {
       powerOf(session, ctx, {
         release: [{ handle: item.handle, number: 1 }],
       }),
-    /* Armour-backup value and tactical swapping remain separate unported work. */
+    /* Tactical swapping and SR-availability folds remain separate unported work. */
   };
 }
 
