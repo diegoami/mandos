@@ -96,3 +96,24 @@ and [modPR78](https://github.com/neostryder/neo-angband-mod-borg/pull/78), clean
 head6e8aa5d3d6fe6137b1682e104b722cec99d61f73. An open proposal is not upstream
 acceptance. Follow actual source resolution plus verified replacement adoption
 before removing a carried unit;125's remaining tactical scope stays explicit.
+
+## Armour curse-classification follow-up
+
+[Source51](https://github.com/diegoami/neo-angband-borg-mod-tracker/issues/51),
+reviewed runtime d9beead34594e52ab5a00b064f0aac395471945b, supplies
+[source51-armour-curse.patch](source51-armour-curse.patch) to aggregate
+[Mandos125](https://github.com/diegoami/mandos/issues/125). The armour-only
+correction uses existing known isCursed classification for its hard gate and
+5000 removable penalty. It includes six actual registered Razorback controls;
+weapon handling/Deathwreaker and the earlier armour/HOME controls remain unchanged.
+No tactical/SR or original-C behavioral correction is folded into this follow-up.
+
+All earlier patch files stay byte-immutable. The removal order is source51,
+then its source48 armour baseline, then accepted76 if an actual retirement
+requires it. [The disposable source51 reverse image](../../docs/runs/2026-11-07-armour-curse-adoption/reverse-image.json)
+returns its runtime/test paths exactly to verified main6e03, removing the new
+six-case test; source48's original reverse text check then applies. This does
+not certify arbitrary reverse order, replace actual upstream/replacement proof,
+or rebuild plugin.js. Normal rebuild/current and relevant checks remain required.
+Source48/51 share the pending Neo485/mod78 proposal lane; a proposal is not
+upstream acceptance.125 remains partial for the separate tactical/SR leaf50.

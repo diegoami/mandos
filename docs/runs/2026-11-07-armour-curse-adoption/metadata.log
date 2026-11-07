@@ -1,0 +1,8 @@
+
+ RUN  v4.1.11 /tmp/mandos-armour-curse-consumer-125
+
+
+ Test Files  2 passed (2)
+      Tests  5 passed (5)
+   Start at  20:49:13
+   Duration  257ms (transform 61ms, setup 324ms, import 21ms, tests 10ms, environment 0ms)
