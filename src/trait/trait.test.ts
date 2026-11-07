@@ -284,8 +284,8 @@ describe("borg_power weights (borg-power.c)", () => {
     /* speed@110 = 55000 (power.c:298), low-level blows bonus = 45000
      * (power.c:167, CLEVEL<=10 * BLOWS 1), max-stat rewards = 190000
      * (power.c:1687), deep-prep bonus = 40000 (town ok, dlvl 2 blocked on
-     * light). 55000 + 45000 + 190000 + 40000, minus the C no-weapon-backup
-     * sentinel1 (power.c:1907), =329999. Armour remains outside this leaf. */
+     * light). 55000 + 45000 + 190000 + 40000, minus both C missing-backup
+     * sentinels (weapon and armour, each -1), =329998. */
     const ctx = mkCtx({}, [], []);
     ctx.world.self.trait = zeroTrait();
     // C adds both missing-backup sentinels (-1 weapon, -1 armour).

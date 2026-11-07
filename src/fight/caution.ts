@@ -38,7 +38,9 @@ import { distance } from "../danger/geometry.js";
 import type { FlowState } from "../flow/flow.js";
 import { borgCheckRest } from "../flow/flow-misc.js";
 import { borgPrepLeaveLevelSpells, borgFlowStairLess } from "../flow/flow-stairs.js";
-import { getThinkSession } from "../think-session.js";
+import { borgBackupSwap } from "../item/item-wear.js";
+import { borgCfg } from "../trait/config.js";
+import { buildItemDeps, getThinkSession } from "../think-session.js";
 import { borgRestock } from "../trait/prepared.js";
 import { TV, SVAL } from "../item/svals.js";
 import { Spell, borgSpell, borgSpellFail } from "../item/magic.js";
@@ -459,6 +461,13 @@ export function borgCaution(
       const d = borgDefend(ctx, posDanger);
       if (d) return d;
     }
+  }
+
+  /* borg-caution.c:1025: after class-ordered defend/heal, including while fleeing. */
+  if (borgCfg().usesSwaps && trait(ctx,BI.MAXDEPTH)<90 && posDanger>Math.trunc(av(ctx)/3)) {
+    const session=getThinkSession(ctx.world);
+    const swap=borgBackupSwap(ctx,posDanger,session.ctx===ctx ? buildItemDeps(session) : undefined);
+    if (swap) return swap;
   }
 
   /* The Borg rests for recall in the dungeon (borg-caution.c:1033-1048). */

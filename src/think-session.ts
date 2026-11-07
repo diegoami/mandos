@@ -30,7 +30,7 @@
  */
 
 import type { ItemView } from "@rpgm-tools/neo-angband-core";
-import type { BorgLoadoutChange, BorgLoadoutRef } from "./trait/simulate.js";
+import type { BorgLoadoutDangerAnswer, BorgLoadoutChange, BorgLoadoutRef } from "./trait/simulate.js";
 import type { BorgContext } from "./context.js";
 import type { FactsResolver } from "./danger/index.js";
 import type { KindCostResolver } from "./perceive.js";
@@ -80,6 +80,9 @@ import { borgHasDistanceAttack } from "./fight/attack.js";
  * to the faithful conservative behavior documented on the field.
  */
 export interface BorgResolvers {
+  /** Declared birth option from the current public frame; null/absent means unreadable. */
+  birthRandarts?: () => boolean | null;
+  loadoutDangerAnswer?: (ctx: BorgContext, change: BorgLoadoutChange) => BorgLoadoutDangerAnswer | null;
   /** Local danger after a simulated equipment change. */
   loadoutDanger?: (ctx: BorgContext, change: BorgLoadoutChange) => number | null;
   bookKind?: BorgContext["bookKind"];
@@ -363,8 +366,13 @@ export function buildItemDeps(session: ThinkSession): WearDeps & SpaceDeps & Rec
   const dangerHere = borgDanger(c, py, px, 1, true, false);
   const fear = getFearCaches(w);
   const res = session.resolvers;
+  const randarts = res.birthRandarts?.();
   return {
     danger: dangerHere,
+    ...(randarts !== null && randarts !== undefined ? { randarts } : {}),
+    backupEval: (item: ItemView, slot: number) => res.loadoutDangerAnswer?.(c, {
+      wieldAt: [{ item: { from: "gear", handle: item.handle }, slot }],
+    }) ?? null,
     isIdent,
     needsIdent,
     worthId: borgItemWorthId,

@@ -11,6 +11,7 @@
 
 import type { BorgWorld } from "../world/model.js";
 import type { BorgTraitOpts } from "./config.js";
+import { noBackupCaps, type BackupCaps } from "./backup-caps.js";
 import type { ArmourSwap } from "./armour-swap.js";
 import type { WeaponSwap } from "./weapon-swap.js";
 import { STAT_MAX } from "./trait-index.js";
@@ -24,6 +25,8 @@ export interface BorgDerived {
   weaponSwapOpts: BorgTraitOpts;
   armourSwap: ArmourSwap;
   armourSwapOpts: BorgTraitOpts;
+  weaponSwapCaps: BackupCaps;
+  armourSwapCaps: BackupCaps;
   /** borg.need_statgain[STAT_MAX]. */
   needStatgain: boolean[];
   /** borg.amt_statgain[STAT_MAX]. */
@@ -40,6 +43,8 @@ export function makeDerived(): BorgDerived {
     weaponSwapOpts: {},
     armourSwap: { handle: null, value: -1 },
     armourSwapOpts: {},
+    weaponSwapCaps: noBackupCaps(),
+    armourSwapCaps: noBackupCaps(),
     needStatgain: new Array<boolean>(STAT_MAX).fill(false),
     amtStatgain: new Array<number>(STAT_MAX).fill(0),
     amtBook: new Array<number>(9).fill(0),
@@ -76,6 +81,8 @@ export function inheritWeaponSwap(scratch: BorgWorld, live: BorgWorld): void {
   d.weaponSwapOpts = from.weaponSwapOpts;
   d.armourSwap = from.armourSwap;
   d.armourSwapOpts = from.armourSwapOpts;
+  d.weaponSwapCaps = from.weaponSwapCaps;
+  d.armourSwapCaps = from.armourSwapCaps;
   store.set(scratch, d);
 }
 
