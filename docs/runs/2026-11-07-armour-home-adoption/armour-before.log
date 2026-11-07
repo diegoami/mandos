@@ -1,0 +1,147 @@
+
+ RUN  v4.1.11 /tmp/mandos-armour-home-consumer-125
+
+ ❯ src/store/armour-backup.test.ts (18 tests | 8 failed) 2217ms
+   × selects the actual known Nether boots as a carried armour backup without wearing them 360ms
+   × includes the carried armour value in power 9ms
+   × retrieves the registered armour through normal HOME dependencies 8ms
+   × does not depend on the optional worn-loadout evaluator for armour HOME value 7ms
+   × applies the C armour depth gate at 50 6ms
+   × applies the C armour depth gate at 89 3ms
+   × chooses the later equal-score nonartifact pack item without adding an AC reward 113ms
+   × preserves the armour snapshot when noticeSwap is false and reselects on true 3ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 8 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/store/armour-backup.test.ts > selects the actual known Nether boots as a carried armour backup without wearing them
+AssertionError: expected undefined to be 2 // Object.is equality
+
+- Expected:
+2
+
++ Received:
+undefined
+
+ ❯ src/store/armour-backup.test.ts:55:33
+     53|   expect(s.wanted.resists).toContainEqual({ element: "NETHER", level: …
+     54|   expect(s.ctx.world.self.trait[BI.RNTHR]).toBe(0);
+     55|   expect(armour(s.ctx)?.handle).toBe(2);
+       |                                 ^
+     56|   expect(armour(s.ctx)?.value).toBeGreaterThan(100000);
+     57|   expect(s.ctx.view.equipment()[0]?.artifactName).toBe("of Pain");
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/8]⎯
+
+ FAIL  src/store/armour-backup.test.ts > includes the carried armour value in power
+AssertionError: expected 0 to be greater than 100000
+ ❯ src/store/armour-backup.test.ts:61:69
+     59| it("includes the carried armour value in power", () => {
+     60|   const empty = scene({ home: false }), carried = scene({ carry: true,…
+     61|   expect(carried.ctx.world.self.power - empty.ctx.world.self.power).to…
+       |                                                                     ^
+     62| });
+     63| it("retrieves the registered armour through normal HOME dependencies",…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/8]⎯
+
+ FAIL  src/store/armour-backup.test.ts > retrieves the registered armour through normal HOME dependencies
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ src/store/armour-backup.test.ts:65:53
+     63| it("retrieves the registered armour through normal HOME dependencies",…
+     64|   const s = scene();
+     65|   expect(borgThinkHomeBuySwapArmour(s.ctx, s.deps)).toBe(true);
+       |                                                     ^
+     66|   expect(borgThinkShopBuy(s.ctx, 7, s.deps)).toMatchObject({ code: "sh…
+     67| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/8]⎯
+
+ FAIL  src/store/armour-backup.test.ts > does not depend on the optional worn-loadout evaluator for armour HOME value
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ src/store/armour-backup.test.ts:70:53
+     68| it("does not depend on the optional worn-loadout evaluator for armour …
+     69|   const s = scene({ loadout: false });
+     70|   expect(borgThinkHomeBuySwapArmour(s.ctx, s.deps)).toBe(true);
+       |                                                     ^
+     71| });
+     72| it.each([[49, false], [50, true], [89, true], [90, false]] as const)("…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/8]⎯
+
+ FAIL  src/store/armour-backup.test.ts > applies the C armour depth gate at 50
+ FAIL  src/store/armour-backup.test.ts > applies the C armour depth gate at 89
+AssertionError: expected null to be 2 // Object.is equality
+
+- Expected:
+2
+
++ Received:
+null
+
+ ❯ src/store/armour-backup.test.ts:74:41
+     72| it.each([[49, false], [50, true], [89, true], [90, false]] as const)("…
+     73|   const s = scene({ carry: true, maxDepth });
+     74|   expect(armour(s.ctx)?.handle ?? null).toBe(chosen ? 2 : null);
+       |                                         ^
+     75| });
+     76| it("keeps swaps disabled when the owner option is off", () => {
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/8]⎯
+
+ FAIL  src/store/armour-backup.test.ts > chooses the later equal-score nonartifact pack item without adding an AC reward
+AssertionError: expected undefined to be 3 // Object.is equality
+
+- Expected:
+3
+
++ Received:
+undefined
+
+ ❯ src/store/armour-backup.test.ts:89:33
+     87|   expect(mithril.ac).toBeGreaterThan(leather.ac);
+     88|   const s = scene({ home: false, pack: [leather, mithril] });
+     89|   expect(armour(s.ctx)?.handle).toBe(3);
+       |                                 ^
+     90|   const reversed = scene({ home: false, pack: [mithril, leather] });
+     91|   expect(armour(reversed.ctx)?.handle).toBe(2);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/8]⎯
+
+ FAIL  src/store/armour-backup.test.ts > preserves the armour snapshot when noticeSwap is false and reselects on true
+AssertionError: expected undefined to be 2 // Object.is equality
+
+- Expected:
+2
+
++ Received:
+undefined
+
+ ❯ src/store/armour-backup.test.ts:115:25
+    113|   const s = scene({ carry: true });
+    114|   const found = armour(s.ctx);
+    115|   expect(found?.handle).toBe(2);
+       |                         ^
+    116|   const emptied = { ...s.ctx, view: { ...s.ctx.view, inventory: () => …
+    117|   borgNotice(emptied, { noticeSwap: false });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/8]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  8 failed | 10 passed (18)
+   Start at  20:19:38
+   Duration  4.09s (transform 1.20s, setup 391ms, import 1.33s, tests 2.22s, environment 0ms)

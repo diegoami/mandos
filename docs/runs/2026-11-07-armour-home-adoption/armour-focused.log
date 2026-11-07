@@ -1,0 +1,8 @@
+
+ RUN  v4.1.11 /tmp/mandos-armour-home-consumer-125
+
+
+ Test Files  33 passed (33)
+      Tests  494 passed (494)
+   Start at  20:23:17
+   Duration  22.74s (transform 72.46s, setup 69.44s, import 95.86s, tests 76.40s, environment 14ms)

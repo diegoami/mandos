@@ -1,0 +1,157 @@
+{
+  "consumerBaseline": "09566b873c4be2c6a1ab5e2ba50e0cff4b5334f1",
+  "sourceRuntime": "79fc5a5883b0fca6cf24d61401e704027ddd9d97",
+  "sourceCandidate": "11446a0b8c36d16cd10071cebee6f822fb740957",
+  "sourceIssue": "https://github.com/diegoami/neo-angband-borg-mod-tracker/issues/48",
+  "sourcePR": "https://github.com/diegoami/neo-angband-borg-mod-tracker/pull/49",
+  "consumerIssue": "https://github.com/diegoami/mandos/issues/125",
+  "testOnlyBeforeCommit": "7689d4081ad6dbb90174d00cc3f8077e05e1c2f7",
+  "consumerRuntime": "e0526f2f817ed5ed4e4f3de039fe7c48116342f3",
+  "runtimeDeltaMatchesSource": true,
+  "before": {
+    "failed": 8,
+    "passed": 10
+  },
+  "matchedAfter": {
+    "passed": 18,
+    "failed": 0
+  },
+  "finalFocused": {
+    "passed": 494,
+    "files": 33,
+    "skipped": 0
+  },
+  "defaultInventory": {
+    "CI": true,
+    "tests": 1372,
+    "files": 83
+  },
+  "pluginSha256": "2565f13f8b1176f8919d47ac13b4b9f0e2f2b9c71d57116b0bb07c8f79d21f18",
+  "patchUnits": [
+    {
+      "path": "patches/c-translations/CBUG-0004-cold-melee.patch",
+      "sha256": "16d1a7d416850d6cee024b11ce38ee47f54155cf5c1395fce113faa964278b18",
+      "baselineSha256": "16d1a7d416850d6cee024b11ce38ee47f54155cf5c1395fce113faa964278b18",
+      "check": "textually applicable; not automatic retirement proof"
+    },
+    {
+      "path": "patches/c-translations/CBUG-0061-ccw-timing.patch",
+      "sha256": "53c711c3ed981b5dce80fe23d97c88ec9792abcbc8b4b1b79b7ef78a5cc45156",
+      "baselineSha256": "53c711c3ed981b5dce80fe23d97c88ec9792abcbc8b4b1b79b7ef78a5cc45156",
+      "check": "textually applicable; not automatic retirement proof"
+    },
+    {
+      "path": "patches/c-translations/CBUG-0065-enlightenment.patch",
+      "sha256": "41e5b2ad41adc7a4481a5c0671123c4b219cb1a4839f892cdbb691639e83e271",
+      "baselineSha256": "41e5b2ad41adc7a4481a5c0671123c4b219cb1a4839f892cdbb691639e83e271",
+      "check": "textually applicable; not automatic retirement proof"
+    },
+    {
+      "path": "patches/c-translations/CBUG-0086-exact-unseen-name.patch",
+      "sha256": "8a618e4d32dcd9a6c900f60942d5a25abf074b9b0de2aaec3b417e21803be873",
+      "baselineSha256": "8a618e4d32dcd9a6c900f60942d5a25abf074b9b0de2aaec3b417e21803be873",
+      "check": "textually applicable; not automatic retirement proof"
+    },
+    {
+      "path": "patches/c-translations/shot-path-279-caster-origin.patch",
+      "sha256": "84eb3a73178596d6aa7c9ea0e8fbbd19ccde4c8814beb13e5c175ba5520b2ca4",
+      "baselineSha256": "84eb3a73178596d6aa7c9ea0e8fbbd19ccde4c8814beb13e5c175ba5520b2ca4",
+      "check": "textually applicable; not automatic retirement proof"
+    },
+    {
+      "path": "patches/c-translations/source238-light-modifier.patch",
+      "sha256": "d4a87f4c800f832064e43ca6948dd0a8bfcd28568ee1c07ebe73655866bcd675",
+      "baselineSha256": "d4a87f4c800f832064e43ca6948dd0a8bfcd28568ee1c07ebe73655866bcd675",
+      "check": "textually applicable; not automatic retirement proof"
+    },
+    {
+      "path": "patches/c-translations/source239-equipment-slays.patch",
+      "sha256": "08e58d2e47531762e238b1443504ca92387401acd5508f1a2c4a09ed736ef3a5",
+      "baselineSha256": "08e58d2e47531762e238b1443504ca92387401acd5508f1a2c4a09ed736ef3a5",
+      "check": "textually applicable; not automatic retirement proof"
+    },
+    {
+      "path": "patches/c-translations/source248-dispel-living.patch",
+      "sha256": "0bc84b002b2ecbddbe659bd632a56c52738a2964789ef9cc1a28d3a934892317",
+      "baselineSha256": "0bc84b002b2ecbddbe659bd632a56c52738a2964789ef9cc1a28d3a934892317",
+      "check": "textually applicable; not automatic retirement proof"
+    },
+    {
+      "path": "patches/c-translations/source257-vampire-selected-distance.patch",
+      "sha256": "2a68d549bf521ae1a0f880e3b4e209ef974aa09ed481babacdd97147d7b5ac05",
+      "baselineSha256": "2a68d549bf521ae1a0f880e3b4e209ef974aa09ed481babacdd97147d7b5ac05",
+      "check": "textually applicable; not automatic retirement proof"
+    },
+    {
+      "path": "patches/port-corrections/accepted76-notice-swap.patch",
+      "sha256": "7732053e34602c44a10cb43d68cbc7f3d5caa08f12f104aa334e6a490e005041",
+      "baselineSha256": "7732053e34602c44a10cb43d68cbc7f3d5caa08f12f104aa334e6a490e005041",
+      "check": "ordered prerequisite; reverse checked only after armour removal"
+    },
+    {
+      "path": "patches/port-corrections/accepted94-wiring.patch",
+      "sha256": "22ecb24c1e9a28a7cc163ac407e8d296c7df252a22bde4bc49a721138bf10fb4",
+      "baselineSha256": "1edfc6e4d80ae1810253514bc5182b1890fc6534e27be4e87da73f0d3335f1da",
+      "check": "textually applicable; not automatic retirement proof"
+    },
+    {
+      "path": "patches/port-corrections/source41-light-base.patch",
+      "sha256": "5881785d0780c06c612e49f8497b1685bf99641f41ad4ffa1d971f39346cc9f1",
+      "baselineSha256": "5881785d0780c06c612e49f8497b1685bf99641f41ad4ffa1d971f39346cc9f1",
+      "check": "textually applicable; not automatic retirement proof"
+    },
+    {
+      "path": "patches/port-corrections/source41-policy-fixtures.patch",
+      "sha256": "5858a98e78b8af69fb70bb70749c8e3532c28e159e52806d3353c601b4d8bfc0",
+      "baselineSha256": "5858a98e78b8af69fb70bb70749c8e3532c28e159e52806d3353c601b4d8bfc0",
+      "check": "textually applicable; not automatic retirement proof"
+    },
+    {
+      "path": "patches/port-corrections/source48-armour-home.patch",
+      "sha256": "0e601c37025de4f0cb28e7db9b97a80f543f5372731fe614f0c2283bfd6104a8",
+      "baselineSha256": null,
+      "check": "textually applicable; not automatic retirement proof"
+    },
+    {
+      "path": "patches/mandos/headless-shadow-fuel-198.patch",
+      "sha256": "cfa4b09f82adefa041450af53dff2a7a605e3a0604e659fcd322d6f2d38aac2f",
+      "baselineSha256": "cfa4b09f82adefa041450af53dff2a7a605e3a0604e659fcd322d6f2d38aac2f",
+      "check": "textually applicable; not automatic retirement proof"
+    }
+  ],
+  "sourceTestHashes": {
+    "src/store/armour-backup.test.ts": "2b7440ce35855407bcdcbbf59bd2da0967596c2ff2565f72e068111f16c986cf",
+    "src/store/armour-backup-capacity.test.ts": "9d0e6530401829a6cacadcd7902a6b5ea275f4b88779836fe6570865cf34277c",
+    "test/fixtures/registered-items.ts": "3696ef28664e6da3eae2cbf05c644aa2814b8b62228cf87553187fe67cd7d4ec"
+  },
+  "unchangedDefaultsAndControls": {
+    "package.json": "91b045d6ff86d99f95562c2c6759b27c1bc22c3c0d676e40edfce9feabb02568",
+    "pnpm-lock.yaml": "b212699bb70b75f77d53e3e1fd98d9b1442d195a6ed9b5d28d046d2599a029a0",
+    "pnpm-workspace.yaml": "4c8db521144bce9635c7fa5b3c6958eba8a1242e023875e13190483f0f3259bd",
+    "manifest.json": "39f29974bc08d69babeabc67e37557632e99b41cd6fb26b108fff3cee6fe8134",
+    "session.json": "71abd3885164df369fd396543ea43e69ab5d0c1341bb8941690b4dfc4fb34f0e",
+    "tools/build.mjs": "dbcaaadf4e11d4adf63b243e8c1b5ab411e83f0328531461bc330546f69017e0",
+    "src/play-session.ts": "4e8d1983d6bca2bd5b3db926335ae2c49eda00367d76f1e2712ac85183d3e934",
+    "src/play-fuel.test.ts": "5983c8f5e73408adb8d1d954894742e9b76b70c4480c1017402688cfbc5121f5",
+    "src/play-stop.test.ts": "23aa5d5f9ec6e3cf9c7e942ad208e96c563139aeec02d74be731fc7d6011330d",
+    "src/play.test.ts": "445dca7730a47087eaa86963b73d788772faee4154eafae6d1682d0d5b48ef1d",
+    "src/trait/notice-swap.test.ts": "b141f081b9b83467d8cba4d4331c831b899729278bb6b9a5d5fc7304ef779143"
+  },
+  "upstreamIssue": "https://github.com/neostryder/neo-angband/issues/485",
+  "upstreamPR": "https://github.com/neostryder/neo-angband-mod-borg/pull/78",
+  "upstreamProposalHead": "6e8aa5d3d6fe6137b1682e104b722cec99d61f73",
+  "sourceMergePendingActualMainVerification": "4ab623535f0422c1d212f0523bd0ace0d6b78c3c",
+  "edgeFocus": {
+    "node": "22.23.4",
+    "passed": 222,
+    "files": 11,
+    "skipped": 0,
+    "samePlugin": true,
+    "oneSDK": true
+  },
+  "finalMetadataFocus": {
+    "passed": 5,
+    "files": 2,
+    "skipped": 0
+  }
+}

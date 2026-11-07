@@ -1,0 +1,15 @@
+✔ only reviewed prose additions/edits use documentation checks (2.476261ms)
+✔ NUL status parsing retains both sides of renames and unusual file names (2.061196ms)
+✔ event refs are validated and manual/new/unknown histories default to full (0.820798ms)
+✔ real Git PR merge-base excludes unrelated base work and cannot hide earlier source edits (342.338798ms)
+✔ CLI writes a fixed boolean and fails safe for unavailable events (58.076988ms)
+✔ prose checks accept existing local links and reject missing/outside targets (8.270854ms)
+✔ CI and privacy trigger once per PR update, on main pushes and manual runs only (5.445441ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 573.74879

@@ -1,4 +1,4 @@
-# Independent faithful-port correction units
+# Faithful-port correction units and adopted baselines
 
 These are source/test provenance units, not pnpm engine patches. The source
 tracker owns the Neo Borg defect; Mandos consumer issues own carry/adoption
@@ -59,3 +59,40 @@ all its added/removed correction lines. Its prior SHA256 at main75ffa891 is
 [the new receipt](../../docs/runs/2026-11-07-notice-swap-adoption/README.md)
 records both hashes and all14 independent reverse checks. Old records/units
 remain retrievable unchanged from their historical commits.
+
+## Armour data/value/HOME carry and baseline dependency
+
+[Source48](https://github.com/diegoami/neo-angband-borg-mod-tracker/issues/48),
+source runtime79fc5a5883b0fca6cf24d61401e704027ddd9d97 and owned
+[PR49](https://github.com/diegoami/neo-angband-borg-mod-tracker/pull/49), feeds
+[Mandos125](https://github.com/diegoami/mandos/issues/125) through
+[source48-armour-home.patch](source48-armour-home.patch). It restores only armour
+backup data/value and strict HOME acquisition. Tactical swaps/SR-availability,
+drop/enchant actions and original-C behavioral corrections remain separate.
+This aggregate consumer stays partial for those actual omissions; source/main
+and consumer verification remain independent.
+
+Accepted76 is now a verified upstream BASELINE prerequisite. The armour unit
+extends its shared noticeSwap and scratch snapshot controls to both backups.
+Keep the original accepted76 delta/proof byte-immutable: do not reverse it
+arbitrarily while dependent armour code remains, or claim that a text check
+certifies functional independence. First remove the armour unit; the
+[disposable reverse-image proof](../../docs/runs/2026-11-07-armour-home-adoption/reverse-image.json)
+then matches all13 affected runtime/test paths exactly to verified main09566b87,
+with four new paths absent, and accepted76's original reverse text check passes
+in that order. A source retirement still needs a verified actual replacement;
+removing a patch file alone is not retirement. Rebuild the generated plugin
+after any runtime removal and run relevant replacement controls.
+
+C9/source41/own198 patch bytes and their separate textual reverse applicability
+remain preserved. Accepted94 gets only a surrounding import-context refresh for
+the new armour type, with identical correction lines and old/new hashes in
+[the current receipt](../../docs/runs/2026-11-07-armour-home-adoption/README.md).
+Historical claims of all14 independent reverse checks describe the earlier
+accepted76-only tree, before this dependent carry existed; they are not rewritten.
+
+The armour source report/proposal is [Neo485](https://github.com/neostryder/neo-angband/issues/485)
+and [modPR78](https://github.com/neostryder/neo-angband-mod-borg/pull/78), clean
+head6e8aa5d3d6fe6137b1682e104b722cec99d61f73. An open proposal is not upstream
+acceptance. Follow actual source resolution plus verified replacement adoption
+before removing a carried unit;125's remaining tactical scope stays explicit.
