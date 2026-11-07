@@ -182,3 +182,28 @@ to `$PNPM_STORE`. The initial manual privacy check caught those two paths before
 publication; its receipt is retained under toolchain/. Raw unmodified install
 logs remain in each isolated profile's artifacts/. No package version, graph,
 archive hash, diagnostic or test result was altered.
+
+## One required stamped-source full gate: actual pass
+
+Official checksum-verified portable **Node22.23.4**, pnpm12.16.1, CI=1:
+`pnpm verify` on exact frozen code9f5363f73cd7cd9797c849aeefa0b067a87e27e8
+and the verified official06a release-stamped Edge218 tuple passes **1329 tests /
+80 files /zero skips**,466.86s, exit0. Types/session and current741.7KiB/05ec
+plugin also pass. [Full log](full-stamped/verify.log), [preflight](full-stamped/preflight.json),
+[actual receipt](full-stamped/receipt.json) and [exit0](full-stamped/exit.txt)
+retain actual code/source/Node/package/SDK identity. All three archives are
+checked before the run; direct and transitive SDK are the same real file;
+only the planned package/YAML/lock overlay differs in the sandbox. There is no
+local-Core alias or additional test exclusion. The normal four explicitly
+optional advanced suites remain exactly the product's existing discovery policy.
+
+The466.86s value is Vitest's actual test duration; queue and non-test timing
+were not separately instrumented. No conclusion of progress or a hang was
+inferred solely from CPU. The run finished normally; no signal, interruption,
+restart, seed/minimum/timeout or assertion change was used.
+
+Subsequent720 GUI/docs updates are code-identical and do not justify another
+local source full. All13 correction-unit reverse checks still pass. The final
+ordinary PR's exact-head required Node22/default published-Beta3 gate remains
+mandatory and is a **different dependency profile**, not a duplicate. No raw
+source third full, optional advanced replay requirement or engine patch is added.

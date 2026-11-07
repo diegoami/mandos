@@ -1,0 +1,100 @@
+{
+  "schema": "mandos/stamped-edge218-full@1",
+  "testedCode": "9f5363f73cd7cd9797c849aeefa0b067a87e27e8",
+  "laterChanges": "README/docs/evidence only; no source/dependency/test/helper/profile runtime changes",
+  "profile": "official06a-stamped-edge218",
+  "officialSource": "06a2321ce30a414df20d1b20d486446e7688171c",
+  "engineVersion": "1.23.0-edge.218",
+  "node": "v22.23.4",
+  "pnpm": "12.16.1",
+  "CI": true,
+  "command": "pnpm verify",
+  "exit": 0,
+  "passed": 1329,
+  "files": 80,
+  "skips": 0,
+  "testDurationSeconds": 466.86,
+  "queuedAndNonTestDurations": "not separately instrumented; no CPU-only progress inference",
+  "defaultNormalOptionalExclusionsOnly": true,
+  "extraExclusions": [],
+  "localCoreAlias": false,
+  "sourceArchivesVerified": 3,
+  "directAndTransitiveSDKSameFile": true,
+  "packageOverlayOnly": [
+    "package.json",
+    "pnpm-lock.yaml",
+    "pnpm-workspace.yaml"
+  ],
+  "pluginSha256": "05ec00ece395dd341088ffffc1ed62afe92b6e3269fe463faacd9114cb72b9db",
+  "pluginCurrent": true,
+  "productDefault": "unpatched published Core/SDK/content1.23.0-beta.3 unchanged",
+  "units": [
+    {
+      "unit": "patches/c-translations/source248-dispel-living.patch",
+      "sha256": "0bc84b002b2ecbddbe659bd632a56c52738a2964789ef9cc1a28d3a934892317",
+      "reverseCheck": true
+    },
+    {
+      "unit": "patches/c-translations/source238-light-modifier.patch",
+      "sha256": "d4a87f4c800f832064e43ca6948dd0a8bfcd28568ee1c07ebe73655866bcd675",
+      "reverseCheck": true
+    },
+    {
+      "unit": "patches/c-translations/shot-path-279-caster-origin.patch",
+      "sha256": "84eb3a73178596d6aa7c9ea0e8fbbd19ccde4c8814beb13e5c175ba5520b2ca4",
+      "reverseCheck": true
+    },
+    {
+      "unit": "patches/c-translations/CBUG-0086-exact-unseen-name.patch",
+      "sha256": "8a618e4d32dcd9a6c900f60942d5a25abf074b9b0de2aaec3b417e21803be873",
+      "reverseCheck": true
+    },
+    {
+      "unit": "patches/c-translations/CBUG-0004-cold-melee.patch",
+      "sha256": "16d1a7d416850d6cee024b11ce38ee47f54155cf5c1395fce113faa964278b18",
+      "reverseCheck": true
+    },
+    {
+      "unit": "patches/c-translations/CBUG-0065-enlightenment.patch",
+      "sha256": "41e5b2ad41adc7a4481a5c0671123c4b219cb1a4839f892cdbb691639e83e271",
+      "reverseCheck": true
+    },
+    {
+      "unit": "patches/c-translations/source257-vampire-selected-distance.patch",
+      "sha256": "2a68d549bf521ae1a0f880e3b4e209ef974aa09ed481babacdd97147d7b5ac05",
+      "reverseCheck": true
+    },
+    {
+      "unit": "patches/c-translations/CBUG-0061-ccw-timing.patch",
+      "sha256": "53c711c3ed981b5dce80fe23d97c88ec9792abcbc8b4b1b79b7ef78a5cc45156",
+      "reverseCheck": true
+    },
+    {
+      "unit": "patches/c-translations/source239-equipment-slays.patch",
+      "sha256": "08e58d2e47531762e238b1443504ca92387401acd5508f1a2c4a09ed736ef3a5",
+      "reverseCheck": true
+    },
+    {
+      "unit": "patches/port-corrections/accepted94-wiring.patch",
+      "sha256": "7688aeff78ae2dbaab9a4b08e37fa334bb01f959ce343f8a2e6270155d25fbc5",
+      "reverseCheck": true
+    },
+    {
+      "unit": "patches/port-corrections/source41-policy-fixtures.patch",
+      "sha256": "5858a98e78b8af69fb70bb70749c8e3532c28e159e52806d3353c601b4d8bfc0",
+      "reverseCheck": true
+    },
+    {
+      "unit": "patches/port-corrections/source41-light-base.patch",
+      "sha256": "5881785d0780c06c612e49f8497b1685bf99641f41ad4ffa1d971f39346cc9f1",
+      "reverseCheck": true
+    },
+    {
+      "unit": "patches/mandos/headless-shadow-fuel-198.patch",
+      "sha256": "cfa4b09f82adefa041450af53dff2a7a605e3a0604e659fcd322d6f2d38aac2f",
+      "reverseCheck": true
+    }
+  ],
+  "normalDefaultPRNode22Full": "still required on final exact PR head; distinct published profile",
+  "GUIManagementAndPersistence": "separate; actual bounded developer controller proof does not certify full management or all save modes"
+}

@@ -1,0 +1,21 @@
+v22.23.4
+12.16.1
+9f5363f73cd7cd9797c849aeefa0b067a87e27e8
+{"expectedVersion":"1.23.0-edge.218","ENGINE_VERSION":"1.23.0-edge.218","packages":[{"name":"@rpgm-tools/neo-angband-core","version":"1.23.0-edge.218"},{"name":"@rpgm-tools/neo-angband-mod-sdk","version":"1.23.0-edge.218"},{"name":"@rpgm-tools/neo-angband-content","version":"1.23.0-edge.218"}],"sameSDK":true,"directSDKEntrySha256":"f34413439813443e35087fece765df85209bbbee671183090a38a4d88022381f","coreEntrySha256":"56b882a8721531282f738bd8d1d7be2b641e1c207d497a3d6dacc4f6e40fe00a","publishedDefaultChanged":false,"localCoreAlias":false}
+All3 artifact hashes and exact9f code/only planned dependency overlay verified
+$ pnpm typecheck && node tools/check-session.mjs && pnpm test && pnpm check
+$ tsc --noEmit
+diegoami/mandos: mandos; bootstrap files and origin verified
+$ vitest run
+
+ RUN  v4.1.11 /tmp/mandos-199-stamped218
+
+
+ Test Files  80 passed (80)
+      Tests  1329 passed (1329)
+   Start at  14:55:02
+   Duration  466.86s (transform 30.22s, setup 50.36s, import 62.50s, tests 648.44s, environment 23ms)
+
+$ node tools/build.mjs --check
+[mod-build] checking 1: mandos
+[mod-build] mandos: ok, and the committed plugin.js is current (741.7 KiB, api >=2.0.0 <3.0.0)
