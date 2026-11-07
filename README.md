@@ -77,6 +77,13 @@ legacy mirror issues as tracking-superseded does not remove code or fix its sour
 remain intact. [Pre-split history](docs/history/repository-split) and
 [reorganization reviews](docs/migrations/reorganization-review/README.md) remain reference evidence.
 
+Accepted Borg PR76's backup-notice correction is tracked in
+[consumer204](https://github.com/diegoami/mandos/issues/204) and its
+[pinned adoption receipt](docs/runs/2026-11-07-notice-swap-adoption/README.md).
+The published beta.3 default and nine existing C corrections are preserved.
+This adoption checks Core/harness behavior; it does not repeat the separate
+historical interactive-host qualification below or deploy the lab.
+
 ## Exact edge.218 developer folder
 
 The normal build keeps the unpatched published1.23.0-beta.3 default. For the

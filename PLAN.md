@@ -44,3 +44,11 @@ reviewed native milestone coverage. No C milestone code is selected by this
 migration.203 owns the live port gate/coverage, including native157's post-review adoption
 for the already verified Enlightenment exception (outside reviewed M3). Historical issue/code/proof links
 remain; original C upstream status is not duplicated as Mandos work queues.
+
+Port-first consumer204 adopts accepted upstream PR76/official235a6f9 through the
+qualified port46 producer. Both generic power/danger hypothetical notices retain
+the live backup, while normal full notice still recomputes it. See
+[the bounded adoption receipt](docs/runs/2026-11-07-notice-swap-adoption/README.md).
+Required consumer/main verification remains distinct from producer readiness;
+source2/consumer125's actual armour/HOME and tactical omissions still gate NEW
+C milestone code after this accepted leaf. No C milestone adoption is performed.
