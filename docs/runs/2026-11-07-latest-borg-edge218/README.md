@@ -97,3 +97,88 @@ producer readiness; this consumer's required/default and stamped-source full
 and actual-main remain separate pending gates. Bootstrap port anchor advances
 to accepted a443; engine anchor waits the independently qualified new source
 profile before final freeze. No npm Edge publication or desktop play is claimed.
+
+## Both exact-source Core package profiles qualify independently
+
+Frozen consumer code a4f88c5d179d58d56f2177b67ab8f5e1c3793787 is checked in
+separate owned worktrees with only explicit file dependency overlays. Raw06a
+beta.3-versioned and official-release-style stamped Edge218 each install all
+three verified archives, use the supported root-YAML SDK override, and prove
+one actual direct/transitive SDK file. Actual Core.ENGINE_VERSION and all three
+package versions match the named profile. Default product package/manifest files are untouched.
+
+Each runs the same222 critical tests/15 files/zero skips, including accepted
+port fields, C9, own198 fuel, class/terrain fixes and unchanged architecture
+checks. Raw4.93s; stamped3.80s. Both typecheck and produce the **same** current
+741.7KiB/05ec plugin through their real SDK builder. Graphs/logs are in profiles/.
+These Node26 focused checks are not the pending required Node22 stamped full.
+Only the stamped profile needs that full; raw-source equivalence does not
+justify a third identical full. Bootstrap anchors now name qualified source06a
+and Borga443; this is source provenance, not an npm-default package switch.
+
+## Preliminary actual headless loader: scopes and refusals
+
+The clean official06a source is stamped Edge218 and fully built **before** any
+packaging-range rewrite. Every probe uses fresh own-ID folders, memory prefs,
+no browser/owner profile and the reviewed b8 plugin2429. Full reports, exits,
+logs and the instrumented-wrapper hash are under host-preliminary/. They are
+preliminary to latest94d, not final default/GUI acceptance.
+
+- The old exact-beta.3 default manifest is syntactically valid under the old
+  SDK, whose engineVerdict reports a data-range warning. Actual code loading is
+  stricter: on Edge218 it blocks the untested exact range, with or without the
+  unsafe flag. A schema/data verdict is not code-loader acceptance.
+- An exact-Edge own-ID profile adds only input:controller and engine:access.
+  With the documented headless --unsafe-in-process opt-in, the unchanged b8
+  plugin loads and all nine lifecycle phases pass, without runtime faults or
+  refused calls. Overall report remains **false**: profiles:manage and
+  session:control are stripped as first-party-only scopes. No full-management
+  acceptance is inferred from loaded=true.
+- The version-matched profile without that opt-in is routed to a public Worker.
+  Raw Core/truth/birth/save/management capabilities are filtered, and the Node
+  runner cannot check the Worker. Its runtime label reports the manifest's
+  declaration, not evidence that in-process code actually executed.
+- The one explicitly approved observational start wrapper preserves the plain
+  definition's seven own enumerable data fields/prototype and calls the original
+  start once. It logs actual Core availability, EngineVersionEdge218 and
+  startGame-function presence twice (before/after reload). Original bundle hash
+  is2429; wrapper hash is separate. It changes no state, RNG, permissions, arming
+  or identity. Overall first-party-management limitations remain unchanged.
+
+The CLI drives waits/stairs/potion/save-reload scripts. This mod's fresh
+character has not been handed over, so its unchanged armed predicate yields no
+controller: the four health calls are two register/two teardown calls. No Borg
+controller decisions are observed. Legitimate Ctrl-Z/consent lives in the GUI
+host, not a declared gameplay input intent or CLI option. No fake armed/noscore
+flag, private installer or custom controller harness was used to force a pass.
+Actual Lab Desktop gameplay evidence is separately owned by the engine probe;
+its save message/cause and management limits must remain explicit.
+
+## Small exact-Edge folder materializer
+
+Normal tools/build.mjs and --check behavior remain. The optional command
+`node tools/build.mjs --profile edge218 --out <fresh directory>` first verifies
+the current artifact with the existing SDK builder, clones the one canonical
+manifest and changes only exact engine.range/because plus the two declarations.
+It copies the same plugin bytes, preserves identity/version/runtime/settings,
+and atomically refuses existing output without deletion. No second300-line
+manifest, code fork, mandatory new SDK/default engine or permanent CI platform
+is introduced. The materialized e028 manifest and05ec plugin match the current
+GUI probe payload exactly. It is a **folder developer profile**, not permission
+to run raw Core inside a public Worker or unsupported ZIP install.
+
+Actual controls prove the limited deep delta, identical plugin, unchanged five
+default files, no overwrite of an existing directory, refusal of unknown and
+ambiguous profile/check arguments, and unchanged normal check behavior. The
+same materializer works under official portable Node22.23.4. Its portable archive
+matches the official SHA256SUMS1805bcd35e6815559bd2eb97db438d3fdb0eb3a5e6a977b7c1badca76337e9ce;
+no global install/HOME mutation occurs. Both node and pnpm exec node report22.23.4,
+pnpm12.16.1. Receipts are under toolchain/. The one CI=1 pnpm verify stamped
+full is still held for the parent's final frozen-head review; normal required
+PR/default Beta3 verification is a separate profile, not a duplicate.
+
+Public installation logs normalize only the machine-specific pnpm store path
+to `$PNPM_STORE`. The initial manual privacy check caught those two paths before
+publication; its receipt is retained under toolchain/. Raw unmodified install
+logs remain in each isolated profile's artifacts/. No package version, graph,
+archive hash, diagnostic or test result was altered.

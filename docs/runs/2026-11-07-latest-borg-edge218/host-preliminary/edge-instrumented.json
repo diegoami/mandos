@@ -1,0 +1,148 @@
+{
+  "format": "neo-angband/mod/headless-run",
+  "schemaVersion": 1,
+  "data": {
+    "passed": false,
+    "booted": true,
+    "engine": "1.23.0-edge.218",
+    "seed": 3,
+    "mods": [
+      {
+        "id": "mandos",
+        "version": "0.1.0",
+        "runtime": "in-process",
+        "loaded": true
+      }
+    ],
+    "phases": [
+      {
+        "name": "load",
+        "outcome": "passed"
+      },
+      {
+        "name": "boot",
+        "outcome": "passed"
+      },
+      {
+        "name": "register",
+        "outcome": "passed"
+      },
+      {
+        "name": "turns",
+        "outcome": "passed"
+      },
+      {
+        "name": "level-change",
+        "outcome": "passed"
+      },
+      {
+        "name": "inventory",
+        "outcome": "passed"
+      },
+      {
+        "name": "save-reload",
+        "outcome": "passed"
+      },
+      {
+        "name": "teardown",
+        "outcome": "passed"
+      },
+      {
+        "name": "parity",
+        "outcome": "passed"
+      }
+    ],
+    "health": [
+      {
+        "id": "mandos",
+        "budgetMs": 50,
+        "calls": 4,
+        "cpuMs": 40.825,
+        "worstMs": 32.023,
+        "worstSite": "register()",
+        "faults": 0,
+        "overBudget": 0,
+        "ceilingBreaches": 0,
+        "switchedOff": false,
+        "refusedCapabilities": 0,
+        "rejections": 0
+      }
+    ],
+    "parity": {
+      "outcome": "match",
+      "offDigest": "6f36278f4e84ba91",
+      "onDigest": "6f36278f4e84ba91"
+    },
+    "events": {
+      "emitted": 4,
+      "delivered": 4
+    },
+    "unattributedRejections": 0,
+    "reports": [
+      {
+        "source": {
+          "tool": "headless-runner",
+          "version": "1.23.0-edge.218"
+        },
+        "mod": {
+          "id": "mandos",
+          "version": "0.1.0"
+        },
+        "findings": [
+          {
+            "rule": "runner/load-problem",
+            "severity": "serious",
+            "kind": "packaging",
+            "outcome": "found",
+            "message": "The loader reported: runs without profiles:manage: only the game's own mods can have it",
+            "evidence": [
+              {
+                "file": "manifest.json",
+                "excerpt": "runs without profiles:manage: only the game's own mods can have it"
+              }
+            ]
+          },
+          {
+            "rule": "runner/load-problem",
+            "severity": "serious",
+            "kind": "packaging",
+            "outcome": "found",
+            "message": "The loader reported: runs without session:control: only the game's own mods can have it",
+            "evidence": [
+              {
+                "file": "manifest.json",
+                "excerpt": "runs without session:control: only the game's own mods can have it"
+              }
+            ]
+          },
+          {
+            "rule": "runner/load-problem",
+            "severity": "serious",
+            "kind": "packaging",
+            "outcome": "found",
+            "message": "The loader reported: runs without profiles:manage: only the game's own mods can have it",
+            "evidence": [
+              {
+                "file": "manifest.json",
+                "excerpt": "runs without profiles:manage: only the game's own mods can have it"
+              }
+            ]
+          },
+          {
+            "rule": "runner/load-problem",
+            "severity": "serious",
+            "kind": "packaging",
+            "outcome": "found",
+            "message": "The loader reported: runs without session:control: only the game's own mods can have it",
+            "evidence": [
+              {
+                "file": "manifest.json",
+                "excerpt": "runs without session:control: only the game's own mods can have it"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

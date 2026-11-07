@@ -1,0 +1,9 @@
+
+ RUN  v4.1.11 /tmp/mandos-199-raw06
+
+
+ Test Files  15 passed (15)
+      Tests  222 passed (222)
+   Start at  14:12:49
+   Duration  4.93s (transform 10.57s, setup 4.48s, import 19.47s, tests 22.96s, environment 3ms)
+

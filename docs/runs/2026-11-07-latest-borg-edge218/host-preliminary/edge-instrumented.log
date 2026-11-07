@@ -1,0 +1,4 @@
+(node:241669) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+MANDOS_EDGE_CORE_PROBE {"hasCore":true,"engineVersion":"1.23.0-edge.218","hasStartGame":true}
+MANDOS_EDGE_CORE_PROBE {"hasCore":true,"engineVersion":"1.23.0-edge.218","hasStartGame":true}

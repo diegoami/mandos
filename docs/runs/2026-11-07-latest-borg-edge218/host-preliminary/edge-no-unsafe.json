@@ -1,0 +1,271 @@
+{
+  "format": "neo-angband/mod/headless-run",
+  "schemaVersion": 1,
+  "data": {
+    "passed": false,
+    "booted": true,
+    "engine": "1.23.0-edge.218",
+    "seed": 3,
+    "mods": [
+      {
+        "id": "mandos",
+        "version": "0.1.0",
+        "runtime": "in-process",
+        "loaded": true
+      }
+    ],
+    "phases": [
+      {
+        "name": "load",
+        "outcome": "passed"
+      },
+      {
+        "name": "boot",
+        "outcome": "passed"
+      },
+      {
+        "name": "register",
+        "outcome": "skipped",
+        "detail": "No mod in the set runs in-process code."
+      },
+      {
+        "name": "turns",
+        "outcome": "passed"
+      },
+      {
+        "name": "level-change",
+        "outcome": "passed"
+      },
+      {
+        "name": "inventory",
+        "outcome": "passed"
+      },
+      {
+        "name": "save-reload",
+        "outcome": "passed"
+      },
+      {
+        "name": "teardown",
+        "outcome": "passed"
+      },
+      {
+        "name": "parity",
+        "outcome": "passed"
+      },
+      {
+        "name": "worker",
+        "outcome": "could-not-check",
+        "detail": "Worker tier not supported headless yet."
+      }
+    ],
+    "health": [
+      {
+        "id": "mandos",
+        "budgetMs": 50,
+        "calls": 2,
+        "cpuMs": 0.039,
+        "worstMs": 0.035,
+        "worstSite": "saveNoiseScent hook",
+        "faults": 0,
+        "overBudget": 0,
+        "ceilingBreaches": 0,
+        "switchedOff": false,
+        "refusedCapabilities": 0,
+        "rejections": 0
+      }
+    ],
+    "parity": {
+      "outcome": "match",
+      "offDigest": "6f36278f4e84ba91",
+      "onDigest": "6f36278f4e84ba91"
+    },
+    "events": {
+      "emitted": 4,
+      "delivered": 4
+    },
+    "unattributedRejections": 0,
+    "reports": [
+      {
+        "source": {
+          "tool": "headless-runner",
+          "version": "1.23.0-edge.218"
+        },
+        "mod": {
+          "id": "mandos",
+          "version": "0.1.0"
+        },
+        "findings": [
+          {
+            "rule": "runner/load-problem",
+            "severity": "serious",
+            "kind": "packaging",
+            "outcome": "found",
+            "message": "The loader reported: runs without state:monsters-actual.read: only the game's own mods can have it",
+            "evidence": [
+              {
+                "file": "manifest.json",
+                "excerpt": "runs without state:monsters-actual.read: only the game's own mods can have it"
+              }
+            ]
+          },
+          {
+            "rule": "runner/load-problem",
+            "severity": "serious",
+            "kind": "packaging",
+            "outcome": "found",
+            "message": "The loader reported: runs without ui:birth.replace: Worker mods cannot have it",
+            "evidence": [
+              {
+                "file": "manifest.json",
+                "excerpt": "runs without ui:birth.replace: Worker mods cannot have it"
+              }
+            ]
+          },
+          {
+            "rule": "runner/load-problem",
+            "severity": "serious",
+            "kind": "packaging",
+            "outcome": "found",
+            "message": "The loader reported: runs without profiles:manage: Only in-process first-party mods can manage the game.",
+            "evidence": [
+              {
+                "file": "manifest.json",
+                "excerpt": "runs without profiles:manage: Only in-process first-party mods can manage the game."
+              }
+            ]
+          },
+          {
+            "rule": "runner/load-problem",
+            "severity": "serious",
+            "kind": "packaging",
+            "outcome": "found",
+            "message": "The loader reported: runs without saves:manage: Worker mods cannot have it",
+            "evidence": [
+              {
+                "file": "manifest.json",
+                "excerpt": "runs without saves:manage: Worker mods cannot have it"
+              }
+            ]
+          },
+          {
+            "rule": "runner/load-problem",
+            "severity": "serious",
+            "kind": "packaging",
+            "outcome": "found",
+            "message": "The loader reported: runs without session:control: Only in-process first-party mods can manage the game.",
+            "evidence": [
+              {
+                "file": "manifest.json",
+                "excerpt": "runs without session:control: Only in-process first-party mods can manage the game."
+              }
+            ]
+          },
+          {
+            "rule": "runner/load-problem",
+            "severity": "serious",
+            "kind": "packaging",
+            "outcome": "found",
+            "message": "The loader reported: runs without engine:access: Worker mods cannot have live engine access",
+            "evidence": [
+              {
+                "file": "manifest.json",
+                "excerpt": "runs without engine:access: Worker mods cannot have live engine access"
+              }
+            ]
+          },
+          {
+            "rule": "runner/load-problem",
+            "severity": "serious",
+            "kind": "packaging",
+            "outcome": "found",
+            "message": "The loader reported: runs without state:monsters-actual.read: only the game's own mods can have it",
+            "evidence": [
+              {
+                "file": "manifest.json",
+                "excerpt": "runs without state:monsters-actual.read: only the game's own mods can have it"
+              }
+            ]
+          },
+          {
+            "rule": "runner/load-problem",
+            "severity": "serious",
+            "kind": "packaging",
+            "outcome": "found",
+            "message": "The loader reported: runs without ui:birth.replace: Worker mods cannot have it",
+            "evidence": [
+              {
+                "file": "manifest.json",
+                "excerpt": "runs without ui:birth.replace: Worker mods cannot have it"
+              }
+            ]
+          },
+          {
+            "rule": "runner/load-problem",
+            "severity": "serious",
+            "kind": "packaging",
+            "outcome": "found",
+            "message": "The loader reported: runs without profiles:manage: Only in-process first-party mods can manage the game.",
+            "evidence": [
+              {
+                "file": "manifest.json",
+                "excerpt": "runs without profiles:manage: Only in-process first-party mods can manage the game."
+              }
+            ]
+          },
+          {
+            "rule": "runner/load-problem",
+            "severity": "serious",
+            "kind": "packaging",
+            "outcome": "found",
+            "message": "The loader reported: runs without saves:manage: Worker mods cannot have it",
+            "evidence": [
+              {
+                "file": "manifest.json",
+                "excerpt": "runs without saves:manage: Worker mods cannot have it"
+              }
+            ]
+          },
+          {
+            "rule": "runner/load-problem",
+            "severity": "serious",
+            "kind": "packaging",
+            "outcome": "found",
+            "message": "The loader reported: runs without session:control: Only in-process first-party mods can manage the game.",
+            "evidence": [
+              {
+                "file": "manifest.json",
+                "excerpt": "runs without session:control: Only in-process first-party mods can manage the game."
+              }
+            ]
+          },
+          {
+            "rule": "runner/load-problem",
+            "severity": "serious",
+            "kind": "packaging",
+            "outcome": "found",
+            "message": "The loader reported: runs without engine:access: Worker mods cannot have live engine access",
+            "evidence": [
+              {
+                "file": "manifest.json",
+                "excerpt": "runs without engine:access: Worker mods cannot have live engine access"
+              }
+            ]
+          },
+          {
+            "rule": "runner/worker-unsupported",
+            "severity": "warning",
+            "kind": "functionality",
+            "outcome": "could-not-check",
+            "message": "Could not check: Worker tier not supported headless yet.",
+            "evidence": [
+              {
+                "file": "manifest.json",
+                "excerpt": "\"runtime\": \"worker\""
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}
