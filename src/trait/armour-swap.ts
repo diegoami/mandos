@@ -7,7 +7,7 @@ import type { BorgContext } from "../context.js";
 import { BI } from "./trait-index.js";
 import { resolveOpts, type BorgTraitOpts } from "./config.js";
 import { hasBrand3, hasFlag, present, resLevel, slayMult } from "./item-util.js";
-import { isOneRing } from "../item/deps.js";
+import { isCursed, isOneRing } from "../item/deps.js";
 import { TV } from "../item/svals.js";
 
 export interface ArmourSwap { handle: number | null; value: number }
@@ -39,7 +39,7 @@ export function borgArmourSwap(
     if (!present(item) || !item.aware || !allowed.includes(item.tval) || isOneRing(item)) continue;
     // FORK host-knowledge boundary: ItemView has curse names, not per-instance power.
     // Do not invent removability. An explicit public-knowledge input may supply it.
-    if (item.curses.length && !uncursable?.(item)) continue;
+    if (isCursed(item) && !uncursable?.(item)) continue;
     const damage = item.dd * item.ds * 35;
     let value = -1 + damage * (trait(BI.BLOWS) + 1)
       + (trait(BI.TOHIT) + item.toH) * 100 + (trait(BI.TODAM) + item.toD) * 35;
@@ -58,7 +58,7 @@ export function borgArmourSwap(
     }
     if (hasFlag(item, "AGGRAVATE")) value -= 8000;
     if (item.curses.some(name => BAD_CURSES.has(name) || !OTHER_CURSES.has(name))) value -= 100000;
-    if (item.curses.length && uncursable?.(item)) value -= 5000;
+    if (isCursed(item) && uncursable?.(item)) value -= 5000;
     for (const [flag, bi, weight] of [["SLOW_DIGEST", BI.SDIG, 10], ["REGEN", BI.REG, 2000], ["TELEPATHY", BI.ESP, 5000],
       ["SEE_INVIS", BI.SINV, 50000], ["FEATHER", BI.FEATH, 10], ["FREE_ACT", BI.FRACT, 10000],
       ["PROT_CONF", BI.RCONF, 5000], ["PROT_BLIND", BI.RBLIND, 5000]] as const)

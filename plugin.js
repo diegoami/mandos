@@ -4020,7 +4020,7 @@ function borgArmourSwap(ctx, opts = {}, inventory = ctx.view.inventory(), select
   let best = NONE();
   for (const item of inventory) {
     if (!present(item) || !item.aware || !allowed.includes(item.tval) || isOneRing(item)) continue;
-    if (item.curses.length && !uncursable?.(item)) continue;
+    if (isCursed(item) && !uncursable?.(item)) continue;
     const damage = item.dd * item.ds * 35;
     let value = -1 + damage * (trait4(146 /* BLOWS */) + 1) + (trait4(134 /* TOHIT */) + item.toH) * 100 + (trait4(135 /* TODAM */) + item.toD) * 35;
     const slay = (name) => slayMult(item, name);
@@ -4038,7 +4038,7 @@ function borgArmourSwap(ctx, opts = {}, inventory = ctx.view.inventory(), select
     }
     if (hasFlag2(item, "AGGRAVATE")) value -= 8e3;
     if (item.curses.some((name) => BAD_CURSES.has(name) || !OTHER_CURSES.has(name))) value -= 1e5;
-    if (item.curses.length && uncursable?.(item)) value -= 5e3;
+    if (isCursed(item) && uncursable?.(item)) value -= 5e3;
     for (const [flag, bi, weight] of [
       ["SLOW_DIGEST", 48 /* SDIG */, 10],
       ["REGEN", 50 /* REG */, 2e3],
