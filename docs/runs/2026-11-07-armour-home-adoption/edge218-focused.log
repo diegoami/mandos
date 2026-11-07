@@ -1,0 +1,8 @@
+
+ RUN  v4.1.11 /tmp/mandos125-stamped218-ehqpw698
+
+
+ Test Files  11 passed (11)
+      Tests  222 passed (222)
+   Start at  20:26:20
+   Duration  6.20s (transform 6.79s, setup 5.49s, import 9.56s, tests 11.08s, environment 1ms)

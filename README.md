@@ -84,6 +84,12 @@ The published beta.3 default and nine existing C corrections are preserved.
 This adoption checks Core/harness behavior; it does not repeat the separate
 historical interactive-host qualification below or deploy the lab.
 
+The [armour/HOME leaf of125](https://github.com/diegoami/mandos/issues/125)
+adopts known carried armour-backup value and strictly better HOME retrieval from
+source48, with [registered-item controls and a separate removal unit](docs/runs/2026-11-07-armour-home-adoption/README.md).
+Tactical equip/actions and SR-availability folds remain separate. This restores
+existing C parity; it introduces no strategy or C milestone correction.
+
 ## Exact edge.218 developer folder
 
 The normal build keeps the unpatched published1.23.0-beta.3 default. For the

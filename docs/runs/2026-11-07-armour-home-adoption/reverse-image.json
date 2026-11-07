@@ -1,0 +1,70 @@
+{
+  "baseline": "09566b873c4be2c6a1ab5e2ba50e0cff4b5334f1",
+  "unit": "patches/port-corrections/source48-armour-home.patch",
+  "paths": [
+    {
+      "path": "src/trait/armour-swap.ts",
+      "result": "absent as at verified095 baseline"
+    },
+    {
+      "path": "src/trait/config.ts",
+      "result": "exact verified095 baseline",
+      "sha256": "423845caf7ea60e2df69ab745316c0fff706fad95e6bc5dd2f0f485cc323144e"
+    },
+    {
+      "path": "src/trait/index.ts",
+      "result": "exact verified095 baseline",
+      "sha256": "c11b926fa7bcc2fb9ca19b9272b02fc7c6dd51412d72458a613e044cc68e5fec"
+    },
+    {
+      "path": "src/trait/power.ts",
+      "result": "exact verified095 baseline",
+      "sha256": "a1d82be51845a491310d897a9f7c478e7f9dce67659f09d104f3316c3983f017"
+    },
+    {
+      "path": "src/trait/state.ts",
+      "result": "exact verified095 baseline",
+      "sha256": "94de83fa1c0efc41938291a3fa791d3ca913503340152b02c09b1c3ae0c048e8"
+    },
+    {
+      "path": "src/trait/trait.ts",
+      "result": "exact verified095 baseline",
+      "sha256": "e2a89422bcf7ddfe01c2997c27a87bd87e5324e5b4be971ba340abe0c45fcea9"
+    },
+    {
+      "path": "src/think-session.ts",
+      "result": "exact verified095 baseline",
+      "sha256": "f4be00f7862bd0f9af417c300d8df51ef42b9b0e8c97b31ab5d31c6c4e8eeaf8"
+    },
+    {
+      "path": "src/store/buy.ts",
+      "result": "exact verified095 baseline",
+      "sha256": "5cf164885d6b697803ceaef5f022e978bca29adef521393586b8ab75e8135668"
+    },
+    {
+      "path": "src/store/armour-backup.test.ts",
+      "result": "absent as at verified095 baseline"
+    },
+    {
+      "path": "src/store/armour-backup-capacity.test.ts",
+      "result": "absent as at verified095 baseline"
+    },
+    {
+      "path": "src/trait/trait.test.ts",
+      "result": "exact verified095 baseline",
+      "sha256": "72ac69f1d1033d0c32f8711b70e3bbfaac89ac87f736ebc03c1f7793f2f8d007"
+    },
+    {
+      "path": "src/think-session.test.ts",
+      "result": "exact verified095 baseline",
+      "sha256": "fb42037fd35643df03f07a6a450e79d8541b06c2b2877268f50ccfe113112fb4"
+    },
+    {
+      "path": "test/fixtures/registered-items.ts",
+      "result": "absent as at verified095 baseline"
+    }
+  ],
+  "accepted76CheckAfterArmourRemoval": "PASS",
+  "pluginRebuildAfterRemovalRequired": true,
+  "notArbitraryRetirementApproval": true
+}

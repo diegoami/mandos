@@ -50,5 +50,13 @@ qualified port46 producer. Both generic power/danger hypothetical notices retain
 the live backup, while normal full notice still recomputes it. See
 [the bounded adoption receipt](docs/runs/2026-11-07-notice-swap-adoption/README.md).
 Required consumer/main verification remains distinct from producer readiness;
-source2/consumer125's actual armour/HOME and tactical omissions still gate NEW
+source2/consumer125's remaining parity leaves still gate NEW
 C milestone code after this accepted leaf. No C milestone adoption is performed.
+
+The next bounded125 leaf adopts source48's armour-backup data/value and strict
+HOME retrieval, using the [pinned consumer receipt](docs/runs/2026-11-07-armour-home-adoption/README.md).
+Accepted76 is its shared upstream baseline prerequisite. Tactical equip/actions
+and SR-availability folds remain separate actual omissions, so125 stays partial
+and203's new-C gate remains blocked after this leaf. No source-C correction is
+silently folded into parity adoption; source/consumer required gates remain
+independent and the parent owns actual-main closure/state.

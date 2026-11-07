@@ -191,8 +191,8 @@ diff --git a/src/trait/config.ts b/src/trait/config.ts
 index cd0dd14..c01efbd 100644
 --- a/src/trait/config.ts
 +++ b/src/trait/config.ts
-@@ -17,6 +17,7 @@
- 
+@@ -18,6 +18,7 @@
+ import type { ArmourSwapKnowledge } from "./armour-swap.js";
  import type { WeaponSwapKnowledge } from "./weapon-swap.js";
  import { flatSvals } from "../item/svals.js";
 +import type { ItemView } from "@rpgm-tools/neo-angband-core";

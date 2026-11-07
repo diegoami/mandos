@@ -547,11 +547,11 @@ describe("the loadout seam reaches the store decisions", () => {
     ]);
   });
 
-  it("wires weapon-backup value while leaving armour backup separate", () => {
+  it("wires independent weapon and armour backup value evaluators", () => {
     const { resolvers } = recorder(2000);
     const { session } = primed(resolvers);
     const deps = buildStoreDeps(session);
     expect(typeof deps.weaponSwapEval).toBe("function");
-    expect(deps.armourSwapEval).toBeUndefined();
+    expect(typeof deps.armourSwapEval).toBe("function");
   });
 });
