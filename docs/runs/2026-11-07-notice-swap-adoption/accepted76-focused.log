@@ -1,0 +1,8 @@
+
+ RUN  v4.1.11 /tmp/mandos-accepted76-consumer-204
+
+
+ Test Files  24 passed (24)
+      Tests  350 passed (350)
+   Start at  19:27:37
+   Duration  18.58s (transform 37.47s, setup 28.14s, import 56.19s, tests 59.61s, environment 10ms)

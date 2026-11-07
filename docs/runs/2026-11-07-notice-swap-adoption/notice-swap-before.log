@@ -1,0 +1,56 @@
+
+ RUN  v4.1.11 /tmp/mandos-accepted76-consumer-204
+
+ ❯ src/trait/notice-swap.test.ts (3 tests | 2 failed) 111ms
+   × keeps the last full notice's backup when noticeSwap is false 36ms
+   × scores a simulated loadout with the live backup, as the C does 15ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/trait/notice-swap.test.ts > keeps the last full notice's backup when noticeSwap is false
+AssertionError: expected { handle: null, value: -1 } to deeply equal { handle: 7, value: 1199 }
+
+- Expected
++ Received
+
+  {
+-   "handle": 7,
+-   "value": 1199,
++   "handle": null,
++   "value": -1,
+  }
+
+ ❯ src/trait/notice-swap.test.ts:54:44
+     52|   const emptied = { ...ctx, view: { ...ctx.view, inventory: () => [] }…
+     53|   borgNotice(emptied, { noticeSwap: false });
+     54|   expect(getDerived(ctx.world).weaponSwap).toEqual(found);
+       |                                            ^
+     55|
+     56|   borgNotice(emptied);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  src/trait/notice-swap.test.ts > scores a simulated loadout with the live backup, as the C does
+AssertionError: expected +0 to be 1200 // Object.is equality
+
+- Expected
++ Received
+
+- 1200
++ 0
+
+ ❯ src/trait/notice-swap.test.ts:70:36
+     68|   const withLive = borgSimulatePower(live, {});
+     69|   const withoutLive = borgSimulatePower(cold, {});
+     70|   expect(withLive! - withoutLive!).toBe(found + 1);
+       |                                    ^
+     71| });
+     72|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  2 failed | 1 passed (3)
+   Start at  19:25:44
+   Duration  3.28s (transform 1.23s, setup 1.33s, import 1.18s, tests 111ms, environment 0ms)

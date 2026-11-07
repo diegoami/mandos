@@ -199,10 +199,10 @@ index cd0dd14..c01efbd 100644
  
  /** borg_cfg[] settings the ported decision code reads (borg.txt defaults). */
  export interface BorgCfg {
-@@ -246,6 +247,8 @@ export interface BorgTraitOpts {
-   home?: BorgHomeSeam;
-   frame?: BorgFrame;
-   svals?: BorgSvals;
+@@ -252,6 +253,8 @@ export interface BorgTraitOpts {
+    * C passes false for its hypothetical loadouts (borg-item-wear.c:339, 602, 667).
+    */
+   noticeSwap?: boolean;
 +  /** Curse powers are absent from ItemView; the equipment loop assumes removable curses. */
 +  uncursable?: (item: ItemView) => boolean;
  }

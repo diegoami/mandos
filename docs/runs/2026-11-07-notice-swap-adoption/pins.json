@@ -1,0 +1,156 @@
+{
+  "consumerBaseline": "75ffa891b131c60e5e4fb51d0ebdfcbcbc87b5aa",
+  "testOnlyCommit": "463e8dc1d17d0ab9c1120ab8df998588368e008f",
+  "runtimeCommit": "75fb80ac03d91e65e3c51ec43d1eebd159e452ef",
+  "producerQualifiedHead": "2860eef58b992d1f46bad4359f62ffa82916e996",
+  "producerNormalMerge": "07af34e6fa5ae0979cafe9c3ed43a2cfb5a04d88",
+  "officialAccepted": "235a6f9b28beb82a8bb4b30dc8d3a6c807108170",
+  "acceptedRuntimeAddedRemovedLinesMatch": true,
+  "upstreamTestSha256": "b141f081b9b83467d8cba4d4331c831b899729278bb6b9a5d5fc7304ef779143",
+  "pluginSha256": "80394b56e1c243ddcc9f906759153d1ed24418a2e664436e44619736a3cc439c",
+  "defaultProfile": "published Core/SDK/content 1.23.0-beta.3; unchanged package/lock/workspace/manifest",
+  "defaultFocusedNode": "26.13.0",
+  "edgeFocusedNode": "22.23.4",
+  "before": {
+    "failed": 2,
+    "passed": 1
+  },
+  "after": {
+    "passed": 3,
+    "failed": 0
+  },
+  "boundedFocus": {
+    "passed": 350,
+    "files": 24,
+    "skipped": 0
+  },
+  "packageRecordsFocus": {
+    "passed": 79,
+    "files": 5,
+    "skipped": 0
+  },
+  "edgeFocus": {
+    "passed": 131,
+    "files": 8,
+    "skipped": 0
+  },
+  "patchUnits": [
+    {
+      "path": "patches/c-translations/CBUG-0004-cold-melee.patch",
+      "sha256": "16d1a7d416850d6cee024b11ce38ee47f54155cf5c1395fce113faa964278b18",
+      "baselineSha256": "16d1a7d416850d6cee024b11ce38ee47f54155cf5c1395fce113faa964278b18",
+      "unchanged": true,
+      "reverseCheck": "PASS"
+    },
+    {
+      "path": "patches/c-translations/CBUG-0061-ccw-timing.patch",
+      "sha256": "53c711c3ed981b5dce80fe23d97c88ec9792abcbc8b4b1b79b7ef78a5cc45156",
+      "baselineSha256": "53c711c3ed981b5dce80fe23d97c88ec9792abcbc8b4b1b79b7ef78a5cc45156",
+      "unchanged": true,
+      "reverseCheck": "PASS"
+    },
+    {
+      "path": "patches/c-translations/CBUG-0065-enlightenment.patch",
+      "sha256": "41e5b2ad41adc7a4481a5c0671123c4b219cb1a4839f892cdbb691639e83e271",
+      "baselineSha256": "41e5b2ad41adc7a4481a5c0671123c4b219cb1a4839f892cdbb691639e83e271",
+      "unchanged": true,
+      "reverseCheck": "PASS"
+    },
+    {
+      "path": "patches/c-translations/CBUG-0086-exact-unseen-name.patch",
+      "sha256": "8a618e4d32dcd9a6c900f60942d5a25abf074b9b0de2aaec3b417e21803be873",
+      "baselineSha256": "8a618e4d32dcd9a6c900f60942d5a25abf074b9b0de2aaec3b417e21803be873",
+      "unchanged": true,
+      "reverseCheck": "PASS"
+    },
+    {
+      "path": "patches/c-translations/shot-path-279-caster-origin.patch",
+      "sha256": "84eb3a73178596d6aa7c9ea0e8fbbd19ccde4c8814beb13e5c175ba5520b2ca4",
+      "baselineSha256": "84eb3a73178596d6aa7c9ea0e8fbbd19ccde4c8814beb13e5c175ba5520b2ca4",
+      "unchanged": true,
+      "reverseCheck": "PASS"
+    },
+    {
+      "path": "patches/c-translations/source238-light-modifier.patch",
+      "sha256": "d4a87f4c800f832064e43ca6948dd0a8bfcd28568ee1c07ebe73655866bcd675",
+      "baselineSha256": "d4a87f4c800f832064e43ca6948dd0a8bfcd28568ee1c07ebe73655866bcd675",
+      "unchanged": true,
+      "reverseCheck": "PASS"
+    },
+    {
+      "path": "patches/c-translations/source239-equipment-slays.patch",
+      "sha256": "08e58d2e47531762e238b1443504ca92387401acd5508f1a2c4a09ed736ef3a5",
+      "baselineSha256": "08e58d2e47531762e238b1443504ca92387401acd5508f1a2c4a09ed736ef3a5",
+      "unchanged": true,
+      "reverseCheck": "PASS"
+    },
+    {
+      "path": "patches/c-translations/source248-dispel-living.patch",
+      "sha256": "0bc84b002b2ecbddbe659bd632a56c52738a2964789ef9cc1a28d3a934892317",
+      "baselineSha256": "0bc84b002b2ecbddbe659bd632a56c52738a2964789ef9cc1a28d3a934892317",
+      "unchanged": true,
+      "reverseCheck": "PASS"
+    },
+    {
+      "path": "patches/c-translations/source257-vampire-selected-distance.patch",
+      "sha256": "2a68d549bf521ae1a0f880e3b4e209ef974aa09ed481babacdd97147d7b5ac05",
+      "baselineSha256": "2a68d549bf521ae1a0f880e3b4e209ef974aa09ed481babacdd97147d7b5ac05",
+      "unchanged": true,
+      "reverseCheck": "PASS"
+    },
+    {
+      "path": "patches/mandos/headless-shadow-fuel-198.patch",
+      "sha256": "cfa4b09f82adefa041450af53dff2a7a605e3a0604e659fcd322d6f2d38aac2f",
+      "baselineSha256": "cfa4b09f82adefa041450af53dff2a7a605e3a0604e659fcd322d6f2d38aac2f",
+      "unchanged": true,
+      "reverseCheck": "PASS"
+    },
+    {
+      "path": "patches/port-corrections/accepted76-notice-swap.patch",
+      "sha256": "7732053e34602c44a10cb43d68cbc7f3d5caa08f12f104aa334e6a490e005041",
+      "baselineSha256": null,
+      "unchanged": false,
+      "reverseCheck": "PASS"
+    },
+    {
+      "path": "patches/port-corrections/accepted94-wiring.patch",
+      "sha256": "1edfc6e4d80ae1810253514bc5182b1890fc6534e27be4e87da73f0d3335f1da",
+      "baselineSha256": "7688aeff78ae2dbaab9a4b08e37fa334bb01f959ce343f8a2e6270155d25fbc5",
+      "unchanged": false,
+      "reverseCheck": "PASS"
+    },
+    {
+      "path": "patches/port-corrections/source41-light-base.patch",
+      "sha256": "5881785d0780c06c612e49f8497b1685bf99641f41ad4ffa1d971f39346cc9f1",
+      "baselineSha256": "5881785d0780c06c612e49f8497b1685bf99641f41ad4ffa1d971f39346cc9f1",
+      "unchanged": true,
+      "reverseCheck": "PASS"
+    },
+    {
+      "path": "patches/port-corrections/source41-policy-fixtures.patch",
+      "sha256": "5858a98e78b8af69fb70bb70749c8e3532c28e159e52806d3353c601b4d8bfc0",
+      "baselineSha256": "5858a98e78b8af69fb70bb70749c8e3532c28e159e52806d3353c601b4d8bfc0",
+      "unchanged": true,
+      "reverseCheck": "PASS"
+    }
+  ],
+  "rootMetadataFocus": {
+    "passed": 5,
+    "files": 2,
+    "skipped": 0
+  },
+  "edgeArchiveSha256": {
+    "core": "4e4fe375624c6ce45b1b5999e89912d6e0b0f8bf5a7663bb3654a0d65249a2e3",
+    "mod-sdk": "8e3447974ee0cb883131fb728d63401573ec306bc11c93222a4642f77e73dd16",
+    "content": "6dc1950d40e2d7a00e114d062d3cf6c35eb16e9450f0f2c03f253132678bc06b"
+  },
+  "existingTestsChanged": [],
+  "unchangedProductFiles": {
+    "package.json": "91b045d6ff86d99f95562c2c6759b27c1bc22c3c0d676e40edfce9feabb02568",
+    "pnpm-lock.yaml": "b212699bb70b75f77d53e3e1fd98d9b1442d195a6ed9b5d28d046d2599a029a0",
+    "pnpm-workspace.yaml": "4c8db521144bce9635c7fa5b3c6958eba8a1242e023875e13190483f0f3259bd",
+    "manifest.json": "39f29974bc08d69babeabc67e37557632e99b41cd6fb26b108fff3cee6fe8134",
+    "tools/build.mjs": "dbcaaadf4e11d4adf63b243e8c1b5ab411e83f0328531461bc330546f69017e0",
+    "src/play-session.ts": "4e8d1983d6bca2bd5b3db926335ae2c49eda00367d76f1e2712ac85183d3e934"
+  }
+}

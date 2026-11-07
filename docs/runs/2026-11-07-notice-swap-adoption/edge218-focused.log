@@ -1,0 +1,8 @@
+
+ RUN  v4.1.11 /tmp/mandos204-stamped218-xrsjw4_5
+
+
+ Test Files  8 passed (8)
+      Tests  131 passed (131)
+   Start at  19:29:32
+   Duration  4.15s (transform 4.87s, setup 3.94s, import 5.76s, tests 4.87s, environment 1ms)

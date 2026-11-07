@@ -41,3 +41,21 @@ The accepted gap removals/comment change require context-only refreshes of
 C239's inventory hunk and source41's light-base hunk; original b8 units/history
 remain immutable. Their functional behavior is preserved and reverse checks
 remain independent.
+
+Accepted backup-notice PR76 is recorded separately in
+[accepted76-notice-swap.patch](accepted76-notice-swap.patch), consumer
+[Mandos204](https://github.com/diegoami/mandos/issues/204), canonical
+[port46](https://github.com/diegoami/neo-angband-borg-mod-tracker/issues/46).
+Producer2860eef imports accepted official235a6f9 through normal merge07af34e.
+The unit contains only the four accepted runtime hunks and three unchanged tests:
+normal notice recomputes the backup; hypothetical power AND danger retain the
+last full backup/options. It is accepted-upstream adoption provenance, not a
+remaining upstream defect or an indefinite backport requirement. Actual Mandos
+main verification controls closure. C9/source41/own198 stay independent.
+
+The accepted94 option hunk now uses noticeSwap as surrounding context, preserving
+all its added/removed correction lines. Its prior SHA256 at main75ffa891 is
+7688aeff78ae2dbaab9a4b08e37fa334bb01f959ce343f8a2e6270155d25fbc5;
+[the new receipt](../../docs/runs/2026-11-07-notice-swap-adoption/README.md)
+records both hashes and all14 independent reverse checks. Old records/units
+remain retrievable unchanged from their historical commits.

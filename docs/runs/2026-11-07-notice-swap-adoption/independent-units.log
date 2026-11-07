@@ -1,0 +1,16 @@
+PASS reverse patches/c-translations/CBUG-0004-cold-melee.patch
+PASS reverse patches/c-translations/CBUG-0061-ccw-timing.patch
+PASS reverse patches/c-translations/CBUG-0065-enlightenment.patch
+PASS reverse patches/c-translations/CBUG-0086-exact-unseen-name.patch
+PASS reverse patches/c-translations/shot-path-279-caster-origin.patch
+PASS reverse patches/c-translations/source238-light-modifier.patch
+PASS reverse patches/c-translations/source239-equipment-slays.patch
+PASS reverse patches/c-translations/source248-dispel-living.patch
+PASS reverse patches/c-translations/source257-vampire-selected-distance.patch
+PASS reverse patches/mandos/headless-shadow-fuel-198.patch
+PASS reverse patches/port-corrections/accepted76-notice-swap.patch
+PASS reverse patches/port-corrections/accepted94-wiring.patch
+PASS reverse patches/port-corrections/source41-light-base.patch
+PASS reverse patches/port-corrections/source41-policy-fixtures.patch
+Runtime added/removed lines exactly match accepted producer delta.
+C9, source41 and own198 patch bytes unchanged.
