@@ -1,0 +1,20 @@
+{
+  "data": {
+    "base": "/tmp/mandos-edge218-labdesktop-probe/data",
+    "kind": "env",
+    "portable": true
+  },
+  "forbiddenCalls": 0,
+  "initialUserDataArg": "/tmp/mandos-edge218-labdesktop-probe/data/chromium",
+  "runtimeMappings": {
+    "userData": "/tmp/mandos-edge218-labdesktop-probe/data/chromium",
+    "sessionData": "/tmp/mandos-edge218-labdesktop-probe/data/chromium",
+    "crashDumps": "/tmp/mandos-edge218-labdesktop-probe/data/chromium/crashes",
+    "logs": "/tmp/mandos-edge218-labdesktop-probe/data/chromium/logs"
+  },
+  "migrationRoots": {
+    "userDir": "/tmp/mandos-edge218-labdesktop-probe/data/user",
+    "sessionDir": "/tmp/mandos-edge218-labdesktop-probe/data/chromium"
+  },
+  "source": "official06a desktop main243–250,2259–2272"
+}

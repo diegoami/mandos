@@ -1,8 +1,8 @@
 diff --git a/src/trait/trait.ts b/src/trait/trait.ts
-index 9812d7d..30b5df0 100644
+index 143f52f..cc16a5e 100644
 --- a/src/trait/trait.ts
 +++ b/src/trait/trait.ts
-@@ -322,15 +322,22 @@ function borgNoticeEquipment(c: Ctx): void {
+@@ -335,15 +335,22 @@
      t[BI.ADEX] = t[BI.ADEX]! + mod(item, "DEX") * (known ? (known[3] ?? 0) : 1);
      t[BI.ACON] = t[BI.ACON]! + mod(item, "CON") * (known ? (known[4] ?? 0) : 1);
  
@@ -35,16 +35,16 @@ index 9812d7d..30b5df0 100644
      /* Brands: OR-accumulated, _3 codes only (trait.c:1463). */
      if (hasBrand3(item, "ACID")) t[BI.WB_ACID] = 1;
 diff --git a/src/wiring-allowlist.ts b/src/wiring-allowlist.ts
-index d059a97..229c014 100644
+index 15cd534..ffc0850 100644
 --- a/src/wiring-allowlist.ts
 +++ b/src/wiring-allowlist.ts
-@@ -17,9 +17,6 @@ export const WIRING_ALLOWLIST: readonly {
+@@ -12,9 +12,6 @@
+   { name: "BI.ISENCUMB", kind: "constant", reason: "Upstream also leaves the encumbrance flag zero; weight changes speed without setting it.", c: "borg-trait.c:2829 (blanket zeroing only); borg-item-wear.c:836 (read)" },
    { name: "BI.ISFIXALL", kind: "constant", reason: "Upstream also leaves the all-stat repair flag zero and sets individual stat flags instead.", c: "borg-trait.c:2829 (blanket zeroing only); borg-recover.c:210 (read)" },
-   { name: "BI.NEED_BRAND_WEAPON", kind: "bug", reason: "The port never counts ammunition needing a brand; its branding action is also a stub.", c: "borg-trait.c:1173, borg-trait.c:1211" },
-   { name: "BI.SAURON_DEAD", kind: "bug", reason: "The port never copies Sauron's recorded death into the trait used by power and shopping.", c: "borg-trait.c:3136" },
+   { name: "BI.SAURON_DEAD", kind: "bug", reason: "AgentView and API 2 world/truth expose no race death counter or killed-unique record. Character history has display text without race identity, so it cannot supply Sauron's recorded death.", c: "borg-trait.c:3136" },
 -  { name: "BI.WK_DEMON", kind: "constant", reason: "Upstream also leaves the demon kill flag zero and writes the WS_DEMON slay trait instead.", c: "borg-trait.c:2829 (blanket zeroing only); borg-fight-attack.c:148 (read)" },
 -  { name: "BI.WK_DRAGON", kind: "constant", reason: "Upstream also leaves the dragon kill flag zero and writes the WS_DRAGON slay trait instead.", c: "borg-trait.c:2829 (blanket zeroing only); borg-fight-attack.c:149 (read)" },
 -  { name: "BI.WK_UNDEAD", kind: "constant", reason: "Upstream also leaves the undead kill flag zero and writes the WS_UNDEAD slay trait instead.", c: "borg-trait.c:2829 (blanket zeroing only); borg-fight-attack.c:147 (read)" },
-   { name: "BI.WORN_NEED_ID", kind: "bug", reason: "The port never counts unidentified worn gear for the equipment power bonus.", c: "borg-trait.c:1437" },
    { name: "self.goal.fleeingLunal", kind: "constant", reason: "Lunal mode is deliberately disabled in think-ladder.ts, so its fleeing flag stays false.", c: "borg-think-dungeon.c:230 (disabled mode)" },
    { name: "self.goal.fleeingMunchkin", kind: "constant", reason: "Munchkin mode is deliberately disabled in think-ladder.ts, so its fleeing flag stays false.", c: "borg-think-dungeon.c:583 (disabled mode)" },
+   { name: "self.lunalMode", kind: "constant", reason: "The port deliberately omits the optional lunal-mode entry block in think-ladder.ts.", c: "borg-think-dungeon.c:1476 (disabled mode)" },

@@ -1,0 +1,14 @@
+{
+  "profile": "old reviewed2429preliminary payload; never installed",
+  "errors": [
+    {
+      "type": "action-error",
+      "error": "TimeoutError: page.waitForEvent: Timeout 10000ms exceeded while waiting for event \"filechooser\"\n=========================== logs ===========================\nwaiting for event \"filechooser\"\n============================================================"
+    },
+    {
+      "type": "action-error",
+      "error": "TimeoutError: page.waitForEvent: Timeout 10000ms exceeded while waiting for event \"filechooser\"\n=========================== logs ===========================\nwaiting for event \"filechooser\"\n============================================================"
+    }
+  ],
+  "meaning": "keyboard picker did not emit chooser; later native pointer route worked; not generic browser-picker unsupported"
+}

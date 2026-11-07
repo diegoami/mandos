@@ -21,9 +21,10 @@
  */
 
 import { execFileSync } from "node:child_process";
-import { existsSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { createHash } from "node:crypto";
 import { fileURLToPath } from "node:url";
-import { join } from "node:path";
+import { join, resolve, dirname } from "node:path";
 
 const REL = join("packages", "mod-sdk", "bin", "neo-angband-mod-build.mjs");
 
@@ -66,11 +67,43 @@ if (bin === undefined) {
  * built plugin.js all sit here, because that pair is what the game fetches and hashes.
  * The builder writes beside the manifest by default, so there is nothing else to say. */
 try {
-  execFileSync(
-    process.execPath,
-    [bin, "--root", fileURLToPath(new URL("../", import.meta.url)), ...process.argv.slice(2)],
-    { stdio: "inherit" },
-  );
+  const root = fileURLToPath(new URL("../", import.meta.url));
+  const args = process.argv.slice(2);
+  const profileAt = args.indexOf("--profile");
+  let output;
+  if (profileAt !== -1) {
+    const outAt = args.indexOf("--out");
+    if (args[profileAt + 1] !== "edge218" || !args[outAt + 1] || args[outAt + 1].startsWith("--") ||
+      args.length !== 4 || [profileAt, outAt].sort((a, b) => a - b).join(",") !== "0,2") {
+      throw new Error("Profile usage: node tools/build.mjs --profile edge218 --out <fresh directory>");
+    }
+    output = resolve(args[outAt + 1]);
+    if (existsSync(output)) throw new Error("The profile output already exists; nothing was overwritten.");
+    if (!existsSync(dirname(output))) throw new Error("Create the profile output's parent directory first.");
+  }
+  // The optional developer profile copies the checked artifact; it is not another code fork.
+  execFileSync(process.execPath, [bin, "--root", root, ...(output ? ["--check"] : args)], { stdio: "inherit" });
+  if (output) {
+    const source = readFileSync(join(root, "manifest.json"));
+    const manifest = JSON.parse(source);
+    if (manifest.data?.id !== "mandos" || manifest.data?.runtime !== "in-process" || !Array.isArray(manifest.data.capabilities)) {
+      throw new Error("The edge profile requires the canonical in-process Mandos manifest.");
+    }
+    manifest.data.engine.range = "1.23.0-edge.218";
+    manifest.data.engine.because = "Disposable qualification against the verified official edge218 build; this is not the published default profile.";
+    for (const capability of ["input:controller", "engine:access"]) {
+      if (!manifest.data.capabilities.includes(capability)) manifest.data.capabilities.push(capability);
+    }
+    const encoded = JSON.stringify(manifest, null, 2) + "\n";
+    const plugin = readFileSync(join(root, "plugin.js"));
+    mkdirSync(output); // Atomic refusal if another process created it during the check.
+    writeFileSync(join(output, "manifest.json"), encoded, { flag: "wx" });
+    writeFileSync(join(output, "plugin.js"), plugin, { flag: "wx" });
+    const sha = (value) => createHash("sha256").update(value).digest("hex");
+    console.log(JSON.stringify({ profile: "edge218-developer", output, engine: manifest.data.engine.range,
+      sourceManifestSha256: sha(source), manifestSha256: sha(encoded), pluginSha256: sha(plugin) }));
+  }
 } catch (e) {
+  if (typeof e.status !== "number") console.error(e.message);
   process.exit(typeof e.status === "number" ? e.status : 1);
 }

@@ -1,0 +1,62 @@
+[
+  {
+    "unit": "patches/c-translations/source248-dispel-living.patch",
+    "exit": 0,
+    "detail": ""
+  },
+  {
+    "unit": "patches/c-translations/source238-light-modifier.patch",
+    "exit": 0,
+    "detail": ""
+  },
+  {
+    "unit": "patches/c-translations/shot-path-279-caster-origin.patch",
+    "exit": 0,
+    "detail": ""
+  },
+  {
+    "unit": "patches/c-translations/CBUG-0086-exact-unseen-name.patch",
+    "exit": 0,
+    "detail": ""
+  },
+  {
+    "unit": "patches/c-translations/CBUG-0004-cold-melee.patch",
+    "exit": 0,
+    "detail": ""
+  },
+  {
+    "unit": "patches/c-translations/CBUG-0065-enlightenment.patch",
+    "exit": 0,
+    "detail": ""
+  },
+  {
+    "unit": "patches/c-translations/source257-vampire-selected-distance.patch",
+    "exit": 0,
+    "detail": ""
+  },
+  {
+    "unit": "patches/c-translations/CBUG-0061-ccw-timing.patch",
+    "exit": 0,
+    "detail": ""
+  },
+  {
+    "unit": "patches/c-translations/source239-equipment-slays.patch",
+    "exit": 1,
+    "detail": "error: patch failed: src/wiring-allowlist.ts:17\nerror: src/wiring-allowlist.ts: patch does not apply"
+  },
+  {
+    "unit": "patches/port-corrections/source41-policy-fixtures.patch",
+    "exit": 0,
+    "detail": ""
+  },
+  {
+    "unit": "patches/port-corrections/source41-light-base.patch",
+    "exit": 1,
+    "detail": "error: patch failed: src/trait/trait.ts:255\nerror: src/trait/trait.ts: patch does not apply"
+  },
+  {
+    "unit": "patches/mandos/headless-shadow-fuel-198.patch",
+    "exit": 0,
+    "detail": ""
+  }
+]

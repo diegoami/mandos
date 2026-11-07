@@ -1,0 +1,3 @@
+[mod-build] checking 1: mandos
+[mod-build] mandos: ok, and the committed plugin.js is current (741.7 KiB, api >=2.0.0 <3.0.0)
+{"profile":"edge218-developer","output":"/tmp/mandos-edge218-node22-overlay","engine":"1.23.0-edge.218","sourceManifestSha256":"39f29974bc08d69babeabc67e37557632e99b41cd6fb26b108fff3cee6fe8134","manifestSha256":"e02869b2a8e89a29c8750f04c7f9697f13faa1f943a7fc15814933a3dcc2765f","pluginSha256":"05ec00ece395dd341088ffffc1ed62afe92b6e3269fe463faacd9114cb72b9db"}

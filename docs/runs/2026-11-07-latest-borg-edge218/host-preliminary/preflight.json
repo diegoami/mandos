@@ -1,0 +1,56 @@
+{
+  "producerRef": "047f9a625b4d5c59a20f39daf7a0a2a955417e2d",
+  "consumerBase": "b8bb7a0958a501c2d70c291e5540e42c8d5a14a2",
+  "artifactChecks": [
+    {
+      "profile": "official06a-source-beta3",
+      "name": "@rpgm-tools/neo-angband-content",
+      "version": "1.23.0-beta.3",
+      "sha256": "eeec7c55a996fc5cc452b89eab99ae2342dada8450274a68c582f1cf308c6cfb",
+      "verified": true
+    },
+    {
+      "profile": "official06a-source-beta3",
+      "name": "@rpgm-tools/neo-angband-core",
+      "version": "1.23.0-beta.3",
+      "sha256": "ab7a0adf00d05b5e4ce07ba34b6f2b8f22989a5da0ea45068c3bbc8444a7acdc",
+      "verified": true
+    },
+    {
+      "profile": "official06a-source-beta3",
+      "name": "@rpgm-tools/neo-angband-mod-sdk",
+      "version": "1.23.0-beta.3",
+      "sha256": "6f70f63c4ac9376101b8a2158100d66f0e041795b38d0bdb204b923cdede6917",
+      "verified": true
+    },
+    {
+      "profile": "official06a-stamped-edge218",
+      "name": "@rpgm-tools/neo-angband-content",
+      "version": "1.23.0-edge.218",
+      "sha256": "6dc1950d40e2d7a00e114d062d3cf6c35eb16e9450f0f2c03f253132678bc06b",
+      "verified": true
+    },
+    {
+      "profile": "official06a-stamped-edge218",
+      "name": "@rpgm-tools/neo-angband-core",
+      "version": "1.23.0-edge.218",
+      "sha256": "4e4fe375624c6ce45b1b5999e89912d6e0b0f8bf5a7663bb3654a0d65249a2e3",
+      "verified": true
+    },
+    {
+      "profile": "official06a-stamped-edge218",
+      "name": "@rpgm-tools/neo-angband-mod-sdk",
+      "version": "1.23.0-edge.218",
+      "sha256": "8e3447974ee0cb883131fb728d63401573ec306bc11c93222a4642f77e73dd16",
+      "verified": true
+    }
+  ],
+  "pluginSha256": "24292392ae4693d402589e87ff26d1934ff2832ea77f415332e47f533c808f9d",
+  "profileDelta": [
+    "engine.range",
+    "engine.because",
+    "capabilities:+input:controller,+engine:access"
+  ],
+  "ownerLabUsed": false,
+  "runnerInvoked": false
+}

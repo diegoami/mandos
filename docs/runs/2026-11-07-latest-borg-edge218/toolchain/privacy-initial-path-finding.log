@@ -1,0 +1,9 @@
+private-scan: 2 problem(s) in /tmp/mandos-edge218-compat - this repository is PUBLIC.
+
+  docs/runs/2026-11-07-latest-borg-edge218/profiles/raw/install.log  [user-home-path] 1 unlisted occurrence(s).
+      why: an absolute path naming a user account - use a repo-relative path, the OS temp dir, or an env var
+
+  docs/runs/2026-11-07-latest-borg-edge218/profiles/stamped/install.log  [user-home-path] 1 unlisted occurrence(s).
+      why: an absolute path naming a user account - use a repo-relative path, the OS temp dir, or an env var
+
+Run `node tools/private-scan.mjs --root /tmp/mandos-edge218-compat` after fixing to confirm.

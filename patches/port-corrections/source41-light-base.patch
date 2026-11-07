@@ -76,10 +76,10 @@ index 92da365..a3c3c4e 100644
      for (let y = 8; y <= 12; y++) for (let x = 8; x <= 12; x++) s.world.map.at(x, y).info &= ~BORG_LIGHT;
      expect(borgRecover(s.ctx, buildItemDeps(s.session))?.code).toBe("rest");
 diff --git a/src/trait/trait.ts b/src/trait/trait.ts
-index 6a37717..3988976 100644
+index d5c227d..cc16a5e 100644
 --- a/src/trait/trait.ts
 +++ b/src/trait/trait.ts
-@@ -8,7 +8,7 @@
+@@ -11,7 +11,7 @@
   * of value are handled differently, both faithfully:
   *
   *  1. Values the C re-derives only to reproduce a number the game already knows
@@ -88,7 +88,7 @@ index 6a37717..3988976 100644
   *     max-HP) are taken straight from the corresponding already-derived
   *     PlayerView field. This is the value the C code is building toward, so the
   *     result is identical without needing race/class base tables AgentView does
-@@ -255,9 +255,12 @@ function borgNoticePlayer(c: Ctx): void {
+@@ -262,9 +262,12 @@
      t[BI.ISFIXSTR + i] = drained?.[i] ? 1 : 0;
    }
  
@@ -102,4 +102,4 @@ index 6a37717..3988976 100644
 +   * The faithful port retains C238; Mandos186 corrects it below separately. */
    t[BI.INFRA] = p.seeInfra;
  
-   /* SAURON_DEAD has no AgentView field; left 0 (caveat). */
+   /* Neither AgentView nor API 2 exposes a race death counter. History has

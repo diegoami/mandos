@@ -32,3 +32,12 @@ The current scope is [181](https://github.com/diegoami/mandos/issues/181) and
 8. Update owner issues/checkpoint36 at merge/stop. Parent applies the reviewed
    [open-issue recommendations](docs/tasks/mandos-scope-181.md); do not close
    unfixed bugs merely because their feature/research work is parked.
+
+Current integration199 consumes the accepted latest Borg94d wiring through
+source43/consumer200 before qualifying exact official edge.218 artifacts. The
+published beta.3 default remains; `tools/build.mjs --profile edge218 --out`
+materializes a separate exact developer folder with the same code/settings.
+Required default and stamped-source Node22 gates stay distinct. Lab startup/
+controller proof does not certify profile/session management or saving; the
+observed save message remains separately attributable work. Future C240
+assessment201 is metadata/triage only, not another C correction in this phase.

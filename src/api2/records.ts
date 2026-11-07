@@ -165,6 +165,9 @@ export function itemAnalyzerFromRecords(
       cursed: item.curses.length > 0 || item.flags.some((flag) => negative.has(flag)),
       oneRing: artifact ? artifact["act"] === "BIZARRE" : item.artifactName === "'The One Ring'",
       randomPower: item.ego && (!ego || ["RAND_POWER", "RAND_SUSTAIN", "RAND_BASE_RES", "RAND_HI_RES", "RAND_RES_POWER"].some((flag) => flags.has(flag))),
+      effects: (Array.isArray(kind?.["effect"]) ? kind["effect"] : []).map((effect) => ({
+        index: String(field(effect, "eff") ?? ""), subtype: String(field(effect, "type") ?? ""),
+      })),
     };
   };
 }

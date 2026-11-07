@@ -30,3 +30,14 @@ The current fixture patch includes that mechanical relocation/import update.
 No production boundary test/allowlist is relaxed. Prior source/adoption commits
 and their failed required checks remain preserved; current consumer issues and
 PR197 own final gate/application status.
+
+Accepted upstream94d wiring is recorded by
+[accepted94-wiring.patch](accepted94-wiring.patch), consumer
+[Mandos200](https://github.com/diegoami/mandos/issues/200), source43/PR44.
+The actual accepted upstream baseline is a4437882; this stored adoption delta
+is provenance, not a claim of a remaining upstream bug or mandatory active
+backport after verified adoption. SAURON_DEAD and future C240 remain separate.
+The accepted gap removals/comment change require context-only refreshes of
+C239's inventory hunk and source41's light-base hunk; original b8 units/history
+remain immutable. Their functional behavior is preserved and reverse checks
+remain independent.

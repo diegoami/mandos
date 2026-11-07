@@ -1,0 +1,57 @@
+{
+  "schema": "mandos/accepted94-adoption@1",
+  "base": "b8bb7a0958a501c2d70c291e5540e42c8d5a14a2",
+  "producerMain": "a3541b2dbfdd080579b9915e65f058a442a7e205",
+  "producerImport": "6c8b88e8dd5d62156b7af045b97bba61556c2bbc",
+  "before": "3efbd5c4b1bd909dd7a24ddc63a55e951f6016f2",
+  "focused": {
+    "passed": 108,
+    "files": 7,
+    "skips": 0,
+    "seconds": 3.44
+  },
+  "realDefaultRegressions": {
+    "passed": 118,
+    "files": 12,
+    "skips": 0,
+    "seconds": 214.57
+  },
+  "pluginTests": 29,
+  "pluginSha256": "05ec00ece395dd341088ffffc1ed62afe92b6e3269fe463faacd9114cb72b9db",
+  "existing7CUnitsByteUnchanged": [
+    "patches/c-translations/CBUG-0004-cold-melee.patch",
+    "patches/c-translations/CBUG-0061-ccw-timing.patch",
+    "patches/c-translations/CBUG-0065-enlightenment.patch",
+    "patches/c-translations/CBUG-0086-exact-unseen-name.patch",
+    "patches/c-translations/shot-path-279-caster-origin.patch",
+    "patches/c-translations/source248-dispel-living.patch",
+    "patches/c-translations/source257-vampire-selected-distance.patch"
+  ],
+  "existingC7And198RuntimeUnchanged": [
+    "src/danger/danger.ts",
+    "src/danger/geometry.ts",
+    "src/fight/attack.ts",
+    "src/item/item-use.ts",
+    "src/perceive-messages.ts",
+    "src/play-session.ts"
+  ],
+  "existingC9FuelStopFixturesUnchanged": [
+    "src/danger/cold-melee-carry.test.ts",
+    "src/perceive-unseen-name.test.ts",
+    "src/item/enlightenment-carry.test.ts",
+    "src/danger/shot-origin-carry.test.ts",
+    "src/item/ccw-timing.test.ts",
+    "src/fight/c-spell-carry.test.ts",
+    "src/trait/c-equipment-corrections.test.ts",
+    "src/trait/light-base.test.ts",
+    "src/play-fuel.test.ts",
+    "src/play-stop.test.ts"
+  ],
+  "contextOnlyRefreshedUnits": [
+    "patches/c-translations/source239-equipment-slays.patch",
+    "patches/port-corrections/source41-light-base.patch"
+  ],
+  "defaultPackageManifestDiff": [],
+  "upstream19TestAssertionsChanged": false,
+  "sourceProfileFull": "Not yet run; held for parent-reviewed latest-port/engine qualification."
+}

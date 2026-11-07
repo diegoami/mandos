@@ -1,0 +1,20 @@
+{
+  "originalPluginSha256": "24292392ae4693d402589e87ff26d1934ff2832ea77f415332e47f533c808f9d",
+  "wrapperSha256": "51efd73a45edf225c22cc6790d3ea20a2795e36d31a41b6709d43fbd896b6e05",
+  "plainDefinition": true,
+  "ownFields": [
+    "api",
+    "birth",
+    "onDeath",
+    "start",
+    "stop",
+    "armed",
+    "controller"
+  ],
+  "allOwnFieldsEnumerableDataProperties": true,
+  "prototype": "Object.prototype",
+  "delegatesOriginalStartOncePerStart": true,
+  "id": "mandos",
+  "manifestIdenticalToEdgeDeveloper": true,
+  "productSourceChanged": false
+}

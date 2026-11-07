@@ -1,0 +1,18 @@
+{
+  "profile": "edge218-developer",
+  "materialized": true,
+  "manifestSha256": "e02869b2a8e89a29c8750f04c7f9697f13faa1f943a7fc15814933a3dcc2765f",
+  "pluginSha256": "05ec00ece395dd341088ffffc1ed62afe92b6e3269fe463faacd9114cb72b9db",
+  "onlyManifestDelta": [
+    "engine.range",
+    "engine.because",
+    "capabilities:+input:controller,+engine:access"
+  ],
+  "allIdentityRuntimeSettingsPreserved": true,
+  "defaultFilesUnchanged": true,
+  "existingDirectoryRefused": true,
+  "existingFilesUnchanged": true,
+  "unknownProfileRefused": true,
+  "ambiguousCheckProfileRefused": true,
+  "normalCheckPassed": true
+}

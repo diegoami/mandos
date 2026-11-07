@@ -1,0 +1,517 @@
+diff --git a/src/api2/bridge.test.ts b/src/api2/bridge.test.ts
+index 335d24e..222fbc2 100644
+--- a/src/api2/bridge.test.ts
++++ b/src/api2/bridge.test.ts
+@@ -22,6 +22,10 @@ import { BorgWorld } from "../world/model.js";
+ import { perceive, makePerceiveMemo } from "../perceive.js";
+ import { makeBorgRng } from "../rng.js";
+ import { makeFakeActions } from "../harness.js";
++import { borgNotice } from "../trait/trait.js";
++import { borgPower } from "../trait/power.js";
++import { BI } from "../trait/trait-index.js";
++import { SVAL } from "../item/svals.js";
+ 
+ const SCENARIO: Scenario = {
+   player: { grid: { x: 5, y: 5 }, depth: 3 },
+@@ -158,6 +162,60 @@ describe("the bridge", () => {
+   });
+ });
+ 
++describe("food cure wiring through published content", () => {
++  it.each([
++    ["BLIND", BI.FOOD_CURE_BLIND, 300],
++    ["CONFUSED", BI.FOOD_CURE_CONF, 400],
++  ] as const)("counts %s cures by stack quantity and applies the C power weight", async (subtype, trait, weight) => {
++    const game = fakeGame({ engine: { core: Core } });
++    const food = (over: Partial<KnownItem>): KnownItem => ({
++      handle: 1, kindKey: "kind:0", baseName: "food", carried: true, aware: true,
++      label: "food", nameColor: "white", tval: TV.FOOD, sval: 99, pval: 0, number: 2,
++      weight: 0, ac: 0, toA: 0, toH: 0, toD: 0, dd: 0, ds: 0, ego: false,
++      artifact: false, flags: [], modifiers: [], brands: [], slays: [], resists: [], curses: [],
++      egoName: null, artifactName: null, activation: false, charging: 0, unknownRunes: false,
++      inscription: null, ...over,
++    });
++    const inventory = [food({}), food({ handle: 2, tval: TV.MUSHROOM, number: 1 }),
++      food({ handle: 3, aware: false, number: 7 }),
++      food({ handle: 4, kindKey: "kind:1", number: 8 }),
++      food({ handle: 5, kindKey: "kind:2", number: 9 }),
++      food({ handle: 6, tval: TV.POTION, number: 10 }),
++      food({ handle: 7, curses: ["doom"], number: 11 }),
++      food({ handle: 8, kindKey: "kind:3", number: 12 })];
++    const known = { ...knownWorld(game.view), inventory };
++    game.mod.view.world = async () => ({ ok: true, value: known });
++    const cure = { eff: "CURE", type: subtype };
++    game.mod.content.records = async (file) => ({ ok: true, value: file === "object" ? [
++      { effect: [{ eff: "RANDOM" }, cure, cure] },
++      { effect: [cure, { eff: "CRUNCH" }] },
++      { effect: [cure, { eff: "TIMED_INC", type: "CONFUSED" }] },
++      { effect: [{ eff: "TIMED_DEC", type: subtype }] },
++    ] : [] });
++    const bridge = createBridge(game.mod);
++    await bridge.prime();
++    const snapshot = (await bridge.readWorld())!;
++    const ctx = { world: new BorgWorld(), view: snapshot.view, act: makeFakeActions(), rng: makeBorgRng() };
++    borgNotice(ctx, { uncursable: () => false });
++    expect(ctx.world.self.trait[trait]).toBe(3);
++    const power = borgPower(ctx);
++    ctx.world.self.trait[trait] = 0;
++    expect(power - borgPower(ctx)).toBe(3 * weight);
++    borgNotice(ctx);
++    expect(ctx.world.self.trait[trait]).toBe(14);
++    known.inventory = [food({ tval: TV.MUSHROOM, sval: SVAL.mush.cure_mind! })];
++    const next = (await bridge.readWorld())!;
++    borgNotice({ ...ctx, view: next.view }, { cfg: { munchkinStart: true, munchkinLevel: 12 } });
++    expect(ctx.world.self.trait[trait]).toBe(0);
++    borgNotice({ ...ctx, view: next.view }, { cfg: { munchkinStart: false } });
++    expect(ctx.world.self.trait[trait]).toBe(2);
++    known.inventory = [];
++    borgNotice({ ...ctx, view: (await bridge.readWorld())!.view });
++    expect(ctx.world.self.trait[trait]).toBe(0);
++    await bridge.dispose();
++  });
++});
++
+ describe("the truth allowlist wrapper", () => {
+   it("reads only the monsters the character perceives", async () => {
+     const game = fakeGame({ scenario: SCENARIO, truth: true });
+diff --git a/src/api2/records.ts b/src/api2/records.ts
+index 7d5d878..17e04a8 100644
+--- a/src/api2/records.ts
++++ b/src/api2/records.ts
+@@ -165,6 +165,9 @@ export function itemAnalyzerFromRecords(
+       cursed: item.curses.length > 0 || item.flags.some((flag) => negative.has(flag)),
+       oneRing: artifact ? artifact["act"] === "BIZARRE" : item.artifactName === "'The One Ring'",
+       randomPower: item.ego && (!ego || ["RAND_POWER", "RAND_SUSTAIN", "RAND_BASE_RES", "RAND_HI_RES", "RAND_RES_POWER"].some((flag) => flags.has(flag))),
++      effects: (Array.isArray(kind?.["effect"]) ? kind["effect"] : []).map((effect) => ({
++        index: String(field(effect, "eff") ?? ""), subtype: String(field(effect, "type") ?? ""),
++      })),
+     };
+   };
+ }
+diff --git a/src/controller.ts b/src/controller.ts
+index 10ee342..17429dd 100644
+--- a/src/controller.ts
++++ b/src/controller.ts
+@@ -239,6 +239,9 @@ export function createBorg(opts: BorgOptions = {}): Borg {
+     borgUpdateMonsterFear(ctx);
+     borgForgetGoalWhileImpaired(world);
+ 
++    /* Messages must compare damage with the preceding update's HP. */
++    world.self.oldchp = world.self.trait[BI.CURHP] ?? 0;
++
+     /* 4. Score the world (borg_power, :459). */
+     world.self.power = borgPower(ctx);
+ 
+diff --git a/src/item/deps.ts b/src/item/deps.ts
+index 4b7d32b..4e929f3 100644
+--- a/src/item/deps.ts
++++ b/src/item/deps.ts
+@@ -25,10 +25,17 @@ export interface ItemAnalysis {
+   cursed: boolean;
+   oneRing: boolean;
+   randomPower: boolean;
++  effects?: readonly { index: string; subtype: string }[];
+ }
+ 
+ type AnalyzedItem = ItemView & { borgAnalysis?: ItemAnalysis };
+ 
++/** Kind effects follow the full chain, including effects after RANDOM. */
++export function hasKindEffect(item: ItemView, index: string, subtype?: string): boolean {
++  return (item as AnalyzedItem).borgAnalysis?.effects?.some((effect) =>
++    effect.index === index && (subtype === undefined || effect.subtype === subtype)) ?? false;
++}
++
+ /** borg-item-analyze.c:498-503 also treats negative-power flags as cursed. */
+ export function isCursed(item: ItemView): boolean {
+   return (item as AnalyzedItem).borgAnalysis?.cursed ?? item.curses.length > 0;
+diff --git a/src/item/item-enchant.ts b/src/item/item-enchant.ts
+index b5c82f3..a9a20de 100644
+--- a/src/item/item-enchant.ts
++++ b/src/item/item-enchant.ts
+@@ -129,15 +129,14 @@ function pickLeastEnchantedWeapon(
+   return best;
+ }
+ 
+-/** Brand ammo (borg_brand_weapon, enchant.c:513): quiver access unavailable. */
++/** Brand ammo (borg_brand_weapon, enchant.c:513): action remains a stub. */
+ function borgBrandWeapon(
+   ctx: BorgContext,
+   _d?: ItemDeps,
+ ): AgentCommand | null {
+   if (!trait(ctx, BI.NEED_BRAND_WEAPON)) return null;
+   if (!trait(ctx, BI.ABRAND)) return null;
+-  /* The eligible items live in the quiver (QUIVER_START..QUIVER_END), which the
+-   * frozen AgentView does not expose here; nothing to brand from the pack. */
++  /* NEED_BRAND_WEAPON counts eligible stacks, but this action has no picker. */
+   return null;
+ }
+ 
+diff --git a/src/perceive.test.ts b/src/perceive.test.ts
+index c2e9be5..7ff0023 100644
+--- a/src/perceive.test.ts
++++ b/src/perceive.test.ts
+@@ -28,6 +28,7 @@ import { makeScenarioView, makeFakeActions } from "./harness.js";
+ import { makeBorgRng } from "./rng.js";
+ import { borgView } from "./core-api.js";
+ import type { BorgContext } from "./context.js";
++import { getFearCaches } from "./danger/state.js";
+ 
+ /** Build a primed context (perceive + notice run) for a scenario. */
+ function makeCtx(scenario: Parameters<typeof makeScenarioView>[0]): {
+@@ -47,6 +48,28 @@ function makeCtx(scenario: Parameters<typeof makeScenarioView>[0]): {
+   return { ctx, world };
+ }
+ 
++describe("previous HP wiring", () => {
++  it("saves HP after unseen spell messages and refreshes it for each update", () => {
++    const { world, controller } = createBorg({ resolvers: { spellMessages: [{
++      index: 2, levels: [{ message: "", blindMessage: "Something casts a spell.", missMessage: "" }],
++    }] } });
++    const act = makeFakeActions();
++    const view = (hp: number, messages: string[] = []) => makeScenarioView({
++      player: { grid: { x: 22, y: 22 }, depth: 3, hp, maxHp: 100 }, messages,
++    });
++    controller(view(100), act);
++    expect(world.self.oldchp).toBe(100);
++    controller(view(70, ["Something casts a spell."]), act);
++    expect(getFearCaches(world).region2d[2]![2]).toBe(60);
++    expect(world.self.oldchp).toBe(70);
++    controller(view(90), act);
++    expect(world.self.oldchp).toBe(90);
++    controller(view(80, ["Something casts a spell."]), act);
++    expect(getFearCaches(world).region2d[2]![2]).toBe(80);
++    expect(world.self.oldchp).toBe(80);
++  });
++});
++
+ describe("tracking deletion cleanup", () => {
+   function tracked() {
+     const world = new BorgWorld();
+diff --git a/src/trait/config.ts b/src/trait/config.ts
+index cd0dd14..c01efbd 100644
+--- a/src/trait/config.ts
++++ b/src/trait/config.ts
+@@ -17,6 +17,7 @@
+ 
+ import type { WeaponSwapKnowledge } from "./weapon-swap.js";
+ import { flatSvals } from "../item/svals.js";
++import type { ItemView } from "@rpgm-tools/neo-angband-core";
+ 
+ /** borg_cfg[] settings the ported decision code reads (borg.txt defaults). */
+ export interface BorgCfg {
+@@ -246,6 +247,8 @@ export interface BorgTraitOpts {
+   home?: BorgHomeSeam;
+   frame?: BorgFrame;
+   svals?: BorgSvals;
++  /** Curse powers are absent from ItemView; the equipment loop assumes removable curses. */
++  uncursable?: (item: ItemView) => boolean;
+ }
+ 
+ /** Resolve a partial opts bundle to a fully-populated one with defaults. */
+@@ -255,6 +258,7 @@ export interface ResolvedOpts {
+   home: BorgHomeSeam;
+   frame: BorgFrame;
+   svals: BorgSvals;
++  uncursable: (item: ItemView) => boolean;
+ }
+ 
+ /** Fill in defaults for any unsupplied seam. */
+@@ -265,5 +269,6 @@ export function resolveOpts(opts: BorgTraitOpts = {}): ResolvedOpts {
+     home: opts.home ?? defaultHomeSeam(),
+     frame: opts.frame ?? defaultFrame(),
+     svals: opts.svals ?? flatSvals(),
++    uncursable: opts.uncursable ?? ((item) => item.curses.length > 0),
+   };
+ }
+diff --git a/src/trait/trait.test.ts b/src/trait/trait.test.ts
+index 7478e0f..45fde81 100644
+--- a/src/trait/trait.test.ts
++++ b/src/trait/trait.test.ts
+@@ -26,6 +26,8 @@ import { borgNotice } from "./trait.js";
+ import { borgPower } from "./power.js";
+ import { borgPrepared } from "./prepared.js";
+ import { getDerived } from "./state.js";
++import { defaultSpellSeam } from "./config.js";
++import { TV, SVAL } from "../item/svals.js";
+ 
+ /* A complete ItemView from a partial. */
+ function item(o: Partial<ItemView>): ItemView {
+@@ -167,6 +169,104 @@ describe("borg_notice equipment derivation", () => {
+   });
+ });
+ 
++describe("borg_notice wiring", () => {
++  it("counts worn stacks needing identification and rewards wearing them", () => {
++    const ctx = mkCtx({}, equipArray({
++      0: item({ name: "a sword {??}", number: 3 }),
++      2: item({ inscription: "??", curses: ["doom"] }),
++      3: item({ inscription: "??", curses: ["doom"], artifact: true }),
++      4: item({ name: "a known ring" }),
++      6: item({ inscription: "??", curses: ["removable"] }),
++    }));
++    borgNotice(ctx, { uncursable: (entry) => entry.curses.includes("removable") });
++    const t = ctx.world.self.trait;
++    expect(t[BI.WORN_NEED_ID]).toBe(3);
++    expect(t[BI.ALL_NEED_ID]).toBe(3);
++    const power = borgPower(ctx);
++    t[BI.WORN_NEED_ID] = 0;
++    expect(power - borgPower(ctx)).toBe(30000);
++    borgNotice(ctx);
++    expect(ctx.world.self.trait[BI.WORN_NEED_ID]).toBe(4);
++    ctx.view.equipment = () => [];
++    borgNotice(ctx);
++    expect(ctx.world.self.trait[BI.WORN_NEED_ID]).toBe(0);
++  });
++
++  it("counts pack identification needs before awareness and curse checks, excluding ammo", () => {
++    const ctx = mkCtx({}, equipArray({ 0: item({ name: "a sword {??}" }) }), [
++      item({ name: "boots {??}", number: 5 }),
++      item({ inscription: "??", aware: false, curses: ["doom"] }),
++      item({ tval: TV.ARROW, name: "arrows {??}", number: 20 }),
++      item({ name: "empty {??}", number: 0 }),
++      item({ name: "known" }),
++    ]);
++    borgNotice(ctx);
++    const t = ctx.world.self.trait;
++    expect(t[BI.ALL_NEED_ID]).toBe(3);
++    t[BI.AID] = 2;
++    const power = borgPower(ctx);
++    t[BI.ALL_NEED_ID] = 0;
++    expect(power - borgPower(ctx)).toBe(12000);
++    ctx.view.inventory = () => [];
++    ctx.view.equipment = () => [];
++    borgNotice(ctx);
++    expect(ctx.world.self.trait[BI.ALL_NEED_ID]).toBe(0);
++  });
++
++  it("counts empty C pack slots after occupied quiver entries and rewards the first hole", () => {
++    const arrows = item({ handle: 1, tval: TV.ARROW, number: 5 });
++    const bolts = item({ handle: 2, tval: TV.BOLT, number: 5 });
++    const pack = Array.from({ length: 20 }, (_, i) => item({ handle: i + 3 }));
++    const ctx = mkCtx({}, [], [...pack, arrows, bolts]);
++    ctx.view.quiver = () => [arrows, bolts];
++    borgNotice(ctx);
++    const t = ctx.world.self.trait;
++    expect(t[BI.EMPTY]).toBe(1);
++    const power = borgPower(ctx);
++    t[BI.EMPTY] = 0;
++    expect(power - borgPower(ctx)).toBe(4000);
++    pack.push(item({ handle: 23, tval: TV.ARROW }));
++    ctx.view.inventory = () => [...pack, arrows, bolts];
++    borgNotice(ctx);
++    expect(ctx.world.self.trait[BI.EMPTY]).toBe(0);
++    pack[0] = item({ number: 0 });
++    borgNotice(ctx);
++    expect(ctx.world.self.trait[BI.EMPTY]).toBe(1);
++  });
++
++  it.each([
++    ["spell", {}, SVAL.bow.long_bow, 20],
++    ["activation", {}, SVAL.bow.long_bow, 20],
++    ["none", {}, SVAL.bow.long_bow, 0],
++    ["spell", {}, SVAL.bow.short_bow, 0],
++    ["spell", { number: 4 }, SVAL.bow.long_bow, 0],
++    ["spell", { number: 5 }, SVAL.bow.long_bow, 20],
++    ["spell", { value: 0 }, SVAL.bow.long_bow, 0],
++    ["spell", { tval: TV.BOLT }, SVAL.bow.long_bow, 0],
++    ["spell", { curses: ["doom"] }, SVAL.bow.long_bow, 0],
++    ["spell", { ego: true }, SVAL.bow.long_bow, 0],
++    ["spell", { artifact: true }, SVAL.bow.long_bow, 0],
++    ["spell", { name: "arrows {??}" }, SVAL.bow.long_bow, 0],
++    ["spell", { aware: false }, SVAL.bow.long_bow, 0],
++  ] satisfies [string, Partial<ItemView>, number | undefined, number][])("counts branding need with %s, %j and bow sval %i", (ability, changes, sval, expected) => {
++    const ammo = item({ handle: 1, tval: TV.ARROW, number: 20, value: 100, ...changes });
++    const ctx = mkCtx({}, equipArray({ 1: item({ tval: TV.BOW, sval: sval! }) }), [ammo]);
++    ctx.view.quiver = () => [ammo];
++    const spells = {
++      ...defaultSpellSeam(),
++      spellLegalFail: (spell: string, fail: number) => ability === "spell" && spell === "BRAND_AMMUNITION" && fail === 65,
++      equipsItem: (act: string) => ability === "activation" && act === "act_firebrand",
++    };
++    borgNotice(ctx, { spells });
++    expect(ctx.world.self.trait[BI.NEED_BRAND_WEAPON]).toBe(expected);
++    ctx.view.quiver = () => [];
++    borgNotice(ctx, { spells });
++    expect(ctx.world.self.trait[BI.NEED_BRAND_WEAPON]).toBe(expected);
++    borgNotice(ctx);
++    expect(ctx.world.self.trait[BI.NEED_BRAND_WEAPON]).toBe(0);
++  });
++});
++
+ describe("borg_power weights (borg-power.c)", () => {
+   /* A zeroed trait with the borg_notice defaults; MAXDEPTH 0 keeps the
+    * depth-gated bonuses out so a single weight can be isolated. */
+diff --git a/src/trait/trait.ts b/src/trait/trait.ts
+index 2f94c90..cc16a5e 100644
+--- a/src/trait/trait.ts
++++ b/src/trait/trait.ts
+@@ -73,6 +73,9 @@ import { resetDerived, addHas, type BorgDerived } from "./state.js";
+ import { borgWeaponSwap } from "./weapon-swap.js";
+ import { borgCheatBuffTimers } from "./buff-timers.js";
+ import type { Temp } from "../world/model.js";
++import { hasKindEffect, isCursed, isIdent, perItemValue } from "../item/deps.js";
++import { borgItemNoteNeedsId } from "../item/item-id.js";
++import { PACK_SIZE } from "../store/store.js";
+ 
+ /* Equipment body-slot indices (AgentView.equipment() order == game equip slots,
+  * matching INVEN_WIELD..INVEN_FEET; generated/equip-slots.ts EQUIP_*). */
+@@ -103,6 +106,7 @@ interface Ctx {
+   R: ResolvedOpts;
+   equip: Array<ItemView | null>;
+   inven: ItemView[];
++  quiver: ItemView[];
+   /** The live buff/resist flags, so the cross-check at :3010 can repair them. */
+   temp: Temp;
+   cls: number;
+@@ -130,13 +134,18 @@ export function borgNotice(ctx: BorgContext, opts: BorgTraitOpts = {}): void {
+ 
+   const cls = classIndexFromName(p.cls);
+   const spellStat = spellStatForClass(cls);
++  const inven = view.inventory();
++  const carried = new Set(inven.filter(present).map((item) => item.handle));
++  const quiver = (view.quiver?.() ?? []).filter((item) => present(item) && carried.has(item.handle));
++  const quivered = new Set(quiver.map((item) => item.handle));
+   const c: Ctx = {
+     t,
+     d,
+     p,
+     R,
+     equip: view.equipment(),
+-    inven: view.inventory(),
++    inven: inven.filter((item) => !quivered.has(item.handle)),
++    quiver,
+     temp: ctx.world.self.temp,
+     cls,
+     spellStat,
+@@ -145,11 +154,6 @@ export function borgNotice(ctx: BorgContext, opts: BorgTraitOpts = {}): void {
+   borgNoticePlayer(c);
+   borgNoticeEquipment(c);
+   borgNoticeInventory(c);
+-  /* borg-trait.c:1122-1129 counts occupied quiver entries for power penalties.
+-   * Engine packSlotsUsed (game/gear.ts:551-575) instead charges one pack slot
+-   * per 40 weighted missiles; pack capacity keeps that engine calculation. */
+-  const carried = new Set(c.inven.filter(present).map((item) => item.handle));
+-  t[BI.QUIVER_SLOTS] = (view.quiver?.() ?? []).filter((item) => present(item) && carried.has(item.handle)).length;
+   finishNotice(c);
+ 
+   /* Publish the finished buffer. */
+@@ -266,7 +270,8 @@ function borgNoticePlayer(c: Ctx): void {
+    * The faithful port retains C238; Mandos186 corrects it below separately. */
+   t[BI.INFRA] = p.seeInfra;
+ 
+-  /* SAURON_DEAD has no AgentView field; left 0 (caveat). */
++  /* Neither AgentView nor API 2 exposes a race death counter. History has
++   * display text without a race identity, so it cannot supply SAURON_DEAD. */
+ }
+ 
+ /**
+@@ -317,6 +322,11 @@ function borgNoticeEquipment(c: Ctx): void {
+ 
+     t[BI.WEIGHT] = t[BI.WEIGHT]! + item.weight * item.number;
+ 
++    if ((!isCursed(item) || item.artifact || c.R.uncursable(item)) && borgItemNoteNeedsId(item)) {
++      t[BI.ALL_NEED_ID] = t[BI.ALL_NEED_ID]! + 1;
++      t[BI.WORN_NEED_ID] = t[BI.WORN_NEED_ID]! + 1;
++    }
++
+     /* Affect stats (known mask defaults to 1). */
+     const known = c.R.frame.statKnown;
+     t[BI.ASTR] = t[BI.ASTR]! + mod(item, "STR") * (known ? (known[0] ?? 0) : 1);
+@@ -680,8 +690,10 @@ function borgNoticeEquipment(c: Ctx): void {
+   if (t[BI.SAV]! >= 100) t[BI.FRACT] = 1;
+   if (t[BI.SAV]! >= 100 && t[BI.RDARK]! && t[BI.RLITE]!) t[BI.RBLIND] = 1;
+ 
+-  /* Quiver ammo (trait.c:2178). AgentView folds the quiver into inventory(); it
+-   * is noticed in borgNoticeInventory via borg_is_ammo. */
++  /* PACK_SLOTS and power use occupied quiver entries in the C, rather than
++   * the engine's weighted missile capacity used by the shopping helpers. */
++  t[BI.QUIVER_SLOTS] = c.quiver.length;
++  for (const item of c.quiver) noticeAmmo(c, item);
+ }
+ 
+ /** Apply an item's curse list to the CRS* traits (trait.c:1558). */
+@@ -730,8 +742,12 @@ function borgNoticeInventory(c: Ctx): void {
+   const sv = R.svals;
+   const equip = c.equip;
+ 
+-  for (const item of inven) {
+-    if (!present(item)) continue;
++  for (let i = 0; i < PACK_SIZE - t[BI.QUIVER_SLOTS]!; i++) {
++    const item = inven[i];
++    if (!present(item)) {
++      t[BI.EMPTY] = t[BI.EMPTY]! + 1;
++      continue;
++    }
+ 
+     /* Ammo in the pack / quiver (trait.c:2218 -> borg_notice_ammo). */
+     if (isAmmoTval(item.tval)) {
+@@ -741,6 +757,8 @@ function borgNoticeInventory(c: Ctx): void {
+ 
+     t[BI.WEIGHT] = t[BI.WEIGHT]! + item.weight * item.number;
+ 
++    if (borgItemNoteNeedsId(item)) t[BI.ALL_NEED_ID] = t[BI.ALL_NEED_ID]! + 1;
++
+     if (item.curses.length > 0) {
+       t[BI.WHERE_CURSED] = t[BI.WHERE_CURSED]! | BORG_INVEN;
+       if (!t[BI.FIRST_CURSED]!) t[BI.FIRST_CURSED] = 1;
+@@ -877,12 +895,24 @@ function noticeAmmo(c: Ctx, item: ItemView): void {
+     return;
+   }
+   if (item.ego) t[BI.AMISSILES_SPECIAL] = t[BI.AMISSILES_SPECIAL]! + item.number;
++  if (perItemValue(item) <= 0 || t[BI.AMMO_POWER]! < 3) return;
++  if (
++    (c.R.spells.equipsItem("act_firebrand") || c.R.spells.spellLegalFail("BRAND_AMMUNITION", 65)) &&
++    item.number >= 5 && !item.ego && !item.artifact && isIdent(item)
++  ) {
++    /* Both C branches count this stack; borgBrandWeapon remains a stub. */
++    t[BI.NEED_BRAND_WEAPON] = t[BI.NEED_BRAND_WEAPON]! + 20;
++  }
+ }
+ 
+ /** Food/mushroom analysis (trait.c:2264). */
+ function noticeFood(c: Ctx, item: ItemView): void {
+   const { t, R } = c;
+   const sv = R.svals;
++  if (!item.aware || (isCursed(item) && !item.artifact && !R.uncursable(item))) return;
++  if (item.tval === TV_MUSHROOM && R.cfg.munchkinStart && t[BI.MAXCLEVEL]! < R.cfg.munchkinLevel &&
++    (item.sval === sv.mush_purging || item.sval === sv.mush_restoring || item.sval === sv.mush_cure_mind)) return;
++  if (hasKindEffect(item, "CRUNCH") || hasKindEffect(item, "TIMED_INC", "CONFUSED")) return;
+   if (item.tval === TV_FOOD) {
+     if (
+       item.sval === sv.food_apple ||
+@@ -901,8 +931,8 @@ function noticeFood(c: Ctx, item: ItemView): void {
+     )
+       t[BI.FOOD_HI] = t[BI.FOOD_HI]! + item.number;
+   }
+-  /* Effects-based food (nourish/cure) require effect data not in ItemView;
+-   * omitted (caveat). */
++  if (hasKindEffect(item, "CURE", "CONFUSED")) t[BI.FOOD_CURE_CONF] = t[BI.FOOD_CURE_CONF]! + item.number;
++  if (hasKindEffect(item, "CURE", "BLIND")) t[BI.FOOD_CURE_BLIND] = t[BI.FOOD_CURE_BLIND]! + item.number;
+ }
+ 
+ /** Rod analysis (trait.c:2406). Activation-failure seam absent -> use the
+diff --git a/src/wiring-allowlist.ts b/src/wiring-allowlist.ts
+index 229c014..ffc0850 100644
+--- a/src/wiring-allowlist.ts
++++ b/src/wiring-allowlist.ts
+@@ -8,19 +8,12 @@ export const WIRING_ALLOWLIST: readonly {
+   reason: string;
+   c: string;
+ }[] = [
+-  { name: "BI.ALL_NEED_ID", kind: "bug", reason: "The port never counts unidentified equipment or inventory for identification scoring.", c: "borg-trait.c:1436, borg-trait.c:2228" },
+-  { name: "BI.EMPTY", kind: "bug", reason: "The port never counts empty pack slots for the inventory power bonus.", c: "borg-trait.c:2211" },
+-  { name: "BI.FOOD_CURE_BLIND", kind: "bug", reason: "The port never counts food effects that cure blindness.", c: "borg-trait.c:2322" },
+-  { name: "BI.FOOD_CURE_CONF", kind: "bug", reason: "The port never counts food effects that cure confusion.", c: "borg-trait.c:2320" },
+   { name: "BI.IPOIS", kind: "constant", reason: "Upstream also leaves poison immunity zero; it has readers but no per-trait writer.", c: "borg-trait.c:2829 (blanket zeroing only); borg-danger.c:1209 (read)" },
+   { name: "BI.ISENCUMB", kind: "constant", reason: "Upstream also leaves the encumbrance flag zero; weight changes speed without setting it.", c: "borg-trait.c:2829 (blanket zeroing only); borg-item-wear.c:836 (read)" },
+   { name: "BI.ISFIXALL", kind: "constant", reason: "Upstream also leaves the all-stat repair flag zero and sets individual stat flags instead.", c: "borg-trait.c:2829 (blanket zeroing only); borg-recover.c:210 (read)" },
+-  { name: "BI.NEED_BRAND_WEAPON", kind: "bug", reason: "The port never counts ammunition needing a brand; its branding action is also a stub.", c: "borg-trait.c:1173, borg-trait.c:1211" },
+-  { name: "BI.SAURON_DEAD", kind: "bug", reason: "The port never copies Sauron's recorded death into the trait used by power and shopping.", c: "borg-trait.c:3136" },
+-  { name: "BI.WORN_NEED_ID", kind: "bug", reason: "The port never counts unidentified worn gear for the equipment power bonus.", c: "borg-trait.c:1437" },
++  { name: "BI.SAURON_DEAD", kind: "bug", reason: "AgentView and API 2 world/truth expose no race death counter or killed-unique record. Character history has display text without race identity, so it cannot supply Sauron's recorded death.", c: "borg-trait.c:3136" },
+   { name: "self.goal.fleeingLunal", kind: "constant", reason: "Lunal mode is deliberately disabled in think-ladder.ts, so its fleeing flag stays false.", c: "borg-think-dungeon.c:230 (disabled mode)" },
+   { name: "self.goal.fleeingMunchkin", kind: "constant", reason: "Munchkin mode is deliberately disabled in think-ladder.ts, so its fleeing flag stays false.", c: "borg-think-dungeon.c:583 (disabled mode)" },
+   { name: "self.lunalMode", kind: "constant", reason: "The port deliberately omits the optional lunal-mode entry block in think-ladder.ts.", c: "borg-think-dungeon.c:1476 (disabled mode)" },
+   { name: "self.munchkinMode", kind: "constant", reason: "The port deliberately omits the optional munchkin-mode entry block in think-ladder.ts.", c: "borg-think-dungeon.c:1488 (disabled mode)" },
+-  { name: "self.oldchp", kind: "bug", reason: "The port never saves current HP for the next turn's unseen-spell damage estimate.", c: "borg-update.c:3029" },
+ ];

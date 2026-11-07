@@ -1,0 +1,80 @@
+{
+  "base": "b8bb7a0958a501c2d70c291e5540e42c8d5a14a2",
+  "refreshed": [
+    {
+      "unit": "patches/c-translations/source239-equipment-slays.patch",
+      "priorSha256": "d440ed3fe8d5542c9d8e22ae5e02b14418cdd0c608f4113c68bca8f3c913b418",
+      "newSha256": "08e58d2e47531762e238b1443504ca92387401acd5508f1a2c4a09ed736ef3a5",
+      "reason": "Context refreshed around accepted94d gap-inventory removals; slay/runtime block identical to b8."
+    },
+    {
+      "unit": "patches/port-corrections/source41-light-base.patch",
+      "priorSha256": "2f2bc6abe679b9ad3f244fcc82f83d667df19bc6f7bd3e88d21826231689b3ca",
+      "newSha256": "5881785d0780c06c612e49f8497b1685bf99641f41ad4ffa1d971f39346cc9f1",
+      "reason": "Context refreshed around accepted94d SAURON_DEAD source explanation; light-base behavior and policy-fixture component unchanged."
+    }
+  ],
+  "reverseChecks": [
+    {
+      "unit": "patches/c-translations/source248-dispel-living.patch",
+      "exit": 0,
+      "detail": ""
+    },
+    {
+      "unit": "patches/c-translations/source238-light-modifier.patch",
+      "exit": 0,
+      "detail": ""
+    },
+    {
+      "unit": "patches/c-translations/shot-path-279-caster-origin.patch",
+      "exit": 0,
+      "detail": ""
+    },
+    {
+      "unit": "patches/c-translations/CBUG-0086-exact-unseen-name.patch",
+      "exit": 0,
+      "detail": ""
+    },
+    {
+      "unit": "patches/c-translations/CBUG-0004-cold-melee.patch",
+      "exit": 0,
+      "detail": ""
+    },
+    {
+      "unit": "patches/c-translations/CBUG-0065-enlightenment.patch",
+      "exit": 0,
+      "detail": ""
+    },
+    {
+      "unit": "patches/c-translations/source257-vampire-selected-distance.patch",
+      "exit": 0,
+      "detail": ""
+    },
+    {
+      "unit": "patches/c-translations/CBUG-0061-ccw-timing.patch",
+      "exit": 0,
+      "detail": ""
+    },
+    {
+      "unit": "patches/c-translations/source239-equipment-slays.patch",
+      "exit": 0,
+      "detail": ""
+    },
+    {
+      "unit": "patches/port-corrections/source41-policy-fixtures.patch",
+      "exit": 0,
+      "detail": ""
+    },
+    {
+      "unit": "patches/port-corrections/source41-light-base.patch",
+      "exit": 0,
+      "detail": ""
+    },
+    {
+      "unit": "patches/mandos/headless-shadow-fuel-198.patch",
+      "exit": 0,
+      "detail": ""
+    }
+  ],
+  "C239BlockUnchanged": true
+}

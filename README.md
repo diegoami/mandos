@@ -66,3 +66,36 @@ their targeted regressions and independent removal units; parking research does
 not undo bug fixes. Upstream credit, GPL/Angband licences and AI_USAGE_POLICY
 remain intact. [Pre-split history](docs/history/repository-split) and
 [reorganization reviews](docs/migrations/reorganization-review/README.md) remain reference evidence.
+
+## Exact edge.218 developer folder
+
+The normal build keeps the unpatched published1.23.0-beta.3 default. For the
+separately checked edge.218 developer mode, materialize a fresh folder from
+the same checked plugin:
+
+```sh
+mkdir -p artifacts
+node tools/build.mjs --profile edge218 --out artifacts/mandos-edge218
+```
+
+The command preserves Mandos's ID/version/runtime and all settings. It changes
+only the exact engine requirement and the controller/Core permission requests,
+and prints the manifest/plugin hashes. An existing output directory is refused.
+Install this **folder**, not a ZIP, through the documented Lab Desktop developer
+route with `labprocess=mandos`, approve the native permissions, create a
+character normally and use Ctrl-Z to hand it over. This uses official source
+and documented Lab build options; no compiled Mandos-registration patch or
+first-party identity spoof is required. Ordinary public Worker execution still
+cannot provide Mandos's raw Core access.
+
+A fresh Lab Desktop probe of the profile’s checked plugin demonstrated native
+consent, controller-owned game progress and Escape returning the keyboard.
+It did **not** certify full management or persistence: profile/session scopes
+remain first-party-only. The initial probe showed “Saving failed.”; a later
+same-profile manual save succeeded. Startup/autosave timing remains separately
+investigated, and persistence of that short controller interval was not measured.
+Use disposable test characters for this qualification mode.
+The downloaded ordinary desktop release was not the GUI tested.
+[Task199](https://github.com/diegoami/mandos/issues/199) and the
+[pinned evidence/profile description](docs/runs/2026-11-07-latest-borg-edge218/README.md)
+own the current exact qualification and limits. The existing lab/data are untouched.

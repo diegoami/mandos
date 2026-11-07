@@ -1,0 +1,18 @@
+✓ Lockfile passes supply-chain policies (verified 19h ago)
+Packages are hard linked from the content-addressable store to the virtual store.
+  Content-addressable store is at: $PNPM_STORE
+  Virtual store is at:             node_modules/.pnpm
+Packages: +53
++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Progress: resolved 53, reused 53, downloaded 0, added 53, done
+
+devDependencies:
++ @rpgm-tools/neo-angband-content 1.23.0-edge.218
++ @rpgm-tools/neo-angband-core 1.23.0-edge.218
++ @rpgm-tools/neo-angband-mod-sdk 1.23.0-edge.218
++ @types/node 22.20.1
++ esbuild 0.28.2
++ typescript 5.9.3
++ vitest 4.1.11
+
+Done in 156ms using pnpm v12.16.1

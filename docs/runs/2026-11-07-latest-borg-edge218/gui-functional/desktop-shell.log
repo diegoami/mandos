@@ -1,0 +1,12 @@
+
+DevTools listening on ws://127.0.0.1:49328/devtools/browser/ee0a448b-353e-44d7-98b3-c8c08c5d1f83
+2026-11-07T13:20:42.732Z INFO  [data] (env) /tmp/mandos-edge218-labdesktop-probe/data
+2026-11-07T13:20:42.736Z INFO  [data] storage origin neo-angband://game | {"olderOrigins":[45871]}
+[321874:1107/142042.840369:ERROR:gpu/ipc/client/command_buffer_proxy_impl.cc:285] ContextResult::kTransientFailure: Failed to send GpuControl.CreateCommandBuffer.
+[321748:1107/142043.123099:ERROR:mojo/public/cpp/bindings/lib/interface_endpoint_client.cc:748] Message 0 rejected by interface blink.mojom.WidgetHost
+(node:321748) UnhandledPromiseRejectionWarning: Error: ERR_ABORTED (-3) loading 'neo-angband://game/?labprocess=mandos&seed=3&log=debug'
+    at rejectAndCleanup (node:electron/js2c/browser_init:2:95767)
+    at WebContents.navigationListener (node:electron/js2c/browser_init:2:96047)
+    at WebContents.emit (node:events:509:28)
+(Use `electron --trace-warnings ...` to show where the warning was created)
+(node:321748) UnhandledPromiseRejectionWarning: Unhandled promise rejection. This error originated either by throwing inside of an async function without a catch block, or by rejecting a promise which was not handled with .catch(). To terminate the node process on unhandled promise rejection, use the CLI flag `--unhandled-rejections=strict` (see https://nodejs.org/api/cli.html#cli_unhandled_rejections_mode). (rejection id: 3)

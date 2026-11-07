@@ -1,0 +1,9 @@
+
+ RUN  v4.1.11 /tmp/mandos-edge218-compat
+
+
+ Test Files  1 passed (1)
+      Tests  29 passed (29)
+   Start at  13:59:50
+   Duration  824ms (transform 275ms, setup 170ms, import 299ms, tests 276ms, environment 0ms)
+

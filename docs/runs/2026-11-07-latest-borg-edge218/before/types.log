@@ -1,0 +1,5 @@
+$ tsc --noEmit
+src/api2/bridge.test.ts(199,23): error TS2353: Object literal may only specify known properties, and 'uncursable' does not exist in type 'BorgTraitOpts'.
+src/trait/trait.test.ts(181,23): error TS2353: Object literal may only specify known properties, and 'uncursable' does not exist in type 'BorgTraitOpts'.
+src/trait/trait.test.ts(181,36): error TS7006: Parameter 'entry' implicitly has an 'any' type.
+[ELIFECYCLE] Command failed with exit code 2.

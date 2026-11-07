@@ -1,0 +1,141 @@
+
+ RUN  v4.1.11 /tmp/mandos-edge218-compat
+
+ ❯ src/trait/trait.test.ts (33 tests | 6 failed) 50ms
+     × counts worn stacks needing identification and rewards wearing them 9ms
+     × counts pack identification needs before awareness and curse checks, excluding ammo 2ms
+     × counts empty C pack slots after occupied quiver entries and rewards the first hole 2ms
+     × counts branding need with spell, {} and bow sval 3 3ms
+     × counts branding need with activation, {} and bow sval 3 1ms
+     × counts branding need with spell, {"number":5} and bow sval 3 1ms
+ ❯ src/api2/bridge.test.ts (24 tests | 2 failed) 38ms
+     × counts BLIND cures by stack quantity and applies the C power weight 8ms
+     × counts CONFUSED cures by stack quantity and applies the C power weight 2ms
+ ❯ src/perceive.test.ts (29 tests | 1 failed) 2131ms
+     × saves HP after unseen spell messages and refreshes it for each update 28ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 9 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/perceive.test.ts > previous HP wiring > saves HP after unseen spell messages and refreshes it for each update
+AssertionError: expected +0 to be 100 // Object.is equality
+
+- Expected
++ Received
+
+- 100
++ 0
+
+ ❯ src/perceive.test.ts:61:31
+     59|     });
+     60|     controller(view(100), act);
+     61|     expect(world.self.oldchp).toBe(100);
+       |                               ^
+     62|     controller(view(70, ["Something casts a spell."]), act);
+     63|     expect(getFearCaches(world).region2d[2]![2]).toBe(60);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/9]⎯
+
+ FAIL  src/api2/bridge.test.ts > food cure wiring through published content > counts BLIND cures by stack quantity and applies the C power weight
+ FAIL  src/api2/bridge.test.ts > food cure wiring through published content > counts CONFUSED cures by stack quantity and applies the C power weight
+AssertionError: expected +0 to be 3 // Object.is equality
+
+- Expected
++ Received
+
+- 3
++ 0
+
+ ❯ src/api2/bridge.test.ts:200:41
+    198|     const ctx = { world: new BorgWorld(), view: snapshot.view, act: ma…
+    199|     borgNotice(ctx, { uncursable: () => false });
+    200|     expect(ctx.world.self.trait[trait]).toBe(3);
+       |                                         ^
+    201|     const power = borgPower(ctx);
+    202|     ctx.world.self.trait[trait] = 0;
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/9]⎯
+
+ FAIL  src/trait/trait.test.ts > borg_notice wiring > counts worn stacks needing identification and rewards wearing them
+AssertionError: expected +0 to be 3 // Object.is equality
+
+- Expected
++ Received
+
+- 3
++ 0
+
+ ❯ src/trait/trait.test.ts:183:32
+    181|     borgNotice(ctx, { uncursable: (entry) => entry.curses.includes("re…
+    182|     const t = ctx.world.self.trait;
+    183|     expect(t[BI.WORN_NEED_ID]).toBe(3);
+       |                                ^
+    184|     expect(t[BI.ALL_NEED_ID]).toBe(3);
+    185|     const power = borgPower(ctx);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/9]⎯
+
+ FAIL  src/trait/trait.test.ts > borg_notice wiring > counts pack identification needs before awareness and curse checks, excluding ammo
+AssertionError: expected +0 to be 3 // Object.is equality
+
+- Expected
++ Received
+
+- 3
++ 0
+
+ ❯ src/trait/trait.test.ts:205:31
+    203|     borgNotice(ctx);
+    204|     const t = ctx.world.self.trait;
+    205|     expect(t[BI.ALL_NEED_ID]).toBe(3);
+       |                               ^
+    206|     t[BI.AID] = 2;
+    207|     const power = borgPower(ctx);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/9]⎯
+
+ FAIL  src/trait/trait.test.ts > borg_notice wiring > counts empty C pack slots after occupied quiver entries and rewards the first hole
+AssertionError: expected +0 to be 1 // Object.is equality
+
+- Expected
++ Received
+
+- 1
++ 0
+
+ ❯ src/trait/trait.test.ts:224:25
+    222|     borgNotice(ctx);
+    223|     const t = ctx.world.self.trait;
+    224|     expect(t[BI.EMPTY]).toBe(1);
+       |                         ^
+    225|     const power = borgPower(ctx);
+    226|     t[BI.EMPTY] = 0;
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/9]⎯
+
+ FAIL  src/trait/trait.test.ts > borg_notice wiring > counts branding need with spell, {} and bow sval 3
+ FAIL  src/trait/trait.test.ts > borg_notice wiring > counts branding need with activation, {} and bow sval 3
+ FAIL  src/trait/trait.test.ts > borg_notice wiring > counts branding need with spell, {"number":5} and bow sval 3
+AssertionError: expected +0 to be 20 // Object.is equality
+
+- Expected
++ Received
+
+- 20
++ 0
+
+ ❯ src/trait/trait.test.ts:261:56
+    259|     };
+    260|     borgNotice(ctx, { spells });
+    261|     expect(ctx.world.self.trait[BI.NEED_BRAND_WEAPON]).toBe(expected);
+       |                                                        ^
+    262|     ctx.view.quiver = () => [];
+    263|     borgNotice(ctx, { spells });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/9]⎯
+
+
+ Test Files  3 failed (3)
+      Tests  9 failed | 77 passed (86)
+   Start at  13:38:35
+   Duration  2.98s (transform 1.18s, setup 566ms, import 1.40s, tests 2.22s, environment 0ms)
+

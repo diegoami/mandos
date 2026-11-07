@@ -1,0 +1,9 @@
+
+ RUN  v4.1.11 /tmp/mandos-199-stamped218
+
+
+ Test Files  15 passed (15)
+      Tests  222 passed (222)
+   Start at  14:14:13
+   Duration  3.80s (transform 7.63s, setup 4.72s, import 12.22s, tests 13.20s, environment 3ms)
+

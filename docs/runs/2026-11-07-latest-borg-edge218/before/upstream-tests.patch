@@ -1,0 +1,235 @@
+diff --git a/src/api2/bridge.test.ts b/src/api2/bridge.test.ts
+index 335d24e..222fbc2 100644
+--- a/src/api2/bridge.test.ts
++++ b/src/api2/bridge.test.ts
+@@ -22,6 +22,10 @@ import { BorgWorld } from "../world/model.js";
+ import { perceive, makePerceiveMemo } from "../perceive.js";
+ import { makeBorgRng } from "../rng.js";
+ import { makeFakeActions } from "../harness.js";
++import { borgNotice } from "../trait/trait.js";
++import { borgPower } from "../trait/power.js";
++import { BI } from "../trait/trait-index.js";
++import { SVAL } from "../item/svals.js";
+ 
+ const SCENARIO: Scenario = {
+   player: { grid: { x: 5, y: 5 }, depth: 3 },
+@@ -158,6 +162,60 @@ describe("the bridge", () => {
+   });
+ });
+ 
++describe("food cure wiring through published content", () => {
++  it.each([
++    ["BLIND", BI.FOOD_CURE_BLIND, 300],
++    ["CONFUSED", BI.FOOD_CURE_CONF, 400],
++  ] as const)("counts %s cures by stack quantity and applies the C power weight", async (subtype, trait, weight) => {
++    const game = fakeGame({ engine: { core: Core } });
++    const food = (over: Partial<KnownItem>): KnownItem => ({
++      handle: 1, kindKey: "kind:0", baseName: "food", carried: true, aware: true,
++      label: "food", nameColor: "white", tval: TV.FOOD, sval: 99, pval: 0, number: 2,
++      weight: 0, ac: 0, toA: 0, toH: 0, toD: 0, dd: 0, ds: 0, ego: false,
++      artifact: false, flags: [], modifiers: [], brands: [], slays: [], resists: [], curses: [],
++      egoName: null, artifactName: null, activation: false, charging: 0, unknownRunes: false,
++      inscription: null, ...over,
++    });
++    const inventory = [food({}), food({ handle: 2, tval: TV.MUSHROOM, number: 1 }),
++      food({ handle: 3, aware: false, number: 7 }),
++      food({ handle: 4, kindKey: "kind:1", number: 8 }),
++      food({ handle: 5, kindKey: "kind:2", number: 9 }),
++      food({ handle: 6, tval: TV.POTION, number: 10 }),
++      food({ handle: 7, curses: ["doom"], number: 11 }),
++      food({ handle: 8, kindKey: "kind:3", number: 12 })];
++    const known = { ...knownWorld(game.view), inventory };
++    game.mod.view.world = async () => ({ ok: true, value: known });
++    const cure = { eff: "CURE", type: subtype };
++    game.mod.content.records = async (file) => ({ ok: true, value: file === "object" ? [
++      { effect: [{ eff: "RANDOM" }, cure, cure] },
++      { effect: [cure, { eff: "CRUNCH" }] },
++      { effect: [cure, { eff: "TIMED_INC", type: "CONFUSED" }] },
++      { effect: [{ eff: "TIMED_DEC", type: subtype }] },
++    ] : [] });
++    const bridge = createBridge(game.mod);
++    await bridge.prime();
++    const snapshot = (await bridge.readWorld())!;
++    const ctx = { world: new BorgWorld(), view: snapshot.view, act: makeFakeActions(), rng: makeBorgRng() };
++    borgNotice(ctx, { uncursable: () => false });
++    expect(ctx.world.self.trait[trait]).toBe(3);
++    const power = borgPower(ctx);
++    ctx.world.self.trait[trait] = 0;
++    expect(power - borgPower(ctx)).toBe(3 * weight);
++    borgNotice(ctx);
++    expect(ctx.world.self.trait[trait]).toBe(14);
++    known.inventory = [food({ tval: TV.MUSHROOM, sval: SVAL.mush.cure_mind! })];
++    const next = (await bridge.readWorld())!;
++    borgNotice({ ...ctx, view: next.view }, { cfg: { munchkinStart: true, munchkinLevel: 12 } });
++    expect(ctx.world.self.trait[trait]).toBe(0);
++    borgNotice({ ...ctx, view: next.view }, { cfg: { munchkinStart: false } });
++    expect(ctx.world.self.trait[trait]).toBe(2);
++    known.inventory = [];
++    borgNotice({ ...ctx, view: (await bridge.readWorld())!.view });
++    expect(ctx.world.self.trait[trait]).toBe(0);
++    await bridge.dispose();
++  });
++});
++
+ describe("the truth allowlist wrapper", () => {
+   it("reads only the monsters the character perceives", async () => {
+     const game = fakeGame({ scenario: SCENARIO, truth: true });
+diff --git a/src/perceive.test.ts b/src/perceive.test.ts
+index c2e9be5..7ff0023 100644
+--- a/src/perceive.test.ts
++++ b/src/perceive.test.ts
+@@ -28,6 +28,7 @@ import { makeScenarioView, makeFakeActions } from "./harness.js";
+ import { makeBorgRng } from "./rng.js";
+ import { borgView } from "./core-api.js";
+ import type { BorgContext } from "./context.js";
++import { getFearCaches } from "./danger/state.js";
+ 
+ /** Build a primed context (perceive + notice run) for a scenario. */
+ function makeCtx(scenario: Parameters<typeof makeScenarioView>[0]): {
+@@ -47,6 +48,28 @@ function makeCtx(scenario: Parameters<typeof makeScenarioView>[0]): {
+   return { ctx, world };
+ }
+ 
++describe("previous HP wiring", () => {
++  it("saves HP after unseen spell messages and refreshes it for each update", () => {
++    const { world, controller } = createBorg({ resolvers: { spellMessages: [{
++      index: 2, levels: [{ message: "", blindMessage: "Something casts a spell.", missMessage: "" }],
++    }] } });
++    const act = makeFakeActions();
++    const view = (hp: number, messages: string[] = []) => makeScenarioView({
++      player: { grid: { x: 22, y: 22 }, depth: 3, hp, maxHp: 100 }, messages,
++    });
++    controller(view(100), act);
++    expect(world.self.oldchp).toBe(100);
++    controller(view(70, ["Something casts a spell."]), act);
++    expect(getFearCaches(world).region2d[2]![2]).toBe(60);
++    expect(world.self.oldchp).toBe(70);
++    controller(view(90), act);
++    expect(world.self.oldchp).toBe(90);
++    controller(view(80, ["Something casts a spell."]), act);
++    expect(getFearCaches(world).region2d[2]![2]).toBe(80);
++    expect(world.self.oldchp).toBe(80);
++  });
++});
++
+ describe("tracking deletion cleanup", () => {
+   function tracked() {
+     const world = new BorgWorld();
+diff --git a/src/trait/trait.test.ts b/src/trait/trait.test.ts
+index 3f60678..0ce498a 100644
+--- a/src/trait/trait.test.ts
++++ b/src/trait/trait.test.ts
+@@ -26,6 +26,8 @@ import { borgNotice } from "./trait.js";
+ import { borgPower } from "./power.js";
+ import { borgPrepared } from "./prepared.js";
+ import { getDerived } from "./state.js";
++import { defaultSpellSeam } from "./config.js";
++import { TV, SVAL } from "../item/svals.js";
+ 
+ /* A complete ItemView from a partial. */
+ function item(o: Partial<ItemView>): ItemView {
+@@ -167,6 +169,104 @@ describe("borg_notice equipment derivation", () => {
+   });
+ });
+ 
++describe("borg_notice wiring", () => {
++  it("counts worn stacks needing identification and rewards wearing them", () => {
++    const ctx = mkCtx({}, equipArray({
++      0: item({ name: "a sword {??}", number: 3 }),
++      2: item({ inscription: "??", curses: ["doom"] }),
++      3: item({ inscription: "??", curses: ["doom"], artifact: true }),
++      4: item({ name: "a known ring" }),
++      6: item({ inscription: "??", curses: ["removable"] }),
++    }));
++    borgNotice(ctx, { uncursable: (entry) => entry.curses.includes("removable") });
++    const t = ctx.world.self.trait;
++    expect(t[BI.WORN_NEED_ID]).toBe(3);
++    expect(t[BI.ALL_NEED_ID]).toBe(3);
++    const power = borgPower(ctx);
++    t[BI.WORN_NEED_ID] = 0;
++    expect(power - borgPower(ctx)).toBe(30000);
++    borgNotice(ctx);
++    expect(ctx.world.self.trait[BI.WORN_NEED_ID]).toBe(4);
++    ctx.view.equipment = () => [];
++    borgNotice(ctx);
++    expect(ctx.world.self.trait[BI.WORN_NEED_ID]).toBe(0);
++  });
++
++  it("counts pack identification needs before awareness and curse checks, excluding ammo", () => {
++    const ctx = mkCtx({}, equipArray({ 0: item({ name: "a sword {??}" }) }), [
++      item({ name: "boots {??}", number: 5 }),
++      item({ inscription: "??", aware: false, curses: ["doom"] }),
++      item({ tval: TV.ARROW, name: "arrows {??}", number: 20 }),
++      item({ name: "empty {??}", number: 0 }),
++      item({ name: "known" }),
++    ]);
++    borgNotice(ctx);
++    const t = ctx.world.self.trait;
++    expect(t[BI.ALL_NEED_ID]).toBe(3);
++    t[BI.AID] = 2;
++    const power = borgPower(ctx);
++    t[BI.ALL_NEED_ID] = 0;
++    expect(power - borgPower(ctx)).toBe(12000);
++    ctx.view.inventory = () => [];
++    ctx.view.equipment = () => [];
++    borgNotice(ctx);
++    expect(ctx.world.self.trait[BI.ALL_NEED_ID]).toBe(0);
++  });
++
++  it("counts empty C pack slots after occupied quiver entries and rewards the first hole", () => {
++    const arrows = item({ handle: 1, tval: TV.ARROW, number: 5 });
++    const bolts = item({ handle: 2, tval: TV.BOLT, number: 5 });
++    const pack = Array.from({ length: 20 }, (_, i) => item({ handle: i + 3 }));
++    const ctx = mkCtx({}, [], [...pack, arrows, bolts]);
++    ctx.view.quiver = () => [arrows, bolts];
++    borgNotice(ctx);
++    const t = ctx.world.self.trait;
++    expect(t[BI.EMPTY]).toBe(1);
++    const power = borgPower(ctx);
++    t[BI.EMPTY] = 0;
++    expect(power - borgPower(ctx)).toBe(4000);
++    pack.push(item({ handle: 23, tval: TV.ARROW }));
++    ctx.view.inventory = () => [...pack, arrows, bolts];
++    borgNotice(ctx);
++    expect(ctx.world.self.trait[BI.EMPTY]).toBe(0);
++    pack[0] = item({ number: 0 });
++    borgNotice(ctx);
++    expect(ctx.world.self.trait[BI.EMPTY]).toBe(1);
++  });
++
++  it.each([
++    ["spell", {}, SVAL.bow.long_bow, 20],
++    ["activation", {}, SVAL.bow.long_bow, 20],
++    ["none", {}, SVAL.bow.long_bow, 0],
++    ["spell", {}, SVAL.bow.short_bow, 0],
++    ["spell", { number: 4 }, SVAL.bow.long_bow, 0],
++    ["spell", { number: 5 }, SVAL.bow.long_bow, 20],
++    ["spell", { value: 0 }, SVAL.bow.long_bow, 0],
++    ["spell", { tval: TV.BOLT }, SVAL.bow.long_bow, 0],
++    ["spell", { curses: ["doom"] }, SVAL.bow.long_bow, 0],
++    ["spell", { ego: true }, SVAL.bow.long_bow, 0],
++    ["spell", { artifact: true }, SVAL.bow.long_bow, 0],
++    ["spell", { name: "arrows {??}" }, SVAL.bow.long_bow, 0],
++    ["spell", { aware: false }, SVAL.bow.long_bow, 0],
++  ] satisfies [string, Partial<ItemView>, number | undefined, number][])("counts branding need with %s, %j and bow sval %i", (ability, changes, sval, expected) => {
++    const ammo = item({ handle: 1, tval: TV.ARROW, number: 20, value: 100, ...changes });
++    const ctx = mkCtx({}, equipArray({ 1: item({ tval: TV.BOW, sval: sval! }) }), [ammo]);
++    ctx.view.quiver = () => [ammo];
++    const spells = {
++      ...defaultSpellSeam(),
++      spellLegalFail: (spell: string, fail: number) => ability === "spell" && spell === "BRAND_AMMUNITION" && fail === 65,
++      equipsItem: (act: string) => ability === "activation" && act === "act_firebrand",
++    };
++    borgNotice(ctx, { spells });
++    expect(ctx.world.self.trait[BI.NEED_BRAND_WEAPON]).toBe(expected);
++    ctx.view.quiver = () => [];
++    borgNotice(ctx, { spells });
++    expect(ctx.world.self.trait[BI.NEED_BRAND_WEAPON]).toBe(expected);
++    borgNotice(ctx);
++    expect(ctx.world.self.trait[BI.NEED_BRAND_WEAPON]).toBe(0);
++  });
++});
++
+ describe("borg_power weights (borg-power.c)", () => {
+   /* A zeroed trait with the borg_notice defaults; MAXDEPTH 0 keeps the
+    * depth-gated bonuses out so a single weight can be isolated. */
