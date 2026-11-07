@@ -1,4 +1,4 @@
-import { registeredTorchFixture } from "../test-known-light.js";
+import { registeredTorchFixture } from "../../test/fixtures/known-light.js";
 /**
  * The decision tick and the verbs it submits through.
  *

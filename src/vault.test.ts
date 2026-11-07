@@ -1,4 +1,4 @@
-import { registeredTorchFixture } from "./test-known-light.js";
+import { registeredTorchFixture } from "../test/fixtures/known-light.js";
 import { describe, expect, it, vi } from "vitest";
 import type { AgentView, ItemView, SpellbookView } from "@rpgm-tools/neo-angband-core";
 import { FEAT } from "./core-api.js";

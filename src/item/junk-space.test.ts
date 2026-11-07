@@ -1,4 +1,4 @@
-import { registeredTorchFixture } from "../test-known-light.js";
+import { registeredTorchFixture } from "../../test/fixtures/known-light.js";
 import { describe, expect, it } from "vitest";
 import type { AgentView, ItemView, PlayerView } from "@rpgm-tools/neo-angband-core";
 import type { BorgContext } from "../context.js";

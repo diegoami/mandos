@@ -4,7 +4,7 @@ import { createRequire } from "node:module";
 import { dirname, join } from "node:path";
 import * as Core from "@rpgm-tools/neo-angband-core";
 import type { ItemView } from "@rpgm-tools/neo-angband-core";
-import { simulationView } from "./api2/world.js";
+import { simulationView } from "../../src/api2/world.js";
 
 type PublicLight = ItemView & { readonly unknownRunes: boolean };
 const cache = new Map<string, { light: number; item: PublicLight }>();

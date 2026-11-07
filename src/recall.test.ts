@@ -1,4 +1,4 @@
-import { registeredLanternFixture } from "./test-known-light.js";
+import { registeredLanternFixture } from "../test/fixtures/known-light.js";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import type { AgentView, ItemView, SpellbookView } from "@rpgm-tools/neo-angband-core";
 import { makeScenarioView, makeFakeActions, type Scenario } from "./harness.js";

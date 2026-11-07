@@ -1,4 +1,4 @@
-import { registeredTorchFixture } from "../test-known-light.js";
+import { registeredTorchFixture } from "../../test/fixtures/known-light.js";
 /**
  * Combat/defense/escape tests (P8.4). Golden values are derived by hand from
  * reference/src/borg/borg-fight-attack.c, feeding the ported damage estimators
