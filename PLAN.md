@@ -53,10 +53,18 @@ Required consumer/main verification remains distinct from producer readiness;
 source2/consumer125's remaining parity leaves still gate NEW
 C milestone code after this accepted leaf. No C milestone adoption is performed.
 
-The next bounded125 leaf adopts source48's armour-backup data/value and strict
-HOME retrieval, using the [pinned consumer receipt](docs/runs/2026-11-07-armour-home-adoption/README.md).
-Accepted76 is its shared upstream baseline prerequisite. Tactical equip/actions
-and SR-availability folds remain separate actual omissions, so125 stays partial
-and203's new-C gate remains blocked after this leaf. No source-C correction is
-silently folded into parity adoption; source/consumer required gates remain
-independent and the parent owns actual-main closure/state.
+The armour125 leaf restores source48's backup data/value and strict HOME
+retrieval, using the [pinned consumer receipt](docs/runs/2026-11-07-armour-home-adoption/README.md).
+Accepted76 is its shared upstream baseline prerequisite. That leaf left tactical
+actions and SR availability to source50 below. Source-C corrections are assessed
+separately; source/consumer gates remain independent and the parent owns
+actual-main closure/state.
+
+Source50's next125 leaf restores tactical backup actions and SR availability
+through [the exact consumer receipt](docs/runs/2026-11-07-backup-tactical-adoption/README.md).
+This follows the armour/value/HOME and known-curse leaves above. It preserves
+original-C quirks for later reviewed native-milestone assessment; it applies no
+C behavioral correction. Parent verifies source+consumer actual main and then
+updates125's remaining scope and203's classified gate. Earlier leaf exclusions
+are historical boundaries, not instructions to keep delivered behavior missing.
+No new C milestone starts merely because a work branch or source PR exists.

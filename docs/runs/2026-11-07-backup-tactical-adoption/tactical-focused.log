@@ -1,0 +1,8 @@
+
+ RUN  v4.1.11 /tmp/mandos-backup-tactical-consumer-125
+
+
+ Test Files  34 passed (34)
+      Tests  620 passed (620)
+   Start at  21:38:44
+   Duration  8.25s (transform 21.91s, setup 20.13s, import 34.03s, tests 36.24s, environment 7ms)

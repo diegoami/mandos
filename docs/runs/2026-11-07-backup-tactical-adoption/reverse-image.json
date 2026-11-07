@@ -1,0 +1,76 @@
+{
+  "baseline": "a70887939b271093f4ccde039b658602158ba1cf",
+  "unit": "patches/port-corrections/source50-tactical-sr.patch",
+  "paths": [
+    {
+      "path": "src/api2/host.ts",
+      "result": "exact verifieda708 baseline",
+      "sha256": "8e3ba236b4e7cd246ecc1409eaeb1b8976a4545485ca7e72bb345e376d3d5619"
+    },
+    {
+      "path": "src/api2/world.ts",
+      "result": "exact verifieda708 baseline",
+      "sha256": "f79a76e799c1b60f4be7d034de8b74c7d168bff0a47b3008041945845fde6997"
+    },
+    {
+      "path": "src/fight/caution.ts",
+      "result": "exact verifieda708 baseline",
+      "sha256": "b40be97029194ed09c1bebe932bfe592f7cab22e82deffb894e20d5d89793cf6"
+    },
+    {
+      "path": "src/item/item-wear.ts",
+      "result": "exact verifieda708 baseline",
+      "sha256": "46bd24f7f1fd6eb1ee83edaa89accc88ba29eefaeb41e685ab72ada53df59f9e"
+    },
+    {
+      "path": "src/resolvers.ts",
+      "result": "exact verifieda708 baseline",
+      "sha256": "878518d84cbb33a93d763b09b17297335c4a5103803791528f447dd689a73d13"
+    },
+    {
+      "path": "src/think-session.ts",
+      "result": "exact verifieda708 baseline",
+      "sha256": "2144003bf33cb4eb62af7e0b09bc085291296b0b1536b83d75faeb87f68716c1"
+    },
+    {
+      "path": "src/trait/backup-caps.ts",
+      "result": "absent as at verifieda708 baseline"
+    },
+    {
+      "path": "src/trait/simulate.ts",
+      "result": "exact verifieda708 baseline",
+      "sha256": "fa379f9249ececf2c858bcf5c6f98d9aed38e05a3c3ddd181468dd4ab32d2065"
+    },
+    {
+      "path": "src/trait/state.ts",
+      "result": "exact verifieda708 baseline",
+      "sha256": "5c30a0a3981a05da963503b91f28997323ff1053e2adc07289436fda1fe21f51"
+    },
+    {
+      "path": "src/trait/trait.ts",
+      "result": "exact verifieda708 baseline",
+      "sha256": "e068e4745f8fb510d400590fa16c001551284a72fcb47d613ef310607bcfb8ac"
+    },
+    {
+      "path": "src/item/backup-tactical.test.ts",
+      "result": "absent as at verifieda708 baseline"
+    },
+    {
+      "path": "src/item/backup-public.test.ts",
+      "result": "absent as at verifieda708 baseline"
+    },
+    {
+      "path": "src/api2/bridge.test.ts",
+      "result": "exact verifieda708 baseline",
+      "sha256": "ec0a346c581c9fb8c205cd891f246a86964f51954281f1c9a671a7efbeb0f012"
+    },
+    {
+      "path": "src/trait/trait.test.ts",
+      "result": "exact verifieda708 baseline",
+      "sha256": "9493ba275d34b5ea405a3f289fc98c60baac8ba1c5bb7e18b302d4cced79ceb6"
+    }
+  ],
+  "order": "50 then51 then48 then accepted76 baseline",
+  "pluginRebuildRequired": true,
+  "notAutomaticRetirementApproval": true
+}

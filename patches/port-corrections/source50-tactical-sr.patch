@@ -1,0 +1,769 @@
+diff --git a/src/api2/host.ts b/src/api2/host.ts
+index 5fa38d6..45fecbc 100644
+--- a/src/api2/host.ts
++++ b/src/api2/host.ts
+@@ -110,6 +110,7 @@ export function createBridge(mod: ModApi2): Bridge {
+         raceRecord: (ridx) => races.get(ridx),
+         raceSymbol: (ridx) => symbols.get(ridx),
+         objects,
++        birthRandarts: () => facts.birthRandarts ?? null,
+         shopnum: () => facts.shopnum,
+         kindCost: (tval, sval) => facts.kinds.get(`${String(tval)}:${String(sval)}`) ?? null,
+         blowMethods: blows.map((message) => ({ messages: [message] })),
+diff --git a/src/api2/world.ts b/src/api2/world.ts
+index 5f491a1..32b2d8b 100644
+--- a/src/api2/world.ts
++++ b/src/api2/world.ts
+@@ -72,6 +72,8 @@ export interface WorldReads {
+ 
+ /** What the resolvers answer from, as of the last reading. */
+ export interface WorldFacts {
++  /** Public birth option; missing/denied reads never become an invented false. */
++  readonly birthRandarts?: boolean | null;
+   /** Index into the stores of the shop entrance the character stands on, or null. */
+   readonly shopnum: number | null;
+   /** The cost and awareness of each object kind the character can see, by "tval:sval". */
+@@ -226,6 +228,8 @@ export async function readWorld(api: Api2Reads, reads: WorldReads): Promise<Worl
+   const known: KnownWorldData | null = await valueOf(api.view.world());
+   if (known === null || known.player === null) return null;
+ 
++  const options = typeof api.view.options === "function" ? await valueOf(api.view.options()) : null;
++  const birthRandarts = typeof options?.birth?.birth_randarts === "boolean" ? options.birth.birth_randarts : null;
+   const { statics } = reads;
+   const player = playerView(known.player, statics.floors);
+   const analyze = await itemAnalyzer(api);
+@@ -306,5 +310,5 @@ export async function readWorld(api: Api2Reads, reads: WorldReads): Promise<Worl
+     inputToken: () => ({ epoch: known.token.epoch, revision: known.token.revision }),
+     simulateLoadout: (change) => reads.loadouts.answer(change as never),
+   };
+-  return { view, facts: { shopnum: known.player.shopnum, kinds } };
++  return { view, facts: { shopnum: known.player.shopnum, kinds, birthRandarts } };
+ }
+diff --git a/src/fight/caution.ts b/src/fight/caution.ts
+index 67f871f..5e07409 100644
+--- a/src/fight/caution.ts
++++ b/src/fight/caution.ts
+@@ -42,7 +42,9 @@ import { borgThrustDamageOne } from "./attack.js";
+ import type { FlowState } from "../flow/flow.js";
+ import { borgCheckRest } from "../flow/flow-misc.js";
+ import { borgPrepLeaveLevelSpells, borgFlowStairLess } from "../flow/flow-stairs.js";
+-import { getThinkSession } from "../think-session.js";
++import { borgBackupSwap } from "../item/item-wear.js";
++import { borgCfg } from "../trait/config.js";
++import { buildItemDeps, getThinkSession } from "../think-session.js";
+ import { borgRestock } from "../trait/prepared.js";
+ import { TV, SVAL } from "../item/svals.js";
+ import { Spell, borgSpell, borgSpellFail } from "../item/magic.js";
+@@ -465,6 +467,13 @@ export function borgCaution(
+     }
+   }
+ 
++  /* borg-caution.c:1025: after class-ordered defend/heal, including while fleeing. */
++  if (borgCfg().usesSwaps && trait(ctx,BI.MAXDEPTH)<90 && posDanger>Math.trunc(av(ctx)/3)) {
++    const session=getThinkSession(ctx.world);
++    const swap=borgBackupSwap(ctx,posDanger,session.ctx===ctx ? buildItemDeps(session) : undefined);
++    if (swap) return swap;
++  }
++
+   /* The Borg rests for recall in the dungeon (borg-caution.c:1033-1048). */
+   if (ctx.world.self.goal.recalling && borgCheckRest(ctx, flow, ctx.world.self.c.y, ctx.world.self.c.x)
+     && trait(ctx, BI.CDEPTH) && !trait(ctx, BI.ISHUNGRY)) {
+diff --git a/src/item/item-wear.ts b/src/item/item-wear.ts
+index 30c1ef7..f021f0d 100644
+--- a/src/item/item-wear.ts
++++ b/src/item/item-wear.ts
+@@ -22,6 +22,11 @@ import type { ItemDeps } from "./deps.js";
+ import { trait, isAware, isIdent, isCursed, isOneRing, itemValue, canRest, clockOf, danger, needsIdent, packItems } from "./deps.js";
+ import { SVAL } from "./svals.js";
+ import { mod as modOf } from "../trait/item-util.js";
++import { getDerived } from "../trait/state.js";
++import { borgCfg } from "../trait/config.js";
++import { getDangerGlobals } from "../danger/index.js";
++import { getFightState } from "../fight/state.js";
++import type { BorgLoadoutDangerAnswer } from "../trait/simulate.js";
+ import type { BorgLoadoutChange, BorgLoadoutRef } from "../trait/simulate.js";
+ import {
+   BORG_HOME, borgHomeFull, borgInventoryFull, homeWares, isOneRing as isOneRingAt,
+@@ -34,6 +39,8 @@ export interface WearDeps extends ItemDeps {
+   hasHole?: boolean;
+   /** birth_randarts option (skip un-IDd randart artifacts); default false. */
+   randarts?: boolean;
++  /** Public known-loadout danger and critical traits for a backup candidate. */
++  backupEval?: (item: ItemView, slot: number) => BorgLoadoutDangerAnswer | null;
+   /** borg.power if `item` were worn (the C's borg_notice/borg_power sim). */
+   wearEval?: (item: ItemView, slot?: number) => number;
+   /** Power for a complete equipment combination (borg-item-wear.c:1229). */
+@@ -392,3 +399,39 @@ export function borgWearStuff(
+   }
+   return null;
+ }
++
++/** borg_backup_swap (4.2.6/current wear.c:534–727), preserving original C82. */
++export function borgBackupSwap(ctx: BorgContext, p: number, d?: WearDeps): AgentCommand | null {
++  if (!borgCfg().usesSwaps || trait(ctx,BI.MAXDEPTH)>=90 || trait(ctx,BI.ISHUNGRY) || trait(ctx,BI.ISWEAK)
++    || ctx.world.self.timeThisPanel>300) return null;
++  const derived=getDerived(ctx.world), pack=packItems(ctx);
++  const armour=pack.find(item=>item.handle===derived.armourSwap.handle), weapon=pack.find(item=>item.handle===derived.weaponSwap.handle);
++  if ((!armour && !weapon) || !d?.backupEval) return null;
++  // Native initializes these only in the armour branch; preserve the weapon-only oddity.
++  const initial=armour ? {rconf:trait(ctx,BI.RCONF),rblind:trait(ctx,BI.RBLIND),fract:trait(ctx,BI.FRACT)} : {rconf:0,rblind:0,fract:0};
++  const evaluate=(item:ItemView):number|null => {
++    const category=wieldSlot(item);
++    if (!category) return null;
++    const slots: Record<Slot,number>={weapon:0,bow:1,ring:LEFT_RING,amulet:4,light:5,body:6,cloak:7,shield:8,helm:9,gloves:10,boots:11};
++    const answer=d.backupEval!(item,slots[category]);
++    if (!answer) return null;
++    const t=answer.traits;
++    if ((initial.rconf&&!t.rconf) || (initial.rblind&&!t.rblind&&!t.rlite&&!t.rdark&&t.sav<100)
++      || (initial.fract&&!t.fract&&t.sav<100)) return 9999;
++    // Missing birth-option knowledge cannot authorize an unidentified artifact.
++    if (d.randarts!==false && item.artifact && !isIdent(item,d)) return 9999;
++    const uncursable=category==="weapon" ? derived.weaponSwapOpts.weaponSwap?.uncursable :
++      derived.armourSwapOpts.armourSwap?.uncursable ?? derived.armourSwapOpts.weaponSwap?.uncursable;
++    if (isCursed(item) && !uncursable?.(item)) return 9999;
++    return answer.danger;
++  };
++  const ap=armour ? evaluate(armour) : 0, wp=weapon ? evaluate(weapon) : 0;
++  if (ap===null || wp===null) return null; // Let unresolved public loadout requests settle; no invented score.
++  // C82 is intentionally retained: the higher danger wins; ties choose weapon.
++  const chosen=ap<=wp ? weapon : armour, score=ap<=wp ? wp : ap;
++  const avoidance=getDangerGlobals(ctx.world).avoidance;
++  const ceiling=getFightState(ctx.world).fightingUnique ? Math.trunc(avoidance*2/3) : Math.trunc(avoidance/2);
++  // Native can select an absent sentinel on a zero tie. No public command expresses an invalid handle.
++  if (!chosen || p<=score || score>ceiling) return null;
++  return ctx.act.wear(chosen.handle);
++}
+diff --git a/src/resolvers.ts b/src/resolvers.ts
+index 00c4dd2..dceb241 100644
+--- a/src/resolvers.ts
++++ b/src/resolvers.ts
+@@ -44,7 +44,7 @@ import type { BorgResolvers } from "./think-session.js";
+ import type { BlowFacts, FactsResolver, MonsterFacts } from "./danger/facts.js";
+ import { defaultResolveMonsterFacts } from "./danger/facts.js";
+ import { borgMonBlowEffect } from "./danger/tables.js";
+-import { borgSimulatePower, borgSimulateDanger } from "./trait/simulate.js";
++import { borgSimulatePower, borgSimulateDanger, borgSimulateDangerAnswer } from "./trait/simulate.js";
+ 
+ /** The one field every activation source (kind/ego/artifact) carries. */
+ interface ActivationLike {
+@@ -79,6 +79,7 @@ export interface CoreShopLookup {
+ 
+ /** What the host supplies to build real resolvers. */
+ export interface CoreResolverInput {
++  birthRandarts?: () => boolean | null;
+   /** Default race symbols from composed content, indexed by bound race index. */
+   raceSymbol?: (ridx: number) => string | undefined;
+   bookKind?: BorgContext["bookKind"];
+@@ -280,5 +281,7 @@ export function makeCoreResolvers(input: CoreResolverInput): BorgResolvers {
+     // correct without asking the host anything.
+     loadoutPower: (ctx, change) => borgSimulatePower(ctx, change),
+     loadoutDanger: (ctx, change) => borgSimulateDanger(ctx, change),
++    loadoutDangerAnswer: (ctx, change) => borgSimulateDangerAnswer(ctx, change),
++    birthRandarts: () => input.birthRandarts?.() ?? null,
+   };
+ }
+diff --git a/src/think-session.ts b/src/think-session.ts
+index d132dd1..7bdf09e 100644
+--- a/src/think-session.ts
++++ b/src/think-session.ts
+@@ -33,7 +33,7 @@
+  */
+ 
+ import type { ItemView } from "@rpgm-tools/neo-angband-core";
+-import type { BorgLoadoutChange, BorgLoadoutRef } from "./trait/simulate.js";
++import type { BorgLoadoutDangerAnswer, BorgLoadoutChange, BorgLoadoutRef } from "./trait/simulate.js";
+ import type { BorgContext } from "./context.js";
+ import type { FactsResolver } from "./danger/index.js";
+ import type { KindCostResolver } from "./perceive.js";
+@@ -83,6 +83,9 @@ import { borgHasDistanceAttack } from "./fight/attack.js";
+  * to the faithful conservative behavior documented on the field.
+  */
+ export interface BorgResolvers {
++  /** Declared birth option from the current public frame; null/absent means unreadable. */
++  birthRandarts?: () => boolean | null;
++  loadoutDangerAnswer?: (ctx: BorgContext, change: BorgLoadoutChange) => BorgLoadoutDangerAnswer | null;
+   /** Local danger after a simulated equipment change. */
+   loadoutDanger?: (ctx: BorgContext, change: BorgLoadoutChange) => number | null;
+   bookKind?: BorgContext["bookKind"];
+@@ -366,8 +369,13 @@ export function buildItemDeps(session: ThinkSession): WearDeps & SpaceDeps & Rec
+   const dangerHere = borgDanger(c, py, px, 1, true, false);
+   const fear = getFearCaches(w);
+   const res = session.resolvers;
++  const randarts = res.birthRandarts?.();
+   return {
+     danger: dangerHere,
++    ...(randarts !== null && randarts !== undefined ? { randarts } : {}),
++    backupEval: (item: ItemView, slot: number) => res.loadoutDangerAnswer?.(c, {
++      wieldAt: [{ item: { from: "gear", handle: item.handle }, slot }],
++    }) ?? null,
+     isIdent,
+     needsIdent,
+     worthId: borgItemWorthId,
+diff --git a/src/trait/backup-caps.ts b/src/trait/backup-caps.ts
+new file mode 100644
+index 0000000..50fab49
+--- /dev/null
++++ b/src/trait/backup-caps.ts
+@@ -0,0 +1,48 @@
++/** Frozen selected-backup globals: C4.2.6 f3082213/current e473720 borg-trait-swap.c; no hidden object reads. */
++import type { ItemView } from "@rpgm-tools/neo-angband-core";
++import type { BorgContext } from "../context.js";
++import type { BorgDerived } from "./state.js";
++import type { BorgSpellSeam } from "./config.js";
++import { BI } from "./trait-index.js";
++import { hasFlag, resLevel } from "./item-util.js";
++import { Spell, borgSpellLegalFail } from "../item/magic.js";
++export type BackupCaps = Readonly<Partial<Record<BI, boolean>>>;
++export const noBackupCaps = (): BackupCaps => Object.freeze({});
++export function backupCaps(item: ItemView | undefined, weapon: boolean): BackupCaps {
++  if (!item) return noBackupCaps();
++  const caps: Partial<Record<BI, boolean>> = {};
++  for (const [sr, element] of [[BI.SRACID, weapon ? "ELEC" : "ACID"], [BI.SRELEC,"ELEC"], [BI.SRFIRE,"FIRE"], [BI.SRCOLD,"COLD"],
++    [BI.SRPOIS,"POIS"], [BI.SRLITE,"LIGHT"], [BI.SRDARK,"DARK"], [BI.SRSND,"SOUND"], [BI.SRSHRD,"SHARD"],
++    [BI.SRNXUS,"NEXUS"], [BI.SRNTHR,"NETHER"], [BI.SRKAOS,"CHAOS"], [BI.SRDIS,"DISEN"]] as const) caps[sr] = resLevel(item,element)>0;
++  // Preserve the C weapon acid-tail ELEC lookup. Both backup fear flags are never populated.
++  for (const [sr,flag] of [[BI.SRBLIND,"PROT_BLIND"], [BI.SRCONF,"PROT_CONF"], [BI.SHLIFE,"HOLD_LIFE"], [BI.SFRACT,"FREE_ACT"]] as const)
++    caps[sr]=hasFlag(item,flag);
++  return Object.freeze(caps);
++}
++/** C folds after both full selectors, or their FALSE-retained globals. */
++export function foldBackupCaps(ctx: BorgContext, d: BorgDerived, spells?: BorgSpellSeam): void {
++  const t=ctx.world.self.trait;
++  const legal=(name:"RESISTANCE"|"RESIST_POISON") => spells ? spells.spellLegalFail(name,15) : borgSpellLegalFail(ctx,Spell[name],15);
++  const resist=legal("RESISTANCE"), poison=legal("RESIST_POISON");
++  const available=(sr:BI,base:BI,spell=false):number =>
++    t[base] || d.weaponSwapCaps[sr] || d.armourSwapCaps[sr] || spell ? 1 : 0;
++  // Keep explicit C-order writers visible to the existing unwritten-trait guard.
++  t[BI.SRACID]=available(BI.SRACID,BI.RACID,resist);
++  t[BI.SRELEC]=available(BI.SRELEC,BI.RELEC,resist);
++  t[BI.SRFIRE]=available(BI.SRFIRE,BI.RFIRE,resist);
++  t[BI.SRCOLD]=available(BI.SRCOLD,BI.RCOLD,resist);
++  t[BI.SRPOIS]=available(BI.SRPOIS,BI.RPOIS,poison);
++  t[BI.SRFEAR]=available(BI.SRFEAR,BI.RFEAR);
++  t[BI.SRLITE]=available(BI.SRLITE,BI.RLITE);
++  t[BI.SRDARK]=available(BI.SRDARK,BI.RDARK);
++  t[BI.SRBLIND]=available(BI.SRBLIND,BI.RBLIND);
++  t[BI.SRCONF]=available(BI.SRCONF,BI.RCONF);
++  t[BI.SRSND]=available(BI.SRSND,BI.RSND);
++  t[BI.SRSHRD]=available(BI.SRSHRD,BI.RSHRD);
++  t[BI.SRNXUS]=available(BI.SRNXUS,BI.RNXUS);
++  t[BI.SRNTHR]=available(BI.SRNTHR,BI.RNTHR);
++  t[BI.SRKAOS]=available(BI.SRKAOS,BI.RKAOS);
++  t[BI.SRDIS]=available(BI.SRDIS,BI.RDIS);
++  t[BI.SHLIFE]=available(BI.SHLIFE,BI.HLIFE);
++  t[BI.SFRACT]=available(BI.SFRACT,BI.FRACT);
++}
+diff --git a/src/trait/simulate.ts b/src/trait/simulate.ts
+index ea078de..0709ded 100644
+--- a/src/trait/simulate.ts
++++ b/src/trait/simulate.ts
+@@ -74,6 +74,7 @@ import type { ItemView, PlayerView } from "@rpgm-tools/neo-angband-core";
+ import type { BorgView } from "../core-api.js";
+ import type { BorgContext } from "../context.js";
+ import type { BorgWorld } from "../world/model.js";
++import { BI } from "./trait-index.js";
+ import { borgNotice } from "./trait.js";
+ import { inheritWeaponSwap } from "./state.js";
+ import { borgPower } from "./power.js";
+@@ -216,7 +217,11 @@ export function borgSimulatePower(
+ }
+ 
+ /** borg-item-wear.c:874,955 rejects a ring swap that raises local danger. */
+-export function borgSimulateDanger(ctx: BorgContext, change: BorgLoadoutChange): number | null {
++export interface BorgLoadoutDangerAnswer {
++  readonly danger: number;
++  readonly traits: { readonly rconf: number; readonly rblind: number; readonly rlite: number; readonly rdark: number; readonly fract: number; readonly sav: number };
++}
++export function borgSimulateDangerAnswer(ctx: BorgContext, change: BorgLoadoutChange): BorgLoadoutDangerAnswer | null {
+   const answer = (ctx.view as LoadoutCapableView).simulateLoadout?.(change);
+   if (!answer) return null;
+   const simCtx: BorgContext = { ...ctx, world: shadowWorld(ctx.world), view: shadowView(ctx.view, answer) };
+@@ -228,5 +233,12 @@ export function borgSimulateDanger(ctx: BorgContext, change: BorgLoadoutChange):
+   scratch.globals = { ...live.globals, tpOtherIndices: [...live.globals.tpOtherIndices] };
+   scratch.fear = live.fear;
+   scratch.maxRange = live.maxRange;
+-  return borgDanger(simCtx, ctx.world.self.c.y, ctx.world.self.c.x, 1, true, false);
++  const t=simCtx.world.self.trait;
++  return { danger: borgDanger(simCtx, ctx.world.self.c.y, ctx.world.self.c.x, 1, true, false),
++    traits: {rconf:t[BI.RCONF]??0,rblind:t[BI.RBLIND]??0,rlite:t[BI.RLITE]??0,rdark:t[BI.RDARK]??0,fract:t[BI.FRACT]??0,sav:t[BI.SAV]??0} };
++}
++
++/** Existing scalar callers retain the same absolute local-danger answer. */
++export function borgSimulateDanger(ctx: BorgContext, change: BorgLoadoutChange): number | null {
++  return borgSimulateDangerAnswer(ctx,change)?.danger ?? null;
+ }
+diff --git a/src/trait/state.ts b/src/trait/state.ts
+index 6b26400..344c06d 100644
+--- a/src/trait/state.ts
++++ b/src/trait/state.ts
+@@ -11,6 +11,7 @@
+ 
+ import type { BorgWorld } from "../world/model.js";
+ import type { BorgTraitOpts } from "./config.js";
++import { noBackupCaps, type BackupCaps } from "./backup-caps.js";
+ import type { ArmourSwap } from "./armour-swap.js";
+ import type { WeaponSwap } from "./weapon-swap.js";
+ import { STAT_MAX } from "./trait-index.js";
+@@ -24,6 +25,8 @@ export interface BorgDerived {
+   weaponSwapOpts: BorgTraitOpts;
+   armourSwap: ArmourSwap;
+   armourSwapOpts: BorgTraitOpts;
++  weaponSwapCaps: BackupCaps;
++  armourSwapCaps: BackupCaps;
+   /** borg.need_statgain[STAT_MAX]. */
+   needStatgain: boolean[];
+   /** borg.amt_statgain[STAT_MAX]. */
+@@ -40,6 +43,8 @@ export function makeDerived(): BorgDerived {
+     weaponSwapOpts: {},
+     armourSwap: { handle: null, value: -1 },
+     armourSwapOpts: {},
++    weaponSwapCaps: noBackupCaps(),
++    armourSwapCaps: noBackupCaps(),
+     needStatgain: new Array<boolean>(STAT_MAX).fill(false),
+     amtStatgain: new Array<number>(STAT_MAX).fill(0),
+     amtBook: new Array<number>(9).fill(0),
+@@ -76,6 +81,8 @@ export function inheritWeaponSwap(scratch: BorgWorld, live: BorgWorld): void {
+   d.weaponSwapOpts = from.weaponSwapOpts;
+   d.armourSwap = from.armourSwap;
+   d.armourSwapOpts = from.armourSwapOpts;
++  d.weaponSwapCaps = from.weaponSwapCaps;
++  d.armourSwapCaps = from.armourSwapCaps;
+   store.set(scratch, d);
+ }
+ 
+diff --git a/src/trait/trait.ts b/src/trait/trait.ts
+index aa3a892..57c816a 100644
+--- a/src/trait/trait.ts
++++ b/src/trait/trait.ts
+@@ -31,6 +31,7 @@
+  */
+ 
+ import type { ItemView, PlayerView } from "@rpgm-tools/neo-angband-core";
++import { backupCaps, foldBackupCaps } from "./backup-caps.js";
+ import type { BorgContext } from "../context.js";
+ import {
+   BI,
+@@ -172,14 +173,20 @@ export function borgNotice(ctx: BorgContext, opts: BorgTraitOpts = {}): void {
+     d.armourSwapOpts = { ...d.weaponSwapOpts, ...(opts.armourSwap ? { armourSwap: { ...opts.armourSwap } } : {}) };
+     const selectedWeapon = ctx.view.inventory().find(item => item.handle === d.weaponSwap.handle) ?? null;
+     d.armourSwap = borgArmourSwap(ctx, d.armourSwapOpts, c.inven, selectedWeapon);
++    d.weaponSwapCaps = backupCaps(selectedWeapon ?? undefined, true);
++    d.armourSwapCaps = backupCaps(c.inven.find(item => item.handle === d.armourSwap.handle), false);
+   } else {
+     // borg_notice(false): the backup stays whatever the last full notice found.
+     d.weaponSwapOpts = previous.weaponSwapOpts;
+     d.weaponSwap = previous.weaponSwap;
+     d.armourSwapOpts = previous.armourSwapOpts;
+     d.armourSwap = previous.armourSwap;
++    d.weaponSwapCaps = previous.weaponSwapCaps;
++    d.armourSwapCaps = previous.armourSwapCaps;
+   }
+ 
++  foldBackupCaps(ctx, d, opts.spells ?? d.weaponSwapOpts.spells);
++
+   /* borg_game_ratio (trait.c:2926): game-turns per borg-turn, from the FINAL
+    * speed, so it is computed here rather than inside finishNotice. Every timed
+    * value the Borg keeps (resistance, no_rest_prep, goal.recalling, see_inv) is
+@@ -1095,30 +1102,6 @@ function applySpellGrants(c: Ctx): void {
+ /** Final folds (trait.c:2865-2953): swap-resists, carry, ratio, prep-fight. */
+ function finishNotice(c: Ctx): void {
+   const { t, R } = c;
+-  const s = R.spells;
+-
+-  /* Swap subsystem is out of scope; swap resists resolve to base + any spell
+-   * resistance the seam grants (trait.c:2865). Defaults: SR* == R*. */
+-  const resSpell = s.spellLegalFail("RESISTANCE", 15);
+-  t[BI.SRACID] = t[BI.RACID]! || resSpell ? 1 : 0;
+-  t[BI.SRELEC] = t[BI.RELEC]! || resSpell ? 1 : 0;
+-  t[BI.SRFIRE] = t[BI.RFIRE]! || resSpell ? 1 : 0;
+-  t[BI.SRCOLD] = t[BI.RCOLD]! || resSpell ? 1 : 0;
+-  t[BI.SRPOIS] = t[BI.RPOIS]! || s.spellLegalFail("RESIST_POISON", 15) ? 1 : 0;
+-  t[BI.SRFEAR] = t[BI.RFEAR]!;
+-  t[BI.SRLITE] = t[BI.RLITE]!;
+-  t[BI.SRDARK] = t[BI.RDARK]!;
+-  t[BI.SRBLIND] = t[BI.RBLIND]!;
+-  t[BI.SRCONF] = t[BI.RCONF]!;
+-  t[BI.SRSND] = t[BI.RSND]!;
+-  t[BI.SRSHRD] = t[BI.RSHRD]!;
+-  t[BI.SRNXUS] = t[BI.RNXUS]!;
+-  t[BI.SRNTHR] = t[BI.RNTHR]!;
+-  t[BI.SRKAOS] = t[BI.RKAOS]!;
+-  t[BI.SRDIS] = t[BI.RDIS]!;
+-  t[BI.SHLIFE] = t[BI.HLIFE]!;
+-  t[BI.SFRACT] = t[BI.FRACT]!;
+-
+   /* Carry capacity (trait.c:2914). Encumbrance speed penalty is already folded
+    * into the game-derived BI_SPEED, so it is not re-applied here. */
+   t[BI.CARRY] = BORG_ADJ_STR_WGT[t[BI.STR_INDEX]!]! * 100;
+diff --git a/src/item/backup-tactical.test.ts b/src/item/backup-tactical.test.ts
+new file mode 100644
+index 0000000..5b070fb
+--- /dev/null
++++ b/src/item/backup-tactical.test.ts
+@@ -0,0 +1,165 @@
++/** Source50: actual known registered gear; explicitly modelled local-danger policy inputs. */
++import { beforeAll, afterEach, expect, it } from "vitest";
++import type { AgentView, AgentCommand, ItemView } from "@rpgm-tools/neo-angband-core";
++import { registeredKnownItem, records, type RegisteredItemSpec } from "../../test/fixtures/registered-items.js";
++import { itemAnalyzer, type ItemAnalyzer } from "../api2/records.js";
++import { itemView } from "../api2/world.js";
++import { makeFakeActions, makeScenarioView } from "../harness.js";
++import type { BorgContext } from "../context.js";
++import { BorgWorld } from "../world/model.js";
++import { makeBorgRng } from "../rng.js";
++import { borgNotice } from "../trait/trait.js";
++import { BI } from "../trait/trait-index.js";
++import { getDerived, inheritWeaponSwap } from "../trait/state.js";
++import { setBorgCfg, resetBorgCfg } from "../trait/config.js";
++import { getDangerGlobals } from "../danger/index.js";
++import { getFightState } from "../fight/state.js";
++import { borgCaution } from "../fight/caution.js";
++import { buildThinkSession,installThinkSession,primeSession } from "../think-session.js";
++import { borgDanger,getFearCaches } from "../danger/index.js";
++import { TV } from "./svals.js";
++import { defaultSpellSeam } from "../trait/config.js";
++import * as Wear from "./item-wear.js";
++let analyze: ItemAnalyzer;
++beforeAll(async () => { analyze = await itemAnalyzer({ content: { records: async (name: string) => ({ ok: true, value: records(name) }) } } as never); });
++afterEach(resetBorgCfg);
++interface CandidateAnswer { danger: number; traits: { rconf: number; rblind: number; rlite: number; rdark: number; fract: number; sav: number } }
++const safe = (danger: number): CandidateAnswer => ({ danger, traits: { rconf: 1, rblind: 1, rlite: 0, rdark: 0, fract: 1, sav: 100 } });
++interface BackupDeps { randarts?: boolean; backupEval?: (item: ItemView, slot: number) => CandidateAnswer | null }
++const run = (ctx: BorgContext, p = 50, d: BackupDeps = { randarts: false, backupEval: item => safe(item.handle === 3 ? 10 : 40) }): AgentCommand | null =>
++  (Wear as typeof Wear & { borgBackupSwap?: (ctx: BorgContext, danger: number, deps?: BackupDeps) => AgentCommand | null }).borgBackupSwap?.(ctx, p, d) ?? null;
++function scene({ weapon = true, armour = true, maxDepth = 60, usesSwaps = true,
++  weaponSpec = {artifact:"of Éowyn"} as RegisteredItemSpec, armourSpec = {artifact:"'Dal-i-thalion'"} as RegisteredItemSpec } = {}) {
++  setBorgCfg({ usesSwaps });
++  const known = (spec: RegisteredItemSpec, handle: number) => itemView(registeredKnownItem(spec, handle), analyze);
++  const main = known({artifact:"of Pain"}, 1), spare = known(weaponSpec, 2), boots = known(armourSpec, 3);
++  const inventory = [...(weapon ? [spare] : []), ...(armour ? [boots] : [])];
++  const equipment: Array<ItemView | null> = Array(12).fill(null); equipment[0] = main;
++  const base = makeScenarioView({ player: { cls: "Warrior", race: "Human", depth: 60, maxDepth, level: 40, maxLevel: 40,
++    hp: 100, maxHp: 100, sp: 0, maxSp: 0, stats: [118,118,118,118,118], blows: 400, toHit: 20, toDam: 10, grid: { x: 10, y: 10 } } });
++  const view: AgentView = { ...base, inventory: () => inventory, equipment: () => equipment };
++  const ctx: BorgContext = { view, world: new BorgWorld(), act: makeFakeActions(), rng: makeBorgRng(1) };
++  borgNotice(ctx); ctx.world.self.c = { x: 10, y: 10 }; getDangerGlobals(ctx.world).avoidance = 100;
++  return { ctx, inventory, equipment, spare, boots };
++}
++it("folds selected actual Nether/FREE_ACT/CONF boots into backup availability without base resistance", () => {
++  const s = scene({ weapon: false }); const t=s.ctx.world.self.trait;
++  expect(s.boots.artifactName).toBe("'Dal-i-thalion'"); expect(s.boots.flags).toContain("FREE_ACT");
++  expect(getDerived(s.ctx.world).armourSwap.handle).toBe(3);
++  expect(t[BI.RNTHR]).toBe(0); expect(t[BI.FRACT]).toBe(0); expect(t[BI.RCONF]).toBe(0);
++  expect([t[BI.SRNTHR],t[BI.SFRACT],t[BI.SRCONF]]).toEqual([1,1,1]);
++});
++it("folds the selected actual Nether weapon independently of armour", () => {
++  const s=scene({armour:false}); expect(s.spare.resists).toContainEqual({element:"NETHER",level:1});
++  expect(getDerived(s.ctx.world).weaponSwap.handle).toBe(2); expect(s.ctx.world.self.trait[BI.RNTHR]).toBe(0);
++  expect(s.ctx.world.self.trait[BI.SRNTHR]).toBe(1);
++});
++it("retains backup capabilities under FALSE after the selected item leaves the scratch pack", () => {
++  const s=scene({weapon:false}); s.inventory.length=0; borgNotice(s.ctx,{noticeSwap:false});
++  expect(getDerived(s.ctx.world).armourSwap.handle).toBe(3); expect(s.ctx.world.self.trait[BI.SRNTHR]).toBe(1);
++  borgNotice(s.ctx); expect(getDerived(s.ctx.world).armourSwap.handle).toBeNull(); expect(s.ctx.world.self.trait[BI.SRNTHR]).toBe(0);
++});
++it("copies selected capabilities into an isolated scratch world without live mutation", () => {
++  const s=scene({weapon:false}); const before=[...s.ctx.world.self.trait], state=getDerived(s.ctx.world);
++  const scratch={...s.ctx,world:new BorgWorld(),view:{...s.ctx.view,inventory:()=>[]}};
++  inheritWeaponSwap(scratch.world,s.ctx.world); borgNotice(scratch,{noticeSwap:false});
++  expect(scratch.world.self.trait[BI.SFRACT]).toBe(1); expect(getDerived(s.ctx.world)).toBe(state); expect(s.ctx.world.self.trait).toEqual(before);
++});
++it("emits the ordinary weapon command for the original C82 higher-danger winner", () => {
++  const s=scene(); expect(getDerived(s.ctx.world).weaponSwap.handle).toBe(2); expect(getDerived(s.ctx.world).armourSwap.handle).toBe(3);
++  expect(run(s.ctx)).toEqual({code:"wield",args:{handle:2}}); // armour10 vs weapon40; preserve original C comparator.
++});
++it("keeps equal-danger ties on the weapon", () => { const s=scene(); expect(run(s.ctx,50,{randarts:false,backupEval:()=>safe(30)})).toEqual({code:"wield",args:{handle:2}}); });
++it("can wear the sole armour candidate when it clears the native ceiling", () => { const s=scene({weapon:false}); expect(run(s.ctx)).toEqual({code:"wield",args:{handle:3}}); });
++it("can wear the sole weapon candidate without an armour snapshot", () => {
++  const s=scene({armour:false}); expect(run(s.ctx)).toEqual({code:"wield",args:{handle:2}});
++});
++it.each([BI.ISHUNGRY,BI.ISWEAK])("refuses the maneuver under condition %i", bi => { const s=scene(); s.ctx.world.self.trait[bi]=1; expect(run(s.ctx)).toBeNull(); });
++it("refuses panel count301", () => { const s=scene(); s.ctx.world.self.timeThisPanel=301; expect(run(s.ctx)).toBeNull(); });
++it("refuses a candidate that does not improve current danger", () => { const s=scene(); expect(run(s.ctx,40)).toBeNull(); });
++it("refuses the native chosen danger above half avoidance", () => { const s=scene(); expect(run(s.ctx,90,{randarts:false,backupEval:()=>safe(51)})).toBeNull(); });
++it("refuses absent loadout evaluation instead of inventing a score", () => { const s=scene(); expect(run(s.ctx,50,{randarts:false})).toBeNull(); });
++it("refuses an unresolved evaluation", () => { const s=scene(); expect(run(s.ctx,50,{randarts:false,backupEval:()=>null})).toBeNull(); });
++it("refuses when there are no selected backups", () => { const s=scene({weapon:false,armour:false}); expect(run(s.ctx)).toBeNull(); });
++it("does not silently repair the absent weapon winner for zero-danger armour tie", () => { const s=scene({weapon:false}); expect(run(s.ctx,50,{randarts:false,backupEval:()=>safe(0)})).toBeNull(); });
++it("does not fold unavailable backups when swaps are off", () => { const s=scene({usesSwaps:false}); expect(s.ctx.world.self.trait[BI.SRNTHR]).toBe(0); expect(run(s.ctx)).toBeNull(); });
++
++// Explicit model-danger/critical-trait policy boundaries; actual command tests are separate.
++it.each([300,301])("applies the panel guard at %i",panels=>{const s=scene();s.ctx.world.self.timeThisPanel=panels;expect(run(s.ctx)?.code??null).toBe(panels===300?"wield":null);});
++it.each([89,90])("applies the tactical max-depth ceiling at %i",depth=>{const s=scene();s.ctx.world.self.trait[BI.MAXDEPTH]=depth;expect(run(s.ctx)?.code??null).toBe(depth===89?"wield":null);});
++it("keeps the digger exception available below armour's depth50 gate",()=>{
++  const s=scene({armour:false,maxDepth:40,weaponSpec:{kind:"& Mattock~"}});
++  expect(getDerived(s.ctx.world).weaponSwap.handle).toBe(2);expect(getDerived(s.ctx.world).armourSwap.handle).toBeNull();
++  expect(run(s.ctx)).toEqual({code:"wield",args:{handle:2}});
++});
++it.each([[50,51,true],[51,90,false]] as const)("uses inclusive ordinary ceiling %i with current danger%i",(candidate,p,allowed)=>{
++  const s=scene();expect(run(s.ctx,p,{randarts:false,backupEval:()=>safe(candidate)})?.code??null).toBe(allowed?"wield":null);
++});
++it.each([[66,true],[67,false]] as const)("uses the nearby-unique ceiling at%i",(candidate,allowed)=>{
++  const s=scene();getFightState(s.ctx.world).fightingUnique=1;
++  expect(run(s.ctx,80,{randarts:false,backupEval:()=>safe(candidate)})?.code??null).toBe(allowed?"wield":null);
++});
++it("does not substitute whole-level unique knowledge for the near-unique ceiling",()=>{
++  const s=scene();s.ctx.world.facts.uniqueOnLevel=42;
++  expect(run(s.ctx,80,{randarts:false,backupEval:()=>safe(66)})).toBeNull();
++});
++it("refuses loss of saved confusion resistance even at saving throw100",()=>{
++  const s=scene();s.ctx.world.self.trait[BI.RCONF]=1;
++  expect(run(s.ctx,50,{randarts:false,backupEval:()=>({...safe(20),traits:{...safe(20).traits,rconf:0}})})).toBeNull();
++});
++it("retains the native weapon-only zero-initialized critical snapshot",()=>{
++  const s=scene({armour:false});s.ctx.world.self.trait[BI.RCONF]=1;
++  expect(run(s.ctx,50,{randarts:false,backupEval:()=>({...safe(20),traits:{...safe(20).traits,rconf:0}})})).toEqual({code:"wield",args:{handle:2}});
++});
++it.each([[99,false],[100,true]] as const)("guards paralysis loss with saving throw%i",(sav,allowed)=>{
++  const s=scene();s.ctx.world.self.trait[BI.FRACT]=1;
++  expect(run(s.ctx,50,{randarts:false,backupEval:()=>({danger:20,traits:{...safe(20).traits,fract:0,sav}})})?.code??null).toBe(allowed?"wield":null);
++});
++it.each([[99,0,0,false],[100,0,0,true],[99,1,0,true],[99,0,1,true]] as const)("guards blindness loss at sav%i light%i dark%i",(sav,rlite,rdark,allowed)=>{
++  const s=scene();s.ctx.world.self.trait[BI.RBLIND]=1;
++  expect(run(s.ctx,50,{randarts:false,backupEval:()=>({danger:20,traits:{...safe(20).traits,rblind:0,rlite,rdark,sav}})})?.code??null).toBe(allowed?"wield":null);
++});
++it("preserves the weapon acid-tail ELEC behavior for actual known acid-only gear",()=>{
++  const s=scene({armour:false,weaponSpec:{artifact:"'Angrist'"}});expect(s.spare.resists).toContainEqual({element:"ACID",level:1});
++  expect(getDerived(s.ctx.world).weaponSwap.handle).toBe(2);expect(s.ctx.world.self.trait[BI.SRACID]).toBe(0);
++});
++it("preserves the weapon acid-tail ELEC behavior for actual known electricity gear",()=>{
++  const s=scene({armour:false,weaponSpec:{artifact:"'Dethanc'"}});expect(s.spare.resists).toContainEqual({element:"ELEC",level:1});
++  expect(getDerived(s.ctx.world).weaponSwap.handle).toBe(2);expect(s.ctx.world.self.trait[BI.SRACID]).toBe(1);
++});
++it("does not manufacture backup fear flags for either actual known selector",()=>{
++  const s=scene({armourSpec:{artifact:"of Thorongil"}});expect(s.spare.flags).toContain("PROT_FEAR");expect(s.boots.flags).toContain("PROT_FEAR");
++  expect(getDerived(s.ctx.world).weaponSwap.handle).toBe(2);expect(getDerived(s.ctx.world).armourSwap.handle).toBe(3);
++  expect(s.ctx.world.self.trait[BI.RFEAR]).toBe(0);expect(s.ctx.world.self.trait[BI.SRFEAR]).toBe(0);
++});
++it.each([15,16])("keeps explicit spell-profile availability at the C fifteen-percent boundary%i",fail=>{
++  const s=scene({weapon:false,armour:false});const calls:string[]=[];
++  borgNotice(s.ctx,{spells:{...defaultSpellSeam(),spellLegalFail:(name,ceiling)=>{calls.push(name+":"+ceiling);return fail<=ceiling;}}});
++  expect(calls).toContain("RESISTANCE:15");expect(calls).toContain("RESIST_POISON:15");
++  expect([BI.SRACID,BI.SRELEC,BI.SRFIRE,BI.SRCOLD,BI.SRPOIS].map(b=>s.ctx.world.self.trait[b])).toEqual(Array(5).fill(fail===15?1:0));
++});
++it("uses actual partial-rune artifact knowledge for the randart guard",()=>{
++  const s=scene({weapon:false,armourSpec:{artifact:"'Dal-i-thalion'",known:false}});
++  expect(s.boots.artifact).toBe(true);expect((s.boots as ItemView&{unknownRunes?:boolean}).unknownRunes).toBe(true);
++  expect(getDerived(s.ctx.world).armourSwap.handle).toBe(3);
++  expect(run(s.ctx,50,{randarts:true,backupEval:()=>safe(20)})).toBeNull();
++  expect(run(s.ctx,50,{backupEval:()=>safe(20)})).toBeNull();
++  expect(run(s.ctx,50,{randarts:false,backupEval:()=>safe(20)})).toEqual({code:"wield",args:{handle:3}});
++});
++
++it.each([[33,false],[34,true]] as const)("wires caution's strict danger trigger while fleeing at%i",(danger,allowed)=>{
++  const s=scene();let calls=0;const session=buildThinkSession({loadoutDangerAnswer:()=>{calls++;return safe(20);}});
++  installThinkSession(s.ctx.world,session);primeSession(session,s.ctx);s.ctx.world.self.goal.fleeing=true;
++  getFearCaches(s.ctx.world).region2d[0]![0]=danger;
++  expect(borgDanger(s.ctx,10,10,1,true,false)).toBe(danger);
++  const cmd=borgCaution(s.ctx,session.flow.state);expect(cmd?.code==="wield").toBe(allowed);expect(calls>0).toBe(allowed);
++});
++it("keeps eligible healing ahead of the backup attempt in the production caution rung",()=>{
++  const s=scene();const potion=itemView(registeredKnownItem({kind:"Healing"},4),analyze);expect(potion.tval).toBe(TV.POTION);
++  s.inventory.push(potion);const player=s.ctx.view.player();
++  // Model injury/stun makes native healing deterministic: stun bypasses its existing probabilistic gate.
++  const ctx={...s.ctx,view:{...s.ctx.view,player:()=>({...player,hp:10,status:{...player.status,stun:5}})}};borgNotice(ctx);
++  let calls=0;const session=buildThinkSession({loadoutDangerAnswer:()=>{calls++;return safe(1);}});
++  installThinkSession(ctx.world,session);primeSession(session,ctx);getFearCaches(ctx.world).region2d[0]![0]=50;
++  expect(borgCaution(ctx,session.flow.state)).toEqual({code:"quaff",args:{handle:4}});expect(calls).toBe(0);
++});
+diff --git a/src/item/backup-public.test.ts b/src/item/backup-public.test.ts
+new file mode 100644
+index 0000000..3a5af6e
+--- /dev/null
++++ b/src/item/backup-public.test.ts
+@@ -0,0 +1,155 @@
++/** Source50: registered public loadout inspection and real headless command contracts, not natural lives. */
++import { afterEach,beforeAll,expect,it } from "vitest";
++import * as Core from "@rpgm-tools/neo-angband-core";
++import type { ItemView,AgentView } from "@rpgm-tools/neo-angband-core";
++import { registeredPack,type RegisteredItemSpec,records } from "../../test/fixtures/registered-items.js";
++import { simulationView,itemView } from "../api2/world.js";
++import { createBridge } from "../api2/host.js";
++import { fakeGame } from "../harness-api2.js";
++import { makeCoreResolvers } from "../resolvers.js";
++import { Spell,borgGetSpellNumber,borgSpellLegalFail } from "./magic.js";
++import type { KnownWorldData } from "@rpgm-tools/neo-angband-mod-sdk";
++import { itemAnalyzer,type ItemAnalyzer } from "../api2/records.js";
++import { makeFakeActions } from "../harness.js";
++import { BorgWorld } from "../world/model.js";
++import type { BorgContext } from "../context.js";
++import { makeBorgRng } from "../rng.js";
++import { perceive,makePerceiveMemo } from "../perceive.js";
++import { borgNotice } from "../trait/trait.js";
++import { getDerived } from "../trait/state.js";
++import { borgSimulateDangerAnswer } from "../trait/simulate.js";
++import { getDangerGlobals } from "../danger/index.js";
++import { getDangerState } from "../danger/state.js";
++import { resetBorgCfg } from "../trait/config.js";
++import { BI } from "../trait/trait-index.js";
++import { borgBackupSwap } from "./item-wear.js";
++let analyze:ItemAnalyzer;
++beforeAll(async()=>{analyze=await itemAnalyzer({content:{records:async(name:string)=>({ok:true,value:records(name)})}} as never);});
++afterEach(resetBorgCfg);
++const safe=(danger:number)=>({danger,traits:{rconf:1,rblind:1,rlite:0,rdark:0,fract:1,sav:100}});
++function fixture() {
++  const game=Core.startGame(registeredPack(),{seed:441,depth:1,raceName:"Human",className:"Warrior"});
++  const {state}=game,gear=state.gear!,reg=game.booted.registries.objects,z=game.booted.registries.constants;
++  function add(spec:RegisteredItemSpec,number=1) {
++    const art=spec.artifact?reg.artifacts.find(a=>a?.name===spec.artifact):undefined;
++    if(spec.artifact&&!art)throw Error("missing registered artifact:"+spec.artifact);
++    const kind=art?reg.lookupKind(art.tval,art.sval):reg.kinds.find(k=>k.name===spec.kind);
++    if(!kind)throw Error("missing registered kind:"+spec.kind);
++    const obj=Core.objectPrep(state.rng,reg,z,kind,60,"maximise");
++    if(art){obj.artifact=art;Core.copyArtifactData(state.rng,reg,obj,art);}
++    obj.number=number;obj.notice|=Core.OBJ_NOTICE.ASSESSED;
++    if(spec.toA!==undefined)obj.toA=spec.toA;
++    game.flavor.objectFlavorAware(kind,state.flavorAwareDeps??Core.NOOP_FLAVOR_AWARE_DEPS);
++    Core.playerLearnAllRunes(state.actor.player,state.runeEnv);
++    const handle=Core.gearAdd(gear,obj);gear.pack.push(handle);gear.inven=[...gear.pack];
++    state.actor.player.upkeep.totalWeight=Core.gearTotalWeight(gear);return handle;
++  }
++  const dispatch=(handle:number)=>game.registry.get("wield")!(state,{code:"wield",args:{handle}});
++  const main=add({artifact:"of Pain"});expect(dispatch(main)).toBe(z.moveEnergy);
++  // Disposable fixture staging, never a Borg drop policy: retain worn gear, clear starting pack.
++  for(const h of gear.pack)gear.store.delete(h);gear.pack=[];gear.inven=[];gear.quiver=[];
++  state.actor.player.upkeep.totalWeight=Core.gearTotalWeight(gear);
++  const deps={reg,describe:(obj:Core.GameObject)=>Core.describeObject(state,obj,Core.ODESC.PREFIX|Core.ODESC.FULL)};
++  function simulation(change:Parameters<typeof Core.simulateLoadout>[1]={}) {
++    const sim=Core.simulateLoadout(state,change,{viewDeps:deps});if(!sim)throw Error("registered loadout refused");
++    const known=Core.knownLoadoutSimulation(state,sim);expect(known.unresolved).toEqual([]);
++    return {known,frame:simulationView(new Map())({...known,unresolved:[]})};
++  }
++  function context() {
++    const {known,frame}=simulation();
++    // Only selection depth is a MODEL policy input; player-derived combat stats and actual handles are not remapped.
++    const player={...frame.after.player,maxDepth:60};
++    const base=Core.createAgentView(state,undefined,deps);
++    const view:AgentView={...base,player:()=>player,inventory:()=>known.after.inventory.map(item=>itemView(item,analyze)),
++      equipment:()=>known.after.equipment.map(item=>item?itemView(item,analyze):null),simulateLoadout:change=>simulation(change).frame};
++    const ctx:BorgContext={view,world:new BorgWorld(),act:makeFakeActions(),rng:makeBorgRng(1)};
++    borgNotice(ctx);perceive(ctx.world,view,makePerceiveMemo());ctx.world.self.c={...player.grid};getDangerGlobals(ctx.world).avoidance=100;return ctx;
++  }
++  function fill() {while(gear.pack.length<z.packSize)add({kind:"Chain Mail~",toA:gear.pack.length});expect(Core.packSlotsUsed(gear,z)).toBe(z.packSize);}
++  return {game,state,gear,reg,z,add,dispatch,simulation,context,fill,main};
++}
++it("emits a real positive gear handle and the ordinary command wears exactly that known weapon",()=>{
++  const f=fixture(),weapon=f.add({artifact:"of Éowyn"}),armour=f.add({artifact:"'Dal-i-thalion'"});const ctx=f.context();
++  expect(getDerived(ctx.world).weaponSwap.handle).toBe(weapon);expect(getDerived(ctx.world).armourSwap.handle).toBe(armour);
++  expect(ctx.view.inventory().find(i=>i.handle===weapon)?.artifactName).toBe("of Éowyn");expect(weapon).toBeGreaterThan(0);
++  const cmd=borgBackupSwap(ctx,50,{randarts:false,backupEval:item=>safe(item.handle===armour?10:40)});
++  expect(cmd).toEqual({code:"wield",args:{handle:weapon}});const turn=f.state.turn;
++  expect(f.game.registry.get("wield")!(f.state,cmd!)).toBe(f.z.moveEnergy);
++  expect(f.state.actor.player.equipment[0]).toBe(weapon);expect(f.gear.store.get(weapon)?.number).toBe(1);
++  expect(f.gear.pack).toContain(f.main);expect(f.state.turn).toBe(turn); // Handler returns energy; scheduler turns are not advanced here.
++});
++it("keeps a full pack legal for a one-unit backup because wearing it frees its own slot",()=>{
++  const f=fixture(),weapon=f.add({artifact:"of Éowyn"});f.fill();const ctx=f.context();expect(getDerived(ctx.world).weaponSwap.handle).toBe(weapon);
++  const messages:string[]=[];f.state.msg=message=>messages.push(message);
++  const cmd=borgBackupSwap(ctx,50,{randarts:false,backupEval:()=>safe(20)});expect(cmd).toEqual({code:"wield",args:{handle:weapon}});
++  expect(f.game.registry.get("wield")!(f.state,cmd!)).toBe(f.z.moveEnergy);expect(f.state.actor.player.equipment[0]).toBe(weapon);
++  expect(messages).not.toContain("Your pack overflows!");
++  expect(Core.packSlotsUsed(f.gear,f.z)).toBe(f.z.packSize);expect(f.gear.pack).toContain(f.main);
++});
++it("lets Core split a nonartifact stack and own overflow without emitting a drop strategy",()=>{
++  const f=fixture(),weapon=f.add({kind:"& Blade~ of Chaos"},2);f.fill();const ctx=f.context();expect(getDerived(ctx.world).weaponSwap.handle).toBe(weapon);
++  const messages:string[]=[];f.state.msg=message=>messages.push(message);
++  const cmd=borgBackupSwap(ctx,50,{randarts:false,backupEval:()=>safe(20)});expect(cmd).toEqual({code:"wield",args:{handle:weapon}});
++  expect(f.game.registry.get("wield")!(f.state,cmd!)).toBe(f.z.moveEnergy);
++  const worn=f.state.actor.player.equipment[0]!;expect(worn).not.toBe(weapon);expect(f.gear.store.get(worn)?.number).toBe(1);
++  expect(Core.packSlotsUsed(f.gear,f.z)).toBeLessThanOrEqual(f.z.packSize);
++  expect(messages).toContain("Your pack overflows!");expect(messages.some(m=>m.startsWith("You drop "))).toBe(true);
++  const inventory=Core.buildKnownWorld(f.state,{reg:f.reg}).inventory!;
++  expect(inventory.find(i=>i.handle===weapon)?.number).toBe(1);
++  expect(f.gear.pack).not.toContain(f.main);expect(inventory.some(i=>i.handle===f.main)).toBe(false);
++  // Optional floor-conservation visibility is retained as a diagnostic artifact, not a CI claim.
++
++});
++it.each([false,true])("preserves generic ring placement with both-full=%s",both=>{
++  const f=fixture(),first=f.add({artifact:"'Nenya'"});expect(f.dispatch(first)).toBe(f.z.moveEnergy);expect(f.state.actor.player.equipment[2]).toBe(first);
++  let second:number|undefined;if(both){second=f.add({artifact:"'Vilya'"});expect(f.dispatch(second)).toBe(f.z.moveEnergy);expect(f.state.actor.player.equipment[3]).toBe(second);}
++  const ring=f.add({artifact:"'Narya'"}),ctx=f.context(),seen:number[]=[];expect(getDerived(ctx.world).armourSwap.handle).toBe(ring);
++  const cmd=borgBackupSwap(ctx,50,{randarts:false,backupEval:(_item,slot)=>{seen.push(slot);return safe(20);}});
++  expect(seen).toEqual([3]);expect(cmd).toEqual({code:"wield",args:{handle:ring}}); // Original C models LEFT, emits the ordinary command.
++  expect(f.game.registry.get("wield")!(f.state,cmd!)).toBe(f.z.moveEnergy);
++  expect(f.state.actor.player.equipment[both?2:3]).toBe(ring);if(both)expect(f.state.actor.player.equipment[3]).toBe(second);
++  // Pinned C item.h134–135 + messages-react149–156 likewise emit equipment 'c'/2 when both rings are full.
++});
++it("returns post-Notice critical traits from the actual known hypothetical gear and leaves live state untouched",()=>{
++  const f=fixture(),armour=f.add({artifact:"'Dal-i-thalion'"}),ctx=f.context();
++  const d=getDerived(ctx.world),traits=[...ctx.world.self.trait],pack=[...f.gear.pack],equipment=[...f.state.actor.player.equipment];
++  const globals=getDangerState(ctx.world).globals;globals.tpOtherIndices=[17];const saved=[...globals.tpOtherIndices];
++  expect(traits[BI.RCONF]).toBe(0);expect(traits[BI.FRACT]).toBe(0);expect(d.armourSwap.handle).toBe(armour);
++  const answer=borgSimulateDangerAnswer(ctx,{wieldAt:[{item:{from:"gear",handle:armour},slot:11}]});
++  expect(answer?.traits.rconf).toBe(1);expect(answer?.traits.fract).toBe(1);expect(answer?.danger).toBeGreaterThanOrEqual(0);
++  expect(getDerived(ctx.world)).toBe(d);expect(ctx.world.self.trait).toEqual(traits);expect(globals.tpOtherIndices).toEqual(saved);
++  expect(f.gear.pack).toEqual(pack);expect(f.state.actor.player.equipment).toEqual(equipment);expect(d.armourSwapCaps[BI.SRCONF]).toBe(true);
++});
++
++it("uses the production spell legality fallback from an actually learned registered book without opts.spells",async()=>{
++  const game=Core.startGame(registeredPack(),{seed:441,depth:0,className:"Mage",rolledStats:[18,18,18,18,18,18]});
++  const {state}=game,p=state.actor.player,reg=game.booted.registries.objects;
++  // Same supported disposable caster setup used by magic-play.test.ts; no private spell flags or positive BI injection.
++  state.turn=state.z.dayLength*5;state.updateBonuses?.();
++  Core.playerExpGain(p,100000000,{rng:state.rng,onLevelChange:()=>state.updateBonuses?.()});
++  Core.calcSpells(p,state.playerState!.statInd);p.csp=p.msp;p.chp=p.mhp;
++  const source=Core.createAgentView(state).spellbooks(),spell=source.flatMap(b=>b.spells).find(s=>s.name==="Resistance");
++  expect(spell).toBeDefined();const book=p.cls.magic.books[spell!.bidx]!;
++  const kind=reg.lookupKind(book.tvalIdx,book.sval)!;expect(kind.name).toBe(book.name);
++  const object=Core.objectPrep(state.rng,reg,game.booted.registries.constants,kind,p.lev,"average");
++  game.flavor.objectFlavorAware(kind,state.flavorAwareDeps??Core.NOOP_FLAVOR_AWARE_DEPS);
++  const handle=Core.invenCarry(state.gear!,p,object,game.booted.registries.constants);Core.calcInventory(state.gear!,game.booted.registries.constants);
++  expect(handle).toBeGreaterThan(0);expect(game.registry.get("study")!(state,{code:"study",args:{handle,spell:spell!.sidx}})).toBeGreaterThan(0);
++  const resolver=new Core.ContentIdResolver({objects:reg,playerRaces:game.players.races,playerClasses:game.players.classes});
++  const mod=fakeGame({engine:{api:"1",core:Core}}).mod;
++  mod.content.records=async name=>({ok:true,value:records(name)});
++  mod.content.boundRecords=async()=>({ok:true,value:reg.kinds.map(k=>({key:k.name,name:k.name,index:k.kidx,tval:k.tval,owner:"core"}))});
++  mod.view.world=async()=>({ok:true,value:Core.buildKnownWorld(state,{reg,resolver}) as KnownWorldData});
++  const bridge=createBridge(mod);await bridge.prime();const resolvers=makeCoreResolvers(bridge.resolverInput());
++  const view=(await bridge.readWorld())!.view;
++  const ctx:BorgContext={view,world:new BorgWorld(),act:makeFakeActions(),rng:makeBorgRng(1),bookKind:resolvers.bookKind,spellEffect:resolvers.spellEffect};
++  borgNotice(ctx);expect(borgGetSpellNumber(ctx,Spell.RESISTANCE)).toBe(spell!.sidx);
++  expect(ctx.view.spellbooks().flatMap(b=>b.spells).find(s=>s.sidx===spell!.sidx)?.learned).toBe(true);
++  expect(borgSpellLegalFail(ctx,Spell.RESISTANCE,15)).toBe(true);
++  expect(ctx.world.self.trait[BI.RACID]).toBe(0);expect(ctx.world.self.trait[BI.SRACID]).toBe(1);
++  // Only disposable fixture setup removes the book; the Borg receives no new drop policy.
++  expect(game.registry.get("drop")!(state,{code:"drop",args:{handle,quantity:1}})).toBeGreaterThan(0);
++  const noBook={...ctx,view:(await bridge.readWorld())!.view};borgNotice(noBook);
++  expect(borgSpellLegalFail(noBook,Spell.RESISTANCE,15)).toBe(false);expect(noBook.world.self.trait[BI.SRACID]).toBe(0);
++  await bridge.dispose();
++});
+diff --git a/src/api2/bridge.test.ts b/src/api2/bridge.test.ts
+index 222fbc2..312104e 100644
+--- a/src/api2/bridge.test.ts
++++ b/src/api2/bridge.test.ts
+@@ -394,3 +394,20 @@ describe("default monster symbols through the API 2 bridge", () => {
+     await bridge.dispose();
+   });
+ });
++
++
++describe("public birth options for backup equipment",()=>{
++  it.each([true,false,null] as const)("preserves the declared birth flag or denial (%s)",async flag=>{
++    const game=fakeGame({engine:{api:"1",core:Core,state:{actor:{player:{noscore:0}}}}});
++    const mod={...game.mod,view:{...game.mod.view,options:async()=>flag===null?{ok:false as const,reason:"not-granted",code:"not-granted",message:"player read denied"}:{ok:true as const,value:{birth:{birth_randarts:flag},values:{},hitpointWarn:0,delayFactor:0,lazymoveDelay:0}}}};
++    const bridge=createBridge(mod as never);await bridge.prime();await bridge.readWorld();
++    expect(bridge.resolverInput().birthRandarts?.()).toBe(flag);
++    expect(makeCoreResolvers(bridge.resolverInput()).birthRandarts?.()).toBe(flag);await bridge.dispose();
++  });
++  it("refreshes birth options on a new public world frame",async()=>{
++    const game=fakeGame({engine:{api:"1",core:Core,state:{actor:{player:{noscore:0}}}}});let flag=true;
++    const mod={...game.mod,view:{...game.mod.view,options:async()=>({ok:true as const,value:{birth:{birth_randarts:flag},values:{},hitpointWarn:0,delayFactor:0,lazymoveDelay:0}})}};
++    const bridge=createBridge(mod as never);await bridge.prime();await bridge.readWorld();expect(bridge.resolverInput().birthRandarts?.()).toBe(true);
++    flag=false;await bridge.readWorld();expect(bridge.resolverInput().birthRandarts?.()).toBe(false);await bridge.dispose();
++  });
++});
+diff --git a/src/trait/trait.test.ts b/src/trait/trait.test.ts
+index 9235a45..589cd5e 100644
+--- a/src/trait/trait.test.ts
++++ b/src/trait/trait.test.ts
+@@ -284,8 +284,8 @@ describe("borg_power weights (borg-power.c)", () => {
+     /* speed@110 = 55000 (power.c:298), low-level blows bonus = 45000
+      * (power.c:167, CLEVEL<=10 * BLOWS 1), max-stat rewards = 190000
+      * (power.c:1687), deep-prep bonus = 40000 (town ok, dlvl 2 blocked on
+-     * light). 55000 + 45000 + 190000 + 40000, minus the C no-weapon-backup
+-     * sentinel1 (power.c:1907), =329999. Armour remains outside this leaf. */
++     * light). 55000 + 45000 + 190000 + 40000, minus both C missing-backup
++     * sentinels (weapon and armour, each -1), =329998. */
+     const ctx = mkCtx({}, [], []);
+     ctx.world.self.trait = zeroTrait();
+     // C adds both missing-backup sentinels (-1 weapon, -1 armour).

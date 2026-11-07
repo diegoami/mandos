@@ -1,0 +1,168 @@
+{
+  "baseline": "a70887939b271093f4ccde039b658602158ba1cf",
+  "sourceRuntime": "fefd34131da5e7892d366315a28c3ace43e4cfae",
+  "sourceFinalTests": "352201a9cf47d88fb8ba67beb5a548bb41f1c95e",
+  "sourcePR": "https://github.com/diegoami/neo-angband-borg-mod-tracker/pull/53",
+  "sourceIssue": "https://github.com/diegoami/neo-angband-borg-mod-tracker/issues/50",
+  "testOnlyCommit": "14cad52305427a77768beb3f246807aa80eebcf1",
+  "runtimeCommit": "85999d10450a8cb0ae3a7d3fa292c77c715844bf",
+  "runtimeDeltaMatchesSource": true,
+  "before": {
+    "failed": 8,
+    "passed": 10
+  },
+  "matchedAfter": {
+    "passed": 18,
+    "failed": 0
+  },
+  "focused": {
+    "passed": 620,
+    "files": 34,
+    "skipped": 0
+  },
+  "CIInventory": {
+    "tests": 1434,
+    "files": 86
+  },
+  "pluginSha256": "d4b8351cb5eb4b8ad9d86bfee47b456b218d3e3df1bf787c37dd5d75b9212d7c",
+  "localDefaultNode": "26.13.0",
+  "edgeFocus": {
+    "node": "22.23.4",
+    "tests": 155,
+    "files": 9,
+    "skipped": 0,
+    "oneSDK": true,
+    "samePlugin": true
+  },
+  "units": [
+    {
+      "path": "patches/c-translations/CBUG-0004-cold-melee.patch",
+      "sha256": "16d1a7d416850d6cee024b11ce38ee47f54155cf5c1395fce113faa964278b18",
+      "unchangedAtBaseline": true,
+      "check": "textual reverse PASS; not automatic retirement approval"
+    },
+    {
+      "path": "patches/c-translations/CBUG-0061-ccw-timing.patch",
+      "sha256": "53c711c3ed981b5dce80fe23d97c88ec9792abcbc8b4b1b79b7ef78a5cc45156",
+      "unchangedAtBaseline": true,
+      "check": "textual reverse PASS; not automatic retirement approval"
+    },
+    {
+      "path": "patches/c-translations/CBUG-0065-enlightenment.patch",
+      "sha256": "41e5b2ad41adc7a4481a5c0671123c4b219cb1a4839f892cdbb691639e83e271",
+      "unchangedAtBaseline": true,
+      "check": "textual reverse PASS; not automatic retirement approval"
+    },
+    {
+      "path": "patches/c-translations/CBUG-0086-exact-unseen-name.patch",
+      "sha256": "8a618e4d32dcd9a6c900f60942d5a25abf074b9b0de2aaec3b417e21803be873",
+      "unchangedAtBaseline": true,
+      "check": "textual reverse PASS; not automatic retirement approval"
+    },
+    {
+      "path": "patches/c-translations/shot-path-279-caster-origin.patch",
+      "sha256": "84eb3a73178596d6aa7c9ea0e8fbbd19ccde4c8814beb13e5c175ba5520b2ca4",
+      "unchangedAtBaseline": true,
+      "check": "textual reverse PASS; not automatic retirement approval"
+    },
+    {
+      "path": "patches/c-translations/source238-light-modifier.patch",
+      "sha256": "d4a87f4c800f832064e43ca6948dd0a8bfcd28568ee1c07ebe73655866bcd675",
+      "unchangedAtBaseline": true,
+      "check": "textual reverse PASS; not automatic retirement approval"
+    },
+    {
+      "path": "patches/c-translations/source239-equipment-slays.patch",
+      "sha256": "08e58d2e47531762e238b1443504ca92387401acd5508f1a2c4a09ed736ef3a5",
+      "unchangedAtBaseline": true,
+      "check": "textual reverse PASS; not automatic retirement approval"
+    },
+    {
+      "path": "patches/c-translations/source248-dispel-living.patch",
+      "sha256": "0bc84b002b2ecbddbe659bd632a56c52738a2964789ef9cc1a28d3a934892317",
+      "unchangedAtBaseline": true,
+      "check": "textual reverse PASS; not automatic retirement approval"
+    },
+    {
+      "path": "patches/c-translations/source257-vampire-selected-distance.patch",
+      "sha256": "2a68d549bf521ae1a0f880e3b4e209ef974aa09ed481babacdd97147d7b5ac05",
+      "unchangedAtBaseline": true,
+      "check": "textual reverse PASS; not automatic retirement approval"
+    },
+    {
+      "path": "patches/port-corrections/accepted76-notice-swap.patch",
+      "sha256": "7732053e34602c44a10cb43d68cbc7f3d5caa08f12f104aa334e6a490e005041",
+      "unchangedAtBaseline": true,
+      "check": "ordered prerequisite; not arbitrary functional retirement"
+    },
+    {
+      "path": "patches/port-corrections/accepted94-wiring.patch",
+      "sha256": "22ecb24c1e9a28a7cc163ac407e8d296c7df252a22bde4bc49a721138bf10fb4",
+      "unchangedAtBaseline": true,
+      "check": "textual reverse PASS; not automatic retirement approval"
+    },
+    {
+      "path": "patches/port-corrections/source41-light-base.patch",
+      "sha256": "5881785d0780c06c612e49f8497b1685bf99641f41ad4ffa1d971f39346cc9f1",
+      "unchangedAtBaseline": true,
+      "check": "textual reverse PASS; not automatic retirement approval"
+    },
+    {
+      "path": "patches/port-corrections/source41-policy-fixtures.patch",
+      "sha256": "5858a98e78b8af69fb70bb70749c8e3532c28e159e52806d3353c601b4d8bfc0",
+      "unchangedAtBaseline": true,
+      "check": "textual reverse PASS; not automatic retirement approval"
+    },
+    {
+      "path": "patches/port-corrections/source48-armour-home.patch",
+      "sha256": "0e601c37025de4f0cb28e7db9b97a80f543f5372731fe614f0c2283bfd6104a8",
+      "unchangedAtBaseline": true,
+      "check": "ordered prerequisite; not arbitrary functional retirement"
+    },
+    {
+      "path": "patches/port-corrections/source50-tactical-sr.patch",
+      "sha256": "a918955684e13c0fcdccead8a37ff7bc5d402945ce28f47191deadeb995ba810",
+      "unchangedAtBaseline": false,
+      "check": "textual reverse PASS; not automatic retirement approval"
+    },
+    {
+      "path": "patches/port-corrections/source51-armour-curse.patch",
+      "sha256": "29069ea5f6506c9af839b68bf8339486d237603324b09250f140c242eb6b622e",
+      "unchangedAtBaseline": true,
+      "check": "textual reverse PASS; not automatic retirement approval"
+    },
+    {
+      "path": "patches/mandos/headless-shadow-fuel-198.patch",
+      "sha256": "cfa4b09f82adefa041450af53dff2a7a605e3a0604e659fcd322d6f2d38aac2f",
+      "unchangedAtBaseline": true,
+      "check": "textual reverse PASS; not automatic retirement approval"
+    }
+  ],
+  "testHashes": {
+    "src/item/backup-tactical.test.ts": "51ca862b10cce401b8320fcba337a33fd7deaabe14f9d49e5630f91a24fc4d12",
+    "src/item/backup-public.test.ts": "7741f25c262cb5fe4a244d64f8d644553737e05e7d4389369b6e77455e2428f6"
+  },
+  "unchanged": {
+    "src/play-session.ts": "4e8d1983d6bca2bd5b3db926335ae2c49eda00367d76f1e2712ac85183d3e934",
+    "src/play-fuel.test.ts": "5983c8f5e73408adb8d1d954894742e9b76b70c4480c1017402688cfbc5121f5",
+    "src/play-stop.test.ts": "23aa5d5f9ec6e3cf9c7e942ad208e96c563139aeec02d74be731fc7d6011330d",
+    "src/play.test.ts": "445dca7730a47087eaa86963b73d788772faee4154eafae6d1682d0d5b48ef1d",
+    "src/trait/armour-swap.ts": "2de2c7a4600d6541fd08cf23875115e45067a395ad255f649fe1bb110b94a1f6",
+    "src/trait/weapon-swap.ts": "778d6d27ab3fc4aecbb9fb51892ce281804d508ebd604fdc4c5bf6f6335466db",
+    "src/store/armour-backup.test.ts": "2b7440ce35855407bcdcbbf59bd2da0967596c2ff2565f72e068111f16c986cf",
+    "src/store/armour-curse.test.ts": "5dbdcc56bff837d5cf1e67a1bae2a05629079db92092d61770b114938dd91703",
+    "src/store/weapon-backup.test.ts": "7c5d36d1d7c53b79dc6b52e78b729a78879f297c92069fdf135dc9322366a9de",
+    "package.json": "91b045d6ff86d99f95562c2c6759b27c1bc22c3c0d676e40edfce9feabb02568",
+    "pnpm-lock.yaml": "b212699bb70b75f77d53e3e1fd98d9b1442d195a6ed9b5d28d046d2599a029a0",
+    "pnpm-workspace.yaml": "4c8db521144bce9635c7fa5b3c6958eba8a1242e023875e13190483f0f3259bd",
+    "manifest.json": "39f29974bc08d69babeabc67e37557632e99b41cd6fb26b108fff3cee6fe8134",
+    "session.json": "71abd3885164df369fd396543ea43e69ab5d0c1341bb8941690b4dfc4fb34f0e",
+    "tools/build.mjs": "dbcaaadf4e11d4adf63b243e8c1b5ab411e83f0328531461bc330546f69017e0"
+  },
+  "metadataFocus": {
+    "passed": 5,
+    "files": 2,
+    "skipped": 0
+  },
+  "sourceMetadataHead": "20100e26c619debb9d019efbe18fecf121e8f2eb"
+}

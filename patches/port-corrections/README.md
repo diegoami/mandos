@@ -117,3 +117,29 @@ not certify arbitrary reverse order, replace actual upstream/replacement proof,
 or rebuild plugin.js. Normal rebuild/current and relevant checks remain required.
 Source48/51 share the pending Neo485/mod78 proposal lane; a proposal is not
 upstream acceptance.125 remains partial for the separate tactical/SR leaf50.
+
+## Tactical backup actions and SR availability
+
+[Source50](https://github.com/diegoami/neo-angband-borg-mod-tracker/issues/50),
+reviewed runtime fefd34131da5e7892d366315a28c3ace43e4cfae and final tests
+352201a9cf47d88fb8ba67beb5a548bb41f1c95e, supplies
+[source50-tactical-sr.patch](source50-tactical-sr.patch) through owned
+[PR53](https://github.com/diegoami/neo-angband-borg-mod-tracker/pull/53) and
+[Mandos125](https://github.com/diegoami/mandos/issues/125). It restores the native
+backup maneuver, selected capability snapshots and SR availability, public
+options and typed public loadout danger. Original C82's comparator/ties,
+weapon acid-from-ELEC, never-populated backup fear and armour-only initial
+critical snapshot are preserved. No original-C correction is included.
+
+[The new removal proof](../../docs/runs/2026-11-07-backup-tactical-adoption/reverse-image.json)
+returns all14 affected runtime/test paths exactly to verified a708, with three
+new paths absent. Retirement order is50→51→48→accepted76; all prior16 patch
+files stay byte-immutable. Text application alone is not replacement proof or
+permission to remove an adopted prerequisite. Rebuild the generated plugin
+and verify relevant actual replacement behavior on any retirement.
+
+125's current carry/remaining scope and203's gate follow verified actual-main
+receipts, not a proposal, work branch or this stored patch. Existing C9/source41/
+own198 and basic evidence remain independent. See the
+[pinned proof and limits](../../docs/runs/2026-11-07-backup-tactical-adoption/README.md),
+including the explicit unverified floor-conservation boundary.

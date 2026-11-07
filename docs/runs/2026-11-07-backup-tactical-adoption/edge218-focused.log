@@ -1,0 +1,8 @@
+
+ RUN  v4.1.11 /tmp/mandos125-tactical-edge218-e0c3hn11
+
+
+ Test Files  9 passed (9)
+      Tests  155 passed (155)
+   Start at  21:40:34
+   Duration  3.23s (transform 3.94s, setup 2.21s, import 5.47s, tests 6.67s, environment 1ms)

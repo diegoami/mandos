@@ -87,8 +87,10 @@ historical interactive-host qualification below or deploy the lab.
 The [armour/HOME leaf of125](https://github.com/diegoami/mandos/issues/125)
 adopts known carried armour-backup value and strictly better HOME retrieval from
 source48, with [registered-item controls and a separate removal unit](docs/runs/2026-11-07-armour-home-adoption/README.md).
-Tactical equip/actions and SR-availability folds remain separate. This restores
-existing C parity; it introduces no strategy or C milestone correction.
+The separate [source50 tactical/SR adoption](docs/runs/2026-11-07-backup-tactical-adoption/README.md)
+restores native backup commands and resistance availability. Source/consumer
+required gates and actual-main status stay explicit. These are C parity
+corrections; no strategy or C milestone correction is introduced.
 
 ## Exact edge.218 developer folder
 
