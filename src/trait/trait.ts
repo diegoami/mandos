@@ -67,6 +67,7 @@ import {
   type ResolvedOpts,
 } from "./config.js";
 import { getDerived, resetDerived, addHas, type BorgDerived } from "./state.js";
+import { borgArmourSwap } from "./armour-swap.js";
 import { borgWeaponSwap } from "./weapon-swap.js";
 import { borgCheatBuffTimers } from "./buff-timers.js";
 import type { Temp } from "../world/model.js";
@@ -164,10 +165,16 @@ export function borgNotice(ctx: BorgContext, opts: BorgTraitOpts = {}): void {
       ...(opts.weaponSwap ? { weaponSwap: { ...opts.weaponSwap } } : {}),
     };
     d.weaponSwap = borgWeaponSwap(ctx, d.weaponSwapOpts);
+    // C computes weapon first: armour high-resist value excludes its selected weapon.
+    d.armourSwapOpts = { ...d.weaponSwapOpts, ...(opts.armourSwap ? { armourSwap: { ...opts.armourSwap } } : {}) };
+    const selectedWeapon = ctx.view.inventory().find(item => item.handle === d.weaponSwap.handle) ?? null;
+    d.armourSwap = borgArmourSwap(ctx, d.armourSwapOpts, c.inven, selectedWeapon);
   } else {
     // borg_notice(false): the backup stays whatever the last full notice found.
     d.weaponSwapOpts = previous.weaponSwapOpts;
     d.weaponSwap = previous.weaponSwap;
+    d.armourSwapOpts = previous.armourSwapOpts;
+    d.armourSwap = previous.armourSwap;
   }
 
   /* borg_game_ratio (trait.c:2926): game-turns per borg-turn, from the FINAL

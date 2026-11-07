@@ -539,7 +539,7 @@ export function borgThinkHomeGrabUseless(
 /* ------------------------------------------------------------------ *
  * Steps 7A / 7B -- buy a weapon / armour swap from the home.
  * Weapon backup uses the notice-produced current value as its baseline;
- * armour remains inert unless its separate valuation seam is supplied.
+ * armour uses its independently noticed current backup value.
  * ------------------------------------------------------------------ */
 
 function borgThinkHomeBuySwap(
@@ -547,18 +547,18 @@ function borgThinkHomeBuySwap(
   weapon: boolean,
   d?: StoreDeps,
 ): boolean {
-  if (weapon && !borgUsesSwaps(ctx, d)) return false;
+  if (!borgUsesSwaps(ctx, d)) return false;
   const evalFn = weapon ? d?.weaponSwapEval : d?.armourSwapEval;
   if (!evalFn) return false; /* no swap valuation -> never buys a swap. */
 
   const wares = homeWares(ctx);
   let bN = -1;
-  const current = weapon ? getDerived(ctx.world).weaponSwap : null;
+  const current = weapon ? getDerived(ctx.world).weaponSwap : getDerived(ctx.world).armourSwap;
   // FORK: C's score simulation replaces an occupied backup slot, but API2
   // shop-buy cannot atomically remove it. No real hole means a zero-energy
   // no-room refusal, so this leaf does not queue an impossible retrieval.
   // This is a host-capacity limit, not evidence of a native C defect.
-  if (weapon && borgFirstEmptyInventorySlot(ctx, d) === -1) return false;
+  if (borgFirstEmptyInventorySlot(ctx, d) === -1) return false;
   let bP = current?.value ?? 0;
 
   for (let n = 0; n < wares.length; n++) {

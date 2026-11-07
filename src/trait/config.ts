@@ -15,6 +15,7 @@
  * borg_cfg[] values come from reference/src/borg/borg.txt (stock defaults).
  */
 
+import type { ArmourSwapKnowledge } from "./armour-swap.js";
 import type { WeaponSwapKnowledge } from "./weapon-swap.js";
 import { flatSvals } from "../item/svals.js";
 import type { ItemView } from "@rpgm-tools/neo-angband-core";
@@ -243,6 +244,8 @@ export interface BorgTraitOpts {
   cfg?: Partial<BorgCfg>;
   /** Public backup-weapon knowledge; no hidden engine reads. */
   weaponSwap?: WeaponSwapKnowledge;
+  /** Per-item armour curse knowledge. Shared tarrasqueDead stays in weaponSwap. */
+  armourSwap?: ArmourSwapKnowledge;
   spells?: BorgSpellSeam;
   home?: BorgHomeSeam;
   frame?: BorgFrame;

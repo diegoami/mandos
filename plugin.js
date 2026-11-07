@@ -3966,6 +3966,123 @@ function present(item) {
   return !!item && item.number > 0;
 }
 
+// src/trait/armour-swap.ts
+var NONE = () => ({ handle: null, value: -1 });
+var BAD_CURSES = /* @__PURE__ */ new Set([
+  "teleportation",
+  "poison",
+  "siren",
+  "hallucination",
+  "paralysis",
+  "demon summon",
+  "dragon summon",
+  "undead summon",
+  "stone",
+  "anti-teleportation",
+  "treacherous weapon",
+  "unknown"
+]);
+var OTHER_CURSES = /* @__PURE__ */ new Set([
+  "vulnerability",
+  "dullness",
+  "sickliness",
+  "enveloping",
+  "irritation",
+  "weakness",
+  "clumsiness",
+  "slowness",
+  "annoyance",
+  "impair mana recovery",
+  "impair hitpoint recovery",
+  "cowardice",
+  "burning up",
+  "chilled to the bone",
+  "steelskin",
+  "air swing"
+]);
+function borgArmourSwap(ctx, opts = {}, inventory = ctx.view.inventory(), selectedWeapon = null) {
+  const R2 = resolveOpts(opts), t = ctx.world.self.trait;
+  const trait4 = (bi) => t[bi] ?? 0;
+  if (!R2.cfg.usesSwaps || trait4(106 /* MAXDEPTH */) < 50 || trait4(106 /* MAXDEPTH */) >= 90) return NONE();
+  const allowed = [
+    TV.RING,
+    TV.AMULET,
+    TV.BOOTS,
+    TV.HELM,
+    TV.CROWN,
+    TV.SHIELD,
+    TV.CLOAK,
+    TV.SOFT_ARMOR,
+    TV.HARD_ARMOR,
+    TV.DRAG_ARMOR
+  ];
+  const uncursable = opts.armourSwap?.uncursable ?? opts.weaponSwap?.uncursable;
+  let best = NONE();
+  for (const item of inventory) {
+    if (!present(item) || !item.aware || !allowed.includes(item.tval) || isOneRing(item)) continue;
+    if (item.curses.length && !uncursable?.(item)) continue;
+    const damage = item.dd * item.ds * 35;
+    let value = -1 + damage * (trait4(146 /* BLOWS */) + 1) + (trait4(134 /* TOHIT */) + item.toH) * 100 + (trait4(135 /* TODAM */) + item.toD) * 35;
+    const slay = (name) => slayMult(item, name);
+    let dam = damage * 2 * trait4(146 /* BLOWS */);
+    if (!trait4(193 /* WS_ANIMAL */) && !trait4(206 /* WB_ELEC */) && slay("ANIMAL")) value += Math.trunc(dam * slay("ANIMAL") / 2);
+    if (!trait4(194 /* WS_EVIL */) && slay("EVIL")) value += Math.trunc(dam * slay("EVIL") / 2);
+    dam = damage * 3 * trait4(146 /* BLOWS */);
+    for (const [name, bi] of [["UNDEAD", 195 /* WS_UNDEAD */], ["DEMON", 196 /* WS_DEMON */], ["GIANT", 199 /* WS_GIANT */], ["DRAGON", 200 /* WS_DRAGON */]])
+      if (!trait4(bi) && !(name === "DRAGON" && trait4(203 /* WK_DRAGON */)) && slay(name)) value += Math.trunc(dam * slay(name) / 2);
+    for (const [name, bi, factor] of [["ACID", 205 /* WB_ACID */, 4], ["ELEC", 206 /* WB_ELEC */, 5], ["FIRE", 207 /* WB_FIRE */, 3], ["COLD", 208 /* WB_COLD */, 3], ["POIS", 209 /* WB_POIS */, 3]])
+      if (!trait4(bi) && hasBrand3(item, name)) value += Math.trunc(dam * factor / 2);
+    for (const [name, bi] of [["ORC", 197 /* WS_ORC */], ["TROLL", 198 /* WS_TROLL */]]) {
+      if (!trait4(bi) && slay(name)) value += Math.trunc(dam * slay(name) / 2);
+      if (!trait4(bi) && !trait4(194 /* WS_EVIL */) && slay(name)) value += Math.trunc(dam * slay(name) / 2);
+    }
+    if (hasFlag2(item, "AGGRAVATE")) value -= 8e3;
+    if (item.curses.some((name) => BAD_CURSES.has(name) || !OTHER_CURSES.has(name))) value -= 1e5;
+    if (item.curses.length && uncursable?.(item)) value -= 5e3;
+    for (const [flag, bi, weight] of [
+      ["SLOW_DIGEST", 48 /* SDIG */, 10],
+      ["REGEN", 50 /* REG */, 2e3],
+      ["TELEPATHY", 37 /* ESP */, 5e3],
+      ["SEE_INVIS", 51 /* SINV */, 5e4],
+      ["FEATHER", 49 /* FEATH */, 10],
+      ["FREE_ACT", 86 /* FRACT */, 1e4],
+      ["PROT_CONF", 78 /* RCONF */, 5e3],
+      ["PROT_BLIND", 77 /* RBLIND */, 5e3]
+    ])
+      if (!trait4(bi) && hasFlag2(item, flag)) value += weight;
+    if (!trait4(26 /* LIGHT */) && (hasFlag2(item, "LIGHT_2") || hasFlag2(item, "LIGHT_3"))) value += 2e3;
+    if (!trait4(85 /* HLIFE */) && trait4(36 /* MAXCLEVEL */) < 50 && hasFlag2(item, "HOLD_LIFE")) value += 2e3;
+    for (const [element, bi, weight] of [["FIRE", 64 /* IFIRE */, 7e4], ["ACID", 65 /* IACID */, 3e4], ["COLD", 66 /* ICOLD */, 5e4], ["ELEC", 67 /* IELEC */, 25e3]])
+      if (!trait4(bi) && resLevel(item, element) === 3) value += weight;
+    for (const [element, bi, weight] of [
+      ["FIRE", 69 /* RFIRE */, 8e3],
+      ["ACID", 72 /* RACID */, 6e3],
+      ["COLD", 70 /* RCOLD */, 4e3],
+      ["ELEC", 71 /* RELEC */, 3e3],
+      ["POIS", 73 /* RPOIS */, 2e4],
+      ["SOUND", 79 /* RSND */, 2e3],
+      ["LIGHT", 75 /* RLITE */, 800],
+      ["DARK", 76 /* RDARK */, 800],
+      ["CHAOS", 83 /* RKAOS */, 8e3],
+      ["DISEN", 84 /* RDIS */, 5e3],
+      ["SHARD", 80 /* RSHRD */, 100],
+      ["NEXUS", 81 /* RNXUS */, 100],
+      ["NETHER", 82 /* RNTHR */, 5500]
+    ])
+      if (!trait4(bi) && resLevel(item, element) > 0) value += weight;
+    if (["FIRE", "ACID", "ELEC", "COLD"].every((element) => resLevel(item, element) > 0)) value += 1e4;
+    if (trait4(106 /* MAXDEPTH */) >= 75 && !opts.weaponSwap?.tarrasqueDead) {
+      for (const [element, bi] of [["COLD", 66 /* ICOLD */], ["FIRE", 64 /* IFIRE */]])
+        if (!trait4(bi) && resLevel(item, element) === 3) value += 9e4;
+    }
+    for (const [element, bi, depth, weight] of [["NETHER", 82 /* RNTHR */, 55, 105e3], ["CHAOS", 83 /* RKAOS */, 60, 104e3], ["DISEN", 84 /* RDIS */, 60, 1e5]])
+      if (!trait4(bi) && trait4(106 /* MAXDEPTH */) + 1 >= depth && resLevel(item, element) > 0 && (!selectedWeapon || resLevel(selectedWeapon, element) <= 0)) value += weight;
+    if (value <= 1e3 || value < best.value) continue;
+    best = { handle: item.handle, value };
+  }
+  return best;
+}
+
 // src/item/magic.ts
 var BORG_MAGIC_LOST = 1;
 var BORG_MAGIC_HIGH = 2;
@@ -4344,8 +4461,8 @@ function borgSpellFail(ctx, spell, allowFail, playerHas2) {
 }
 
 // src/trait/weapon-swap.ts
-var NONE = () => ({ handle: null, value: -1 });
-var BAD_CURSES = /* @__PURE__ */ new Set([
+var NONE2 = () => ({ handle: null, value: -1 });
+var BAD_CURSES2 = /* @__PURE__ */ new Set([
   "teleportation",
   "poison",
   "siren",
@@ -4359,7 +4476,7 @@ var BAD_CURSES = /* @__PURE__ */ new Set([
   "treacherous weapon",
   "unknown"
 ]);
-var OTHER_CURSES = /* @__PURE__ */ new Set([
+var OTHER_CURSES2 = /* @__PURE__ */ new Set([
   "vulnerability",
   "dullness",
   "sickliness",
@@ -4398,12 +4515,12 @@ function borgWeaponSwap(ctx, opts = {}, inventory = ctx.view.inventory()) {
   const R2 = resolveOpts(opts), t = ctx.world.self.trait;
   const trait4 = (bi) => t[bi] ?? 0;
   const quiver = new Set(ctx.view.quiver?.().map((item) => item.handle) ?? []);
-  let best = NONE();
+  let best = NONE2();
   for (const item of inventory) {
     if (quiver.has(item.handle) || !present(item) || !item.aware || !wearable.includes(item.tval)) continue;
     if (trait4(106 /* MAXDEPTH */) < 50 && item.tval !== TV.DIGGING) continue;
     if ((!R2.cfg.usesSwaps || trait4(106 /* MAXDEPTH */) >= 90) && item.tval !== TV.DIGGING)
-      return NONE();
+      return NONE2();
     if (!weapons.includes(item.tval)) continue;
     if (item.curses.length && !opts.weaponSwap?.uncursable) continue;
     let digger = 0;
@@ -4446,7 +4563,7 @@ function borgWeaponSwap(ctx, opts = {}, inventory = ctx.view.inventory()) {
     if (trait4(106 /* MAXDEPTH */) >= 25 && trait4(106 /* MAXDEPTH */) <= 40 && trait4(45 /* GOLD */) < 1e5 && digger)
       value += digger * 3500 + 1e3;
     if (hasFlag2(item, "AGGRAVATE")) value -= 8e3;
-    if (item.curses.some((name) => BAD_CURSES.has(name) || !OTHER_CURSES.has(name))) value -= 1e5;
+    if (item.curses.some((name) => BAD_CURSES2.has(name) || !OTHER_CURSES2.has(name))) value -= 1e5;
     if (item.curses.length && opts.weaponSwap?.uncursable?.(item)) value -= 5e3;
     for (const [flag, bi, weight] of [
       ["SLOW_DIGEST", 48 /* SDIG */, 10],
@@ -4507,6 +4624,8 @@ function makeDerived() {
     has: /* @__PURE__ */ new Map(),
     weaponSwap: { handle: null, value: -1 },
     weaponSwapOpts: {},
+    armourSwap: { handle: null, value: -1 },
+    armourSwapOpts: {},
     needStatgain: new Array(STAT_MAX).fill(false),
     amtStatgain: new Array(STAT_MAX).fill(0),
     amtBook: new Array(9).fill(0)
@@ -4531,6 +4650,8 @@ function inheritWeaponSwap(scratch, live) {
   const d = makeDerived();
   d.weaponSwap = from.weaponSwap;
   d.weaponSwapOpts = from.weaponSwapOpts;
+  d.armourSwap = from.armourSwap;
+  d.armourSwapOpts = from.armourSwapOpts;
   store.set(scratch, d);
 }
 function has(d, role) {
@@ -7273,9 +7394,14 @@ function borgNotice(ctx, opts = {}) {
       ...opts.weaponSwap ? { weaponSwap: { ...opts.weaponSwap } } : {}
     };
     d.weaponSwap = borgWeaponSwap(ctx, d.weaponSwapOpts);
+    d.armourSwapOpts = { ...d.weaponSwapOpts, ...opts.armourSwap ? { armourSwap: { ...opts.armourSwap } } : {} };
+    const selectedWeapon = ctx.view.inventory().find((item) => item.handle === d.weaponSwap.handle) ?? null;
+    d.armourSwap = borgArmourSwap(ctx, d.armourSwapOpts, c.inven, selectedWeapon);
   } else {
     d.weaponSwapOpts = previous.weaponSwapOpts;
     d.weaponSwap = previous.weaponSwap;
+    d.armourSwapOpts = previous.armourSwapOpts;
+    d.armourSwap = previous.armourSwap;
   }
   const speed = t[44 /* SPEED */] ?? 110;
   ctx.world.self.gameRatio = speed > 110 ? Math.trunc(1e5 / ((speed - 110) * 10 + 100)) : 1e3;
@@ -8928,6 +9054,7 @@ function borgPower(ctx, opts = {}) {
   }
   value += (i - 1) * 4e4;
   value += d.weaponSwap.value;
+  value += d.armourSwap.value;
   ctx.world.self.power = value;
   return value;
 }
@@ -10264,13 +10391,13 @@ function borgThinkHomeGrabUseless(ctx, d) {
   return false;
 }
 function borgThinkHomeBuySwap(ctx, weapon, d) {
-  if (weapon && !borgUsesSwaps(ctx, d)) return false;
+  if (!borgUsesSwaps(ctx, d)) return false;
   const evalFn = weapon ? d?.weaponSwapEval : d?.armourSwapEval;
   if (!evalFn) return false;
   const wares = homeWares(ctx);
   let bN = -1;
-  const current = weapon ? getDerived(ctx.world).weaponSwap : null;
-  if (weapon && borgFirstEmptyInventorySlot(ctx, d) === -1) return false;
+  const current = weapon ? getDerived(ctx.world).weaponSwap : getDerived(ctx.world).armourSwap;
+  if (borgFirstEmptyInventorySlot(ctx, d) === -1) return false;
   let bP = current?.value ?? 0;
   for (let n = 0; n < wares.length; n++) {
     const item = wares[n];
@@ -15525,6 +15652,15 @@ function buildStoreDeps(session) {
       const pack = ctx.view.inventory().filter((entry) => entry.handle !== current.handle);
       if (borgFirstEmptyInventorySlot(ctx) === -1) return -1;
       return borgWeaponSwap(ctx, derived.weaponSwapOpts, [...pack, { ...item, number: 1 }]).value;
+    },
+    // HOME armour scans every ware; a weapon ware can change high-resist anti-dup.
+    armourSwapEval: (ctx, item) => {
+      const derived = getDerived(ctx.world), current = derived.armourSwap;
+      if (borgFirstEmptyInventorySlot(ctx) === -1) return -1;
+      const pack = [...ctx.view.inventory().filter((entry) => entry.handle !== current.handle), { ...item, number: 1 }];
+      const weapon = borgWeaponSwap(ctx, derived.armourSwapOpts, pack);
+      const selected = pack.find((entry) => entry.handle === weapon.handle) ?? null;
+      return borgArmourSwap(ctx, derived.armourSwapOpts, pack, selected).value;
     }
   };
   if (!res.loadoutPower) return common;
@@ -15563,7 +15699,7 @@ function buildStoreDeps(session) {
     sellHomeBadEval: (ctx, item) => powerOf(session, ctx, {
       release: [{ handle: item.handle, number: 1 }]
     })
-    /* Armour-backup value and tactical swapping remain separate unported work. */
+    /* Tactical swapping and SR-availability folds remain separate unported work. */
   };
 }
 function buildThinkSession(resolvers = {}) {
