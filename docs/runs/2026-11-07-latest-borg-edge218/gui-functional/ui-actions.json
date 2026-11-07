@@ -1,0 +1,2694 @@
+[
+  {
+    "type": "child-environment",
+    "sensitiveAndOldOverrideKeysRemoved": 3,
+    "valuesPrinted": false,
+    "dataBase": "/tmp/mandos-edge218-labdesktop-probe/data",
+    "firstPartyTrustFlag": false
+  },
+  {
+    "type": "snapshot",
+    "tag": "00-initial",
+    "url": "neo-angband://game/?labprocess=mandos&log=debug",
+    "ready": true,
+    "screen": [
+      "Choose your look",
+      "a) Vanilla - Classic Angband presentation",
+      "b) Neo Angband - AnybandUI presentation",
+      "[ a/b, arrows, or tap; Enter selects; ESC cancels ]"
+    ],
+    "turn": 0,
+    "modal": true,
+    "driver": {
+      "kind": "player"
+    },
+    "token": {
+      "epoch": 1,
+      "revision": 0
+    },
+    "seed": 3,
+    "size": {
+      "cols": 80,
+      "rows": 24
+    },
+    "fileInputs": [],
+    "userActivation": {
+      "active": true,
+      "ever": true
+    },
+    "player": {
+      "grid": {
+        "x": 33,
+        "y": 2
+      },
+      "hp": 19,
+      "depth": 0
+    },
+    "messages": [],
+    "dialogs": [],
+    "buttons": [],
+    "checkboxes": []
+  },
+  {
+    "type": "snapshot",
+    "tag": "01-vanilla",
+    "url": "neo-angband://game/?labprocess=mandos&log=debug",
+    "ready": true,
+    "screen": [
+      "                    _   _",
+      "                   | \\ | | ___  ___    ^",
+      "                   |  \\| |/ _ \\/ _ \\  ^^^",
+      "                ^  | |\\  |  __/ (_) |^^^^^                   ^",
+      "               ^^^ |_| \\_|\\___|\\___/^^^^^^^                 ^^^",
+      "              ^^^^^                ^^^^^^^^^               ^^^^^",
+      "             ^^^^  _              ^ _  ^^^^^^             _  ^^^^",
+      "            ^^^^  / \\   _ __   __ _| |__   __ _ _ __   __| | ^^^^^",
+      "           ^^^^  / _ \\ | '_ \\ / _` | '_ \\ / _` | '_ \\ / _` | ^^^^^^",
+      "          ^^^^  / ___ \\| | | | (_| | |_) | (_| | | | | (_| | ^^^^^^^",
+      "         ^^^^  /_/   \\_\\_| |_|\\__, |_.__/ \\__,_|_| |_|\\__,_| ^^^^^^^^",
+      "        ^^^^^                 |___/  1.23.0-edge.218",
+      "       ^^^^^^^^^^^^^^^^^^                     ^^^^  ^^^^^^^^^^^^^^^^^^^",
+      " A faithful but moddable port of Angband, meant to be playable almost anywhere.",
+      "             Docs and quick start: https://angband.rpgm.world/docs",
+      "               GitHub: https://github.com/neostryder/neo-angband",
+      "            Releases: https://releases.rpgm.tools/repos/neo-angband/",
+      "                     Discord: https://discord.gg/YegtwbHTBQ",
+      "      Thank you, Eric Branlund and past maintainers and developers, and to",
+      "             all those who have given us so many creative variants!",
+      "   (P)rofile   (N)ew   (O)pen   (R)esume   (M)ods   (L)ook: Vanilla   (Q)uit"
+    ],
+    "turn": 0,
+    "modal": true,
+    "driver": {
+      "kind": "player"
+    },
+    "token": {
+      "epoch": 1,
+      "revision": 0
+    },
+    "seed": 3,
+    "size": {
+      "cols": 80,
+      "rows": 24
+    },
+    "fileInputs": [],
+    "userActivation": {
+      "active": true,
+      "ever": true
+    },
+    "player": {
+      "grid": {
+        "x": 33,
+        "y": 2
+      },
+      "hp": 19,
+      "depth": 0
+    },
+    "messages": [],
+    "dialogs": [],
+    "buttons": [],
+    "checkboxes": []
+  },
+  {
+    "type": "snapshot",
+    "tag": "02-folder-mods",
+    "url": "neo-angband://game/?labprocess=mandos&log=debug",
+    "ready": true,
+    "screen": [
+      "Mods",
+      "a) [ ] Mandos (diegoami)  v0.1.0  (trusted)  ! unreviewed",
+      "1) Recommended mods...",
+      "7) Update installed mods...  (checks each mod's own repository)",
+      "8) Save a Delve...",
+      "+) Load a Delve...",
+      "-) Mod profile sync folder...                                                  v",
+      "Mandos (diegoami)  (id: mandos)",
+      "version 0.1.0  -  plugin pack, trusted plugin",
+      "diegoami  -  GPL-2.0-only",
+      "Not loaded: not enabled",
+      "...  (open the mod to read the rest)",
+      "Makes 30 separate changes, 21 of them on by default. Turning the mod on asks",
+      "whether to use the defaults, pick your own, or use none.",
+      "Needs: core *",
+      "It asks to be allowed to:",
+      "  - Add new player commands",
+      "...  (open the mod to read the rest)",
+      "Runs its own code. Asks for 24 permissions.",
+      "[ Space turns one on or off, Enter opens it; ESC to go back ]"
+    ],
+    "turn": 0,
+    "modal": true,
+    "driver": {
+      "kind": "player"
+    },
+    "token": {
+      "epoch": 1,
+      "revision": 0
+    },
+    "seed": 3,
+    "size": {
+      "cols": 80,
+      "rows": 24
+    },
+    "fileInputs": [],
+    "userActivation": {
+      "active": true,
+      "ever": true
+    },
+    "player": {
+      "grid": {
+        "x": 33,
+        "y": 2
+      },
+      "hp": 19,
+      "depth": 0
+    },
+    "messages": [],
+    "dialogs": [],
+    "buttons": [],
+    "checkboxes": []
+  },
+  {
+    "type": "snapshot",
+    "tag": "03-enable-folder",
+    "url": "neo-angband://game/?labprocess=mandos&log=debug",
+    "ready": true,
+    "screen": [
+      "Unreviewed mod: Mandos",
+      "Mandos asks for these permissions.",
+      "This mod can read hidden game state and runs code in the game page, with access",
+      "to storage and the network.",
+      "To turn it off later, switch it off on the Mods screen. If the game will not",
+      "start with it on, hold Shift while the game starts, or start the desktop app",
+      "with --safe-mode, and every mod stays off for that session.",
+      "[ Press ESC to review, then choose ]"
+    ],
+    "turn": 0,
+    "modal": true,
+    "driver": {
+      "kind": "player"
+    },
+    "token": {
+      "epoch": 1,
+      "revision": 0
+    },
+    "seed": 3,
+    "size": {
+      "cols": 80,
+      "rows": 24
+    },
+    "fileInputs": [],
+    "userActivation": {
+      "active": true,
+      "ever": true
+    },
+    "player": {
+      "grid": {
+        "x": 33,
+        "y": 2
+      },
+      "hp": 19,
+      "depth": 0
+    },
+    "messages": [],
+    "dialogs": [],
+    "buttons": [],
+    "checkboxes": []
+  },
+  {
+    "type": "snapshot",
+    "tag": "04-folder-warning-read",
+    "url": "neo-angband://game/?labprocess=mandos&log=debug",
+    "ready": true,
+    "screen": [
+      "Turn on Mandos anyway?",
+      "a) Turn it on",
+      "b) Leave it off",
+      "[ a/b or tap; ESC cancels ]"
+    ],
+    "turn": 0,
+    "modal": true,
+    "driver": {
+      "kind": "player"
+    },
+    "token": {
+      "epoch": 1,
+      "revision": 0
+    },
+    "seed": 3,
+    "size": {
+      "cols": 80,
+      "rows": 24
+    },
+    "fileInputs": [],
+    "userActivation": {
+      "active": true,
+      "ever": true
+    },
+    "player": {
+      "grid": {
+        "x": 33,
+        "y": 2
+      },
+      "hp": 19,
+      "depth": 0
+    },
+    "messages": [],
+    "dialogs": [],
+    "buttons": [],
+    "checkboxes": []
+  },
+  {
+    "type": "snapshot",
+    "tag": "05-folder-consent",
+    "url": "neo-angband://game/?labprocess=mandos&log=debug",
+    "ready": true,
+    "screen": [
+      "Turn on Mandos anyway?",
+      "a) Turn it on",
+      "b) Leave it off",
+      "[ a/b or tap; ESC cancels ]"
+    ],
+    "turn": 0,
+    "modal": true,
+    "driver": {
+      "kind": "player"
+    },
+    "token": {
+      "epoch": 1,
+      "revision": 0
+    },
+    "seed": 3,
+    "size": {
+      "cols": 80,
+      "rows": 24
+    },
+    "fileInputs": [],
+    "userActivation": {
+      "active": true,
+      "ever": true
+    },
+    "player": {
+      "grid": {
+        "x": 33,
+        "y": 2
+      },
+      "hp": 19,
+      "depth": 0
+    },
+    "messages": [],
+    "dialogs": [
+      "Mod permissionsMandosThis mod can read hidden game state and runs code in the game page, with access to storage and the network.Add new player commandsRead player game stateRead monsters game stateRead map game stateRead inventory game stateRead floor game stateRead stores game stateRead spells game stateRead turn game stateSee exact numbers for the creatures your character perceives, such as hit points and speed, and what each kind of creature really doesRead interaction game stateAct on your character's behalf with the same commands your own keys useAnswer the game's current question through its input handlerObserve the \"message\" game eventObserve the \"run-end\" game eventObserve the \"dungeonlevel\" game eventObserve the \"player-command\" game eventAdd title screen actionsDraw the character creation screens instead of the gameList, load, rename and delete your characters; deletion asks you firstThis mod can play your character for you. Press Escape or Ctrl-Z to take back control.This mod can read hidden game state and runs code in the game page, with access to storage and the network.You will be asked again if this mod's files or permissions change.Apply choicesCancel"
+    ],
+    "buttons": [
+      "Apply choices",
+      "Cancel"
+    ],
+    "checkboxes": [
+      {
+        "label": "Add new player commands",
+        "checked": false
+      },
+      {
+        "label": "Read player game state",
+        "checked": true
+      },
+      {
+        "label": "Read monsters game state",
+        "checked": true
+      },
+      {
+        "label": "Read map game state",
+        "checked": true
+      },
+      {
+        "label": "Read inventory game state",
+        "checked": true
+      },
+      {
+        "label": "Read floor game state",
+        "checked": true
+      },
+      {
+        "label": "Read stores game state",
+        "checked": true
+      },
+      {
+        "label": "Read spells game state",
+        "checked": true
+      },
+      {
+        "label": "Read turn game state",
+        "checked": true
+      },
+      {
+        "label": "See exact numbers for the creatures your character perceives, such as hit points and speed, and what each kind of creature really does",
+        "checked": false
+      },
+      {
+        "label": "Read interaction game state",
+        "checked": true
+      },
+      {
+        "label": "Act on your character's behalf with the same commands your own keys use",
+        "checked": false
+      },
+      {
+        "label": "Answer the game's current question through its input handler",
+        "checked": false
+      },
+      {
+        "label": "Observe the \"message\" game event",
+        "checked": true
+      },
+      {
+        "label": "Observe the \"run-end\" game event",
+        "checked": true
+      },
+      {
+        "label": "Observe the \"dungeonlevel\" game event",
+        "checked": true
+      },
+      {
+        "label": "Observe the \"player-command\" game event",
+        "checked": true
+      },
+      {
+        "label": "Add title screen actions",
+        "checked": false
+      },
+      {
+        "label": "Draw the character creation screens instead of the game",
+        "checked": false
+      },
+      {
+        "label": "List, load, rename and delete your characters; deletion asks you first",
+        "checked": false
+      },
+      {
+        "label": "This mod can play your character for you. Press Escape or Ctrl-Z to take back control.",
+        "checked": false
+      },
+      {
+        "label": "This mod can read hidden game state and runs code in the game page, with access to storage and the network.",
+        "checked": false
+      }
+    ]
+  },
+  {
+    "type": "snapshot",
+    "tag": "06-command-grant",
+    "url": "neo-angband://game/?labprocess=mandos&log=debug",
+    "ready": true,
+    "screen": [
+      "Turn on Mandos anyway?",
+      "a) Turn it on",
+      "b) Leave it off",
+      "[ a/b or tap; ESC cancels ]"
+    ],
+    "turn": 0,
+    "modal": true,
+    "driver": {
+      "kind": "player"
+    },
+    "token": {
+      "epoch": 1,
+      "revision": 0
+    },
+    "seed": 3,
+    "size": {
+      "cols": 80,
+      "rows": 24
+    },
+    "fileInputs": [],
+    "userActivation": {
+      "active": true,
+      "ever": true
+    },
+    "player": {
+      "grid": {
+        "x": 33,
+        "y": 2
+      },
+      "hp": 19,
+      "depth": 0
+    },
+    "messages": [],
+    "dialogs": [
+      "Mod permissionsMandosThis mod can read hidden game state and runs code in the game page, with access to storage and the network.Add new player commandsRead player game stateRead monsters game stateRead map game stateRead inventory game stateRead floor game stateRead stores game stateRead spells game stateRead turn game stateSee exact numbers for the creatures your character perceives, such as hit points and speed, and what each kind of creature really doesRead interaction game stateAct on your character's behalf with the same commands your own keys useAnswer the game's current question through its input handlerObserve the \"message\" game eventObserve the \"run-end\" game eventObserve the \"dungeonlevel\" game eventObserve the \"player-command\" game eventAdd title screen actionsDraw the character creation screens instead of the gameList, load, rename and delete your characters; deletion asks you firstThis mod can play your character for you. Press Escape or Ctrl-Z to take back control.This mod can read hidden game state and runs code in the game page, with access to storage and the network.You will be asked again if this mod's files or permissions change.Apply choicesCancel"
+    ],
+    "buttons": [
+      "Apply choices",
+      "Cancel"
+    ],
+    "checkboxes": [
+      {
+        "label": "Add new player commands",
+        "checked": true
+      },
+      {
+        "label": "Read player game state",
+        "checked": true
+      },
+      {
+        "label": "Read monsters game state",
+        "checked": true
+      },
+      {
+        "label": "Read map game state",
+        "checked": true
+      },
+      {
+        "label": "Read inventory game state",
+        "checked": true
+      },
+      {
+        "label": "Read floor game state",
+        "checked": true
+      },
+      {
+        "label": "Read stores game state",
+        "checked": true
+      },
+      {
+        "label": "Read spells game state",
+        "checked": true
+      },
+      {
+        "label": "Read turn game state",
+        "checked": true
+      },
+      {
+        "label": "See exact numbers for the creatures your character perceives, such as hit points and speed, and what each kind of creature really does",
+        "checked": false
+      },
+      {
+        "label": "Read interaction game state",
+        "checked": true
+      },
+      {
+        "label": "Act on your character's behalf with the same commands your own keys use",
+        "checked": false
+      },
+      {
+        "label": "Answer the game's current question through its input handler",
+        "checked": false
+      },
+      {
+        "label": "Observe the \"message\" game event",
+        "checked": true
+      },
+      {
+        "label": "Observe the \"run-end\" game event",
+        "checked": true
+      },
+      {
+        "label": "Observe the \"dungeonlevel\" game event",
+        "checked": true
+      },
+      {
+        "label": "Observe the \"player-command\" game event",
+        "checked": true
+      },
+      {
+        "label": "Add title screen actions",
+        "checked": false
+      },
+      {
+        "label": "Draw the character creation screens instead of the game",
+        "checked": false
+      },
+      {
+        "label": "List, load, rename and delete your characters; deletion asks you first",
+        "checked": false
+      },
+      {
+        "label": "This mod can play your character for you. Press Escape or Ctrl-Z to take back control.",
+        "checked": false
+      },
+      {
+        "label": "This mod can read hidden game state and runs code in the game page, with access to storage and the network.",
+        "checked": false
+      }
+    ]
+  },
+  {
+    "type": "snapshot",
+    "tag": "07-known-danger-grant",
+    "url": "neo-angband://game/?labprocess=mandos&log=debug",
+    "ready": true,
+    "screen": [
+      "Turn on Mandos anyway?",
+      "a) Turn it on",
+      "b) Leave it off",
+      "[ a/b or tap; ESC cancels ]"
+    ],
+    "turn": 0,
+    "modal": true,
+    "driver": {
+      "kind": "player"
+    },
+    "token": {
+      "epoch": 1,
+      "revision": 0
+    },
+    "seed": 3,
+    "size": {
+      "cols": 80,
+      "rows": 24
+    },
+    "fileInputs": [],
+    "userActivation": {
+      "active": true,
+      "ever": true
+    },
+    "player": {
+      "grid": {
+        "x": 33,
+        "y": 2
+      },
+      "hp": 19,
+      "depth": 0
+    },
+    "messages": [],
+    "dialogs": [
+      "Mod permissionsMandosThis mod can read hidden game state and runs code in the game page, with access to storage and the network.Add new player commandsRead player game stateRead monsters game stateRead map game stateRead inventory game stateRead floor game stateRead stores game stateRead spells game stateRead turn game stateSee exact numbers for the creatures your character perceives, such as hit points and speed, and what each kind of creature really doesRead interaction game stateAct on your character's behalf with the same commands your own keys useAnswer the game's current question through its input handlerObserve the \"message\" game eventObserve the \"run-end\" game eventObserve the \"dungeonlevel\" game eventObserve the \"player-command\" game eventAdd title screen actionsDraw the character creation screens instead of the gameList, load, rename and delete your characters; deletion asks you firstThis mod can play your character for you. Press Escape or Ctrl-Z to take back control.This mod can read hidden game state and runs code in the game page, with access to storage and the network.You will be asked again if this mod's files or permissions change.Apply choicesCancel"
+    ],
+    "buttons": [
+      "Apply choices",
+      "Cancel"
+    ],
+    "checkboxes": [
+      {
+        "label": "Add new player commands",
+        "checked": true
+      },
+      {
+        "label": "Read player game state",
+        "checked": true
+      },
+      {
+        "label": "Read monsters game state",
+        "checked": true
+      },
+      {
+        "label": "Read map game state",
+        "checked": true
+      },
+      {
+        "label": "Read inventory game state",
+        "checked": true
+      },
+      {
+        "label": "Read floor game state",
+        "checked": true
+      },
+      {
+        "label": "Read stores game state",
+        "checked": true
+      },
+      {
+        "label": "Read spells game state",
+        "checked": true
+      },
+      {
+        "label": "Read turn game state",
+        "checked": true
+      },
+      {
+        "label": "See exact numbers for the creatures your character perceives, such as hit points and speed, and what each kind of creature really does",
+        "checked": true
+      },
+      {
+        "label": "Read interaction game state",
+        "checked": true
+      },
+      {
+        "label": "Act on your character's behalf with the same commands your own keys use",
+        "checked": false
+      },
+      {
+        "label": "Answer the game's current question through its input handler",
+        "checked": false
+      },
+      {
+        "label": "Observe the \"message\" game event",
+        "checked": true
+      },
+      {
+        "label": "Observe the \"run-end\" game event",
+        "checked": true
+      },
+      {
+        "label": "Observe the \"dungeonlevel\" game event",
+        "checked": true
+      },
+      {
+        "label": "Observe the \"player-command\" game event",
+        "checked": true
+      },
+      {
+        "label": "Add title screen actions",
+        "checked": false
+      },
+      {
+        "label": "Draw the character creation screens instead of the game",
+        "checked": false
+      },
+      {
+        "label": "List, load, rename and delete your characters; deletion asks you first",
+        "checked": false
+      },
+      {
+        "label": "This mod can play your character for you. Press Escape or Ctrl-Z to take back control.",
+        "checked": false
+      },
+      {
+        "label": "This mod can read hidden game state and runs code in the game page, with access to storage and the network.",
+        "checked": false
+      }
+    ]
+  },
+  {
+    "type": "snapshot",
+    "tag": "08-intent-grant",
+    "url": "neo-angband://game/?labprocess=mandos&log=debug",
+    "ready": true,
+    "screen": [
+      "Turn on Mandos anyway?",
+      "a) Turn it on",
+      "b) Leave it off",
+      "[ a/b or tap; ESC cancels ]"
+    ],
+    "turn": 0,
+    "modal": true,
+    "driver": {
+      "kind": "player"
+    },
+    "token": {
+      "epoch": 1,
+      "revision": 0
+    },
+    "seed": 3,
+    "size": {
+      "cols": 80,
+      "rows": 24
+    },
+    "fileInputs": [],
+    "userActivation": {
+      "active": true,
+      "ever": true
+    },
+    "player": {
+      "grid": {
+        "x": 33,
+        "y": 2
+      },
+      "hp": 19,
+      "depth": 0
+    },
+    "messages": [],
+    "dialogs": [
+      "Mod permissionsMandosThis mod can read hidden game state and runs code in the game page, with access to storage and the network.Add new player commandsRead player game stateRead monsters game stateRead map game stateRead inventory game stateRead floor game stateRead stores game stateRead spells game stateRead turn game stateSee exact numbers for the creatures your character perceives, such as hit points and speed, and what each kind of creature really doesRead interaction game stateAct on your character's behalf with the same commands your own keys useAnswer the game's current question through its input handlerObserve the \"message\" game eventObserve the \"run-end\" game eventObserve the \"dungeonlevel\" game eventObserve the \"player-command\" game eventAdd title screen actionsDraw the character creation screens instead of the gameList, load, rename and delete your characters; deletion asks you firstThis mod can play your character for you. Press Escape or Ctrl-Z to take back control.This mod can read hidden game state and runs code in the game page, with access to storage and the network.You will be asked again if this mod's files or permissions change.Apply choicesCancel"
+    ],
+    "buttons": [
+      "Apply choices",
+      "Cancel"
+    ],
+    "checkboxes": [
+      {
+        "label": "Add new player commands",
+        "checked": true
+      },
+      {
+        "label": "Read player game state",
+        "checked": true
+      },
+      {
+        "label": "Read monsters game state",
+        "checked": true
+      },
+      {
+        "label": "Read map game state",
+        "checked": true
+      },
+      {
+        "label": "Read inventory game state",
+        "checked": true
+      },
+      {
+        "label": "Read floor game state",
+        "checked": true
+      },
+      {
+        "label": "Read stores game state",
+        "checked": true
+      },
+      {
+        "label": "Read spells game state",
+        "checked": true
+      },
+      {
+        "label": "Read turn game state",
+        "checked": true
+      },
+      {
+        "label": "See exact numbers for the creatures your character perceives, such as hit points and speed, and what each kind of creature really does",
+        "checked": true
+      },
+      {
+        "label": "Read interaction game state",
+        "checked": true
+      },
+      {
+        "label": "Act on your character's behalf with the same commands your own keys use",
+        "checked": true
+      },
+      {
+        "label": "Answer the game's current question through its input handler",
+        "checked": false
+      },
+      {
+        "label": "Observe the \"message\" game event",
+        "checked": true
+      },
+      {
+        "label": "Observe the \"run-end\" game event",
+        "checked": true
+      },
+      {
+        "label": "Observe the \"dungeonlevel\" game event",
+        "checked": true
+      },
+      {
+        "label": "Observe the \"player-command\" game event",
+        "checked": true
+      },
+      {
+        "label": "Add title screen actions",
+        "checked": false
+      },
+      {
+        "label": "Draw the character creation screens instead of the game",
+        "checked": false
+      },
+      {
+        "label": "List, load, rename and delete your characters; deletion asks you first",
+        "checked": false
+      },
+      {
+        "label": "This mod can play your character for you. Press Escape or Ctrl-Z to take back control.",
+        "checked": false
+      },
+      {
+        "label": "This mod can read hidden game state and runs code in the game page, with access to storage and the network.",
+        "checked": false
+      }
+    ]
+  },
+  {
+    "type": "snapshot",
+    "tag": "09-prompt-grant",
+    "url": "neo-angband://game/?labprocess=mandos&log=debug",
+    "ready": true,
+    "screen": [
+      "Turn on Mandos anyway?",
+      "a) Turn it on",
+      "b) Leave it off",
+      "[ a/b or tap; ESC cancels ]"
+    ],
+    "turn": 0,
+    "modal": true,
+    "driver": {
+      "kind": "player"
+    },
+    "token": {
+      "epoch": 1,
+      "revision": 0
+    },
+    "seed": 3,
+    "size": {
+      "cols": 80,
+      "rows": 24
+    },
+    "fileInputs": [],
+    "userActivation": {
+      "active": true,
+      "ever": true
+    },
+    "player": {
+      "grid": {
+        "x": 33,
+        "y": 2
+      },
+      "hp": 19,
+      "depth": 0
+    },
+    "messages": [],
+    "dialogs": [
+      "Mod permissionsMandosThis mod can read hidden game state and runs code in the game page, with access to storage and the network.Add new player commandsRead player game stateRead monsters game stateRead map game stateRead inventory game stateRead floor game stateRead stores game stateRead spells game stateRead turn game stateSee exact numbers for the creatures your character perceives, such as hit points and speed, and what each kind of creature really doesRead interaction game stateAct on your character's behalf with the same commands your own keys useAnswer the game's current question through its input handlerObserve the \"message\" game eventObserve the \"run-end\" game eventObserve the \"dungeonlevel\" game eventObserve the \"player-command\" game eventAdd title screen actionsDraw the character creation screens instead of the gameList, load, rename and delete your characters; deletion asks you firstThis mod can play your character for you. Press Escape or Ctrl-Z to take back control.This mod can read hidden game state and runs code in the game page, with access to storage and the network.You will be asked again if this mod's files or permissions change.Apply choicesCancel"
+    ],
+    "buttons": [
+      "Apply choices",
+      "Cancel"
+    ],
+    "checkboxes": [
+      {
+        "label": "Add new player commands",
+        "checked": true
+      },
+      {
+        "label": "Read player game state",
+        "checked": true
+      },
+      {
+        "label": "Read monsters game state",
+        "checked": true
+      },
+      {
+        "label": "Read map game state",
+        "checked": true
+      },
+      {
+        "label": "Read inventory game state",
+        "checked": true
+      },
+      {
+        "label": "Read floor game state",
+        "checked": true
+      },
+      {
+        "label": "Read stores game state",
+        "checked": true
+      },
+      {
+        "label": "Read spells game state",
+        "checked": true
+      },
+      {
+        "label": "Read turn game state",
+        "checked": true
+      },
+      {
+        "label": "See exact numbers for the creatures your character perceives, such as hit points and speed, and what each kind of creature really does",
+        "checked": true
+      },
+      {
+        "label": "Read interaction game state",
+        "checked": true
+      },
+      {
+        "label": "Act on your character's behalf with the same commands your own keys use",
+        "checked": true
+      },
+      {
+        "label": "Answer the game's current question through its input handler",
+        "checked": true
+      },
+      {
+        "label": "Observe the \"message\" game event",
+        "checked": true
+      },
+      {
+        "label": "Observe the \"run-end\" game event",
+        "checked": true
+      },
+      {
+        "label": "Observe the \"dungeonlevel\" game event",
+        "checked": true
+      },
+      {
+        "label": "Observe the \"player-command\" game event",
+        "checked": true
+      },
+      {
+        "label": "Add title screen actions",
+        "checked": false
+      },
+      {
+        "label": "Draw the character creation screens instead of the game",
+        "checked": false
+      },
+      {
+        "label": "List, load, rename and delete your characters; deletion asks you first",
+        "checked": false
+      },
+      {
+        "label": "This mod can play your character for you. Press Escape or Ctrl-Z to take back control.",
+        "checked": false
+      },
+      {
+        "label": "This mod can read hidden game state and runs code in the game page, with access to storage and the network.",
+        "checked": false
+      }
+    ]
+  },
+  {
+    "type": "snapshot",
+    "tag": "10-controller-grant",
+    "url": "neo-angband://game/?labprocess=mandos&log=debug",
+    "ready": true,
+    "screen": [
+      "Turn on Mandos anyway?",
+      "a) Turn it on",
+      "b) Leave it off",
+      "[ a/b or tap; ESC cancels ]"
+    ],
+    "turn": 0,
+    "modal": true,
+    "driver": {
+      "kind": "player"
+    },
+    "token": {
+      "epoch": 1,
+      "revision": 0
+    },
+    "seed": 3,
+    "size": {
+      "cols": 80,
+      "rows": 24
+    },
+    "fileInputs": [],
+    "userActivation": {
+      "active": true,
+      "ever": true
+    },
+    "player": {
+      "grid": {
+        "x": 33,
+        "y": 2
+      },
+      "hp": 19,
+      "depth": 0
+    },
+    "messages": [],
+    "dialogs": [
+      "Mod permissionsMandosThis mod can read hidden game state and runs code in the game page, with access to storage and the network.Add new player commandsRead player game stateRead monsters game stateRead map game stateRead inventory game stateRead floor game stateRead stores game stateRead spells game stateRead turn game stateSee exact numbers for the creatures your character perceives, such as hit points and speed, and what each kind of creature really doesRead interaction game stateAct on your character's behalf with the same commands your own keys useAnswer the game's current question through its input handlerObserve the \"message\" game eventObserve the \"run-end\" game eventObserve the \"dungeonlevel\" game eventObserve the \"player-command\" game eventAdd title screen actionsDraw the character creation screens instead of the gameList, load, rename and delete your characters; deletion asks you firstThis mod can play your character for you. Press Escape or Ctrl-Z to take back control.This mod can read hidden game state and runs code in the game page, with access to storage and the network.You will be asked again if this mod's files or permissions change.Apply choicesCancel"
+    ],
+    "buttons": [
+      "Apply choices",
+      "Cancel"
+    ],
+    "checkboxes": [
+      {
+        "label": "Add new player commands",
+        "checked": true
+      },
+      {
+        "label": "Read player game state",
+        "checked": true
+      },
+      {
+        "label": "Read monsters game state",
+        "checked": true
+      },
+      {
+        "label": "Read map game state",
+        "checked": true
+      },
+      {
+        "label": "Read inventory game state",
+        "checked": true
+      },
+      {
+        "label": "Read floor game state",
+        "checked": true
+      },
+      {
+        "label": "Read stores game state",
+        "checked": true
+      },
+      {
+        "label": "Read spells game state",
+        "checked": true
+      },
+      {
+        "label": "Read turn game state",
+        "checked": true
+      },
+      {
+        "label": "See exact numbers for the creatures your character perceives, such as hit points and speed, and what each kind of creature really does",
+        "checked": true
+      },
+      {
+        "label": "Read interaction game state",
+        "checked": true
+      },
+      {
+        "label": "Act on your character's behalf with the same commands your own keys use",
+        "checked": true
+      },
+      {
+        "label": "Answer the game's current question through its input handler",
+        "checked": true
+      },
+      {
+        "label": "Observe the \"message\" game event",
+        "checked": true
+      },
+      {
+        "label": "Observe the \"run-end\" game event",
+        "checked": true
+      },
+      {
+        "label": "Observe the \"dungeonlevel\" game event",
+        "checked": true
+      },
+      {
+        "label": "Observe the \"player-command\" game event",
+        "checked": true
+      },
+      {
+        "label": "Add title screen actions",
+        "checked": false
+      },
+      {
+        "label": "Draw the character creation screens instead of the game",
+        "checked": false
+      },
+      {
+        "label": "List, load, rename and delete your characters; deletion asks you first",
+        "checked": false
+      },
+      {
+        "label": "This mod can play your character for you. Press Escape or Ctrl-Z to take back control.",
+        "checked": true
+      },
+      {
+        "label": "This mod can read hidden game state and runs code in the game page, with access to storage and the network.",
+        "checked": false
+      }
+    ]
+  },
+  {
+    "type": "snapshot",
+    "tag": "11-core-grant",
+    "url": "neo-angband://game/?labprocess=mandos&log=debug",
+    "ready": true,
+    "screen": [
+      "Turn on Mandos anyway?",
+      "a) Turn it on",
+      "b) Leave it off",
+      "[ a/b or tap; ESC cancels ]"
+    ],
+    "turn": 0,
+    "modal": true,
+    "driver": {
+      "kind": "player"
+    },
+    "token": {
+      "epoch": 1,
+      "revision": 0
+    },
+    "seed": 3,
+    "size": {
+      "cols": 80,
+      "rows": 24
+    },
+    "fileInputs": [],
+    "userActivation": {
+      "active": true,
+      "ever": true
+    },
+    "player": {
+      "grid": {
+        "x": 33,
+        "y": 2
+      },
+      "hp": 19,
+      "depth": 0
+    },
+    "messages": [],
+    "dialogs": [
+      "Mod permissionsMandosThis mod can read hidden game state and runs code in the game page, with access to storage and the network.Add new player commandsRead player game stateRead monsters game stateRead map game stateRead inventory game stateRead floor game stateRead stores game stateRead spells game stateRead turn game stateSee exact numbers for the creatures your character perceives, such as hit points and speed, and what each kind of creature really doesRead interaction game stateAct on your character's behalf with the same commands your own keys useAnswer the game's current question through its input handlerObserve the \"message\" game eventObserve the \"run-end\" game eventObserve the \"dungeonlevel\" game eventObserve the \"player-command\" game eventAdd title screen actionsDraw the character creation screens instead of the gameList, load, rename and delete your characters; deletion asks you firstThis mod can play your character for you. Press Escape or Ctrl-Z to take back control.This mod can read hidden game state and runs code in the game page, with access to storage and the network.You will be asked again if this mod's files or permissions change.Apply choicesCancel"
+    ],
+    "buttons": [
+      "Apply choices",
+      "Cancel"
+    ],
+    "checkboxes": [
+      {
+        "label": "Add new player commands",
+        "checked": true
+      },
+      {
+        "label": "Read player game state",
+        "checked": true
+      },
+      {
+        "label": "Read monsters game state",
+        "checked": true
+      },
+      {
+        "label": "Read map game state",
+        "checked": true
+      },
+      {
+        "label": "Read inventory game state",
+        "checked": true
+      },
+      {
+        "label": "Read floor game state",
+        "checked": true
+      },
+      {
+        "label": "Read stores game state",
+        "checked": true
+      },
+      {
+        "label": "Read spells game state",
+        "checked": true
+      },
+      {
+        "label": "Read turn game state",
+        "checked": true
+      },
+      {
+        "label": "See exact numbers for the creatures your character perceives, such as hit points and speed, and what each kind of creature really does",
+        "checked": true
+      },
+      {
+        "label": "Read interaction game state",
+        "checked": true
+      },
+      {
+        "label": "Act on your character's behalf with the same commands your own keys use",
+        "checked": true
+      },
+      {
+        "label": "Answer the game's current question through its input handler",
+        "checked": true
+      },
+      {
+        "label": "Observe the \"message\" game event",
+        "checked": true
+      },
+      {
+        "label": "Observe the \"run-end\" game event",
+        "checked": true
+      },
+      {
+        "label": "Observe the \"dungeonlevel\" game event",
+        "checked": true
+      },
+      {
+        "label": "Observe the \"player-command\" game event",
+        "checked": true
+      },
+      {
+        "label": "Add title screen actions",
+        "checked": false
+      },
+      {
+        "label": "Draw the character creation screens instead of the game",
+        "checked": false
+      },
+      {
+        "label": "List, load, rename and delete your characters; deletion asks you first",
+        "checked": false
+      },
+      {
+        "label": "This mod can play your character for you. Press Escape or Ctrl-Z to take back control.",
+        "checked": true
+      },
+      {
+        "label": "This mod can read hidden game state and runs code in the game page, with access to storage and the network.",
+        "checked": true
+      }
+    ]
+  },
+  {
+    "type": "snapshot",
+    "tag": "12-apply-developer-consent",
+    "url": "neo-angband://game/?labprocess=mandos&log=debug",
+    "ready": true,
+    "screen": [
+      "Mandos is on. Which of its features?",
+      "a) Enable default features",
+      "b) Choose features to enable",
+      "c) Do not enable any features",
+      "Use what this mod ships turned on.",
+      "[ a/b/c or tap; ESC = default features ]"
+    ],
+    "turn": 0,
+    "modal": true,
+    "driver": {
+      "kind": "player"
+    },
+    "token": {
+      "epoch": 1,
+      "revision": 0
+    },
+    "seed": 3,
+    "size": {
+      "cols": 80,
+      "rows": 24
+    },
+    "fileInputs": [],
+    "userActivation": {
+      "active": true,
+      "ever": true
+    },
+    "player": {
+      "grid": {
+        "x": 33,
+        "y": 2
+      },
+      "hp": 19,
+      "depth": 0
+    },
+    "messages": [],
+    "dialogs": [],
+    "buttons": [],
+    "checkboxes": []
+  },
+  {
+    "type": "snapshot",
+    "tag": "13-default-features",
+    "url": "neo-angband://game/?labprocess=mandos&log=debug",
+    "ready": true,
+    "screen": [
+      "Mods",
+      "a) [x] Mandos (diegoami)  v0.1.0  (trusted)  ! unreviewed",
+      "1) Recommended mods...",
+      "7) Update installed mods...  (checks each mod's own repository)",
+      "8) Save a Delve...",
+      "+) Load a Delve...",
+      "-) Mod profile sync folder...                                                  v",
+      "Mandos (diegoami)  (id: mandos)",
+      "version 0.1.0  -  plugin pack, trusted plugin",
+      "diegoami  -  GPL-2.0-only",
+      "Not loaded: not enabled",
+      "...  (open the mod to read the rest)",
+      "Makes 30 separate changes. Open the mod to switch any one on or off.",
+      "Needs: core *",
+      "It asks to be allowed to:",
+      "  - Add new player commands",
+      "  - Read player game state",
+      "...  (open the mod to read the rest)",
+      "Runs its own code. Asks for 24 permissions.",
+      "[ Space on/off, Enter opens; Apply to reload; ESC = back ]"
+    ],
+    "turn": 0,
+    "modal": true,
+    "driver": {
+      "kind": "player"
+    },
+    "token": {
+      "epoch": 1,
+      "revision": 0
+    },
+    "seed": 3,
+    "size": {
+      "cols": 80,
+      "rows": 24
+    },
+    "fileInputs": [],
+    "userActivation": {
+      "active": true,
+      "ever": true
+    },
+    "player": {
+      "grid": {
+        "x": 33,
+        "y": 2
+      },
+      "hp": 19,
+      "depth": 0
+    },
+    "messages": [],
+    "dialogs": [],
+    "buttons": [],
+    "checkboxes": []
+  },
+  {
+    "type": "snapshot",
+    "tag": "14-apply-mods",
+    "url": "neo-angband://game/?labprocess=mandos&log=debug",
+    "ready": true,
+    "screen": [
+      "                                       ###",
+      "                                       #@#",
+      "                                       ###",
+      "                            Digging out the dungeon.",
+      "                                  Neo Angband"
+    ],
+    "turn": 0,
+    "modal": false,
+    "driver": {
+      "kind": "player"
+    },
+    "token": {
+      "epoch": 1,
+      "revision": 0
+    },
+    "seed": 1471779398,
+    "size": {
+      "cols": 80,
+      "rows": 24
+    },
+    "fileInputs": [],
+    "userActivation": {
+      "active": true,
+      "ever": true
+    },
+    "player": {
+      "grid": {
+        "x": 41,
+        "y": 4
+      },
+      "hp": 19,
+      "depth": 0
+    },
+    "messages": [],
+    "dialogs": [],
+    "buttons": [],
+    "checkboxes": []
+  },
+  {
+    "type": "snapshot",
+    "tag": "15-folder-loaded",
+    "url": "neo-angband://game/?labprocess=mandos&log=debug",
+    "ready": true,
+    "screen": [
+      "                    _   _",
+      "                   | \\ | | ___  ___    ^",
+      "                   |  \\| |/ _ \\/ _ \\  ^^^",
+      "                ^  | |\\  |  __/ (_) |^^^^^                   ^",
+      "               ^^^ |_| \\_|\\___|\\___/^^^^^^^                 ^^^",
+      "              ^^^^^                ^^^^^^^^^               ^^^^^",
+      "             ^^^^  _              ^ _  ^^^^^^             _  ^^^^",
+      "            ^^^^  / \\   _ __   __ _| |__   __ _ _ __   __| | ^^^^^",
+      "           ^^^^  / _ \\ | '_ \\ / _` | '_ \\ / _` | '_ \\ / _` | ^^^^^^",
+      "          ^^^^  / ___ \\| | | | (_| | |_) | (_| | | | | (_| | ^^^^^^^",
+      "         ^^^^  /_/   \\_\\_| |_|\\__, |_.__/ \\__,_|_| |_|\\__,_| ^^^^^^^^",
+      "        ^^^^^                 |___/  1.23.0-edge.218",
+      "       ^^^^^^^^^^^^^^^^^^                     ^^^^  ^^^^^^^^^^^^^^^^^^^",
+      " A faithful but moddable port of Angband, meant to be playable almost anywhere.",
+      "             Docs and quick start: https://angband.rpgm.world/docs",
+      "               GitHub: https://github.com/neostryder/neo-angband",
+      "            Releases: https://releases.rpgm.tools/repos/neo-angband/",
+      "                     Discord: https://discord.gg/YegtwbHTBQ",
+      "      Thank you, Eric Branlund and past maintainers and developers, and to",
+      "             all those who have given us so many creative variants!",
+      "   (P)rofile   (N)ew   (O)pen   (R)esume   (M)ods   (L)ook: Vanilla   (Q)uit"
+    ],
+    "turn": 0,
+    "modal": true,
+    "driver": {
+      "kind": "player"
+    },
+    "token": {
+      "epoch": 1,
+      "revision": 0
+    },
+    "seed": 1471779398,
+    "size": {
+      "cols": 80,
+      "rows": 24
+    },
+    "fileInputs": [],
+    "userActivation": {
+      "active": true,
+      "ever": true
+    },
+    "player": {
+      "grid": {
+        "x": 41,
+        "y": 4
+      },
+      "hp": 19,
+      "depth": 0
+    },
+    "messages": [],
+    "dialogs": [],
+    "buttons": [],
+    "checkboxes": []
+  },
+  {
+    "type": "snapshot",
+    "tag": "16-native-birth",
+    "url": "neo-angband://game/?labprocess=mandos&log=debug",
+    "ready": true,
+    "screen": [
+      "  Please select your character traits from the menus below:",
+      "  Use the movement keys to scroll the menu, Enter to select the current menu",
+      "  item, '*' for a random menu item, '@' to finish the character with random",
+      "  selections, 'ESC' to step back through the birth process, '=' for the birth",
+      "  options, '?' for help, or 'Ctrl-X' to quit.",
+      "  Race affects stats and skills, and may confer resistances and abilities.",
+      "  a) Human         Str:  +0  Dex:  +0",
+      "  b) Half-Elf      Int:  +0  Con:  +0",
+      "  c) Elf           Wis:  +0",
+      "  d) Hobbit",
+      "  e) Gnome         Hit/Shoot/Throw: +0/+0/+0",
+      "  f) Dwarf         Hit die: 10   XP mod: 100%",
+      "  g) Half-Orc      Disarm:  +0/ +0   Devices:  +0",
+      "  i) Half-Troll    Save:    +0   Stealth:  +0",
+      "  m) Dunadan       Infravision:  0 ft",
+      "  n) High-Elf      Digging:      +0",
+      "  o) Kobold        Search:       +0"
+    ],
+    "turn": 0,
+    "modal": true,
+    "driver": {
+      "kind": "player"
+    },
+    "token": {
+      "epoch": 1,
+      "revision": 0
+    },
+    "seed": 1471779398,
+    "size": {
+      "cols": 80,
+      "rows": 24
+    },
+    "fileInputs": [],
+    "userActivation": {
+      "active": true,
+      "ever": true
+    },
+    "player": {
+      "grid": {
+        "x": 41,
+        "y": 4
+      },
+      "hp": 19,
+      "depth": 0
+    },
+    "messages": [],
+    "dialogs": [],
+    "buttons": [],
+    "checkboxes": []
+  },
+  {
+    "type": "snapshot",
+    "tag": "17-human",
+    "url": "neo-angband://game/?labprocess=mandos&log=debug",
+    "ready": true,
+    "screen": [
+      "  Please select your character traits from the menus below:",
+      "  Use the movement keys to scroll the menu, Enter to select the current menu",
+      "  item, '*' for a random menu item, '@' to finish the character with random",
+      "  selections, 'ESC' to step back through the birth process, '=' for the birth",
+      "  options, '?' for help, or 'Ctrl-X' to quit.",
+      "  Class affects stats, skills, and other character traits.",
+      "  a) Human         a) Warrior       Str:  +3  Dex:  +2",
+      "  b) Half-Elf      b) Mage          Int:  -2  Con:  +2",
+      "  c) Elf           c) Druid         Wis:  -2",
+      "  d) Hobbit        d) Priest",
+      "  e) Gnome         e) Necromancer   Hit/Shoot/Throw: +70/+55/+55",
+      "  f) Dwarf         f) Paladin       Hit die: 19   XP mod: 100%",
+      "  g) Half-Orc      g) Rogue         Disarm: +25/+20   Devices: +18",
+      "  i) Half-Troll    i) Ranger        Save:   +18   Stealth:  +0",
+      "  m) Dunadan       m) Blackguard    Digging:      +0",
+      "  n) High-Elf                       Search:       +10",
+      "  o) Kobold",
+      "                                    Relentless [30]",
+      "                                    No Magic",
+      "                                    Shield Bash"
+    ],
+    "turn": 0,
+    "modal": true,
+    "driver": {
+      "kind": "player"
+    },
+    "token": {
+      "epoch": 1,
+      "revision": 0
+    },
+    "seed": 1471779398,
+    "size": {
+      "cols": 80,
+      "rows": 24
+    },
+    "fileInputs": [],
+    "userActivation": {
+      "active": true,
+      "ever": true
+    },
+    "player": {
+      "grid": {
+        "x": 41,
+        "y": 4
+      },
+      "hp": 19,
+      "depth": 0
+    },
+    "messages": [],
+    "dialogs": [],
+    "buttons": [],
+    "checkboxes": []
+  },
+  {
+    "type": "snapshot",
+    "tag": "18-warrior",
+    "url": "neo-angband://game/?labprocess=mandos&log=debug",
+    "ready": true,
+    "screen": [
+      "  Please select your character traits from the menus below:",
+      "  Use the movement keys to scroll the menu, Enter to select the current menu",
+      "  item, '*' for a random menu item, '@' to finish the character with random",
+      "  selections, 'ESC' to step back through the birth process, '=' for the birth",
+      "  options, '?' for help, or 'Ctrl-X' to quit.",
+      "  Choose how to generate your intrinsic stats. Point-based is recommended.",
+      "  a) Human         a) Warrior       a) Point-based",
+      "  b) Half-Elf      b) Mage          b) Standard roller",
+      "  c) Elf           c) Druid",
+      "  d) Hobbit        d) Priest",
+      "  e) Gnome         e) Necromancer",
+      "  f) Dwarf         f) Paladin",
+      "  g) Half-Orc      g) Rogue",
+      "  i) Half-Troll    i) Ranger",
+      "  m) Dunadan       m) Blackguard",
+      "  n) High-Elf",
+      "  o) Kobold"
+    ],
+    "turn": 0,
+    "modal": true,
+    "driver": {
+      "kind": "player"
+    },
+    "token": {
+      "epoch": 1,
+      "revision": 0
+    },
+    "seed": 1471779398,
+    "size": {
+      "cols": 80,
+      "rows": 24
+    },
+    "fileInputs": [],
+    "userActivation": {
+      "active": true,
+      "ever": true
+    },
+    "player": {
+      "grid": {
+        "x": 41,
+        "y": 4
+      },
+      "hp": 19,
+      "depth": 0
+    },
+    "messages": [],
+    "dialogs": [],
+    "buttons": [],
+    "checkboxes": []
+  },
+  {
+    "type": "snapshot",
+    "tag": "19-point-based",
+    "url": "neo-angband://game/?labprocess=mandos&log=debug",
+    "ready": true,
+    "screen": [
+      " Name                Age             18          Self  RB  CB  EB   Best  Cost",
+      " Race   Human        Height        4'8\"   STR:     17  +0  +3  +0  18/20     8",
+      " Class  Warrior      Weight    10st 0lb   INT:     10  +0  -2  +0      8     0",
+      " Title  Rookie       Turns used:          WIS:     10  +0  -2  +0      8     0",
+      " HP     20/20        Game             0   DEX:     16  +0  +2  +0     18     6",
+      " SP     0/0          Standard         0   CON:     16  +0  +2  +0     18     6",
+      "                     Resting          0                      Total Cost: 20/20",
+      " Level                  1    Armor         [0,+2]   Saving Throw     20%",
+      " Cur Exp                0                           Stealth          Bad",
+      " Max Exp                0    Melee         1d1,+3   Disarm - phys.   29%",
+      " Adv Exp               10    To-hit        24,+4    Disarm - magic   22%",
+      "                             Blows         2.7/turn Magic Devices     19",
+      " Gold                 600                           Searching        11%",
+      " Burden            0.0 lb    Shoot to-dam     +0    Infravision     0 ft",
+      " Overweight     -143.9 lb    To-hit        19,+4    Speed           Normal",
+      " Max Depth           Town    Shots         0.0/turn",
+      " You are one of several children of a Serf.  You are the black sheep of",
+      " the family.  You have brown eyes, straight auburn hair, and a very",
+      " fair complexion.",
+      "    [up/down to move, left/right to modify, 'r' to reset, 'Enter' to accept]"
+    ],
+    "turn": 0,
+    "modal": true,
+    "driver": {
+      "kind": "player"
+    },
+    "token": {
+      "epoch": 1,
+      "revision": 0
+    },
+    "seed": 1471779398,
+    "size": {
+      "cols": 80,
+      "rows": 24
+    },
+    "fileInputs": [],
+    "userActivation": {
+      "active": true,
+      "ever": true
+    },
+    "player": {
+      "grid": {
+        "x": 41,
+        "y": 4
+      },
+      "hp": 19,
+      "depth": 0
+    },
+    "messages": [],
+    "dialogs": [],
+    "buttons": [],
+    "checkboxes": []
+  },
+  {
+    "type": "snapshot",
+    "tag": "20-accept-native-stats",
+    "url": "neo-angband://game/?labprocess=mandos&log=debug",
+    "ready": true,
+    "screen": [
+      "Enter a name for your character (* for a random name):",
+      " Name                Age             18          Self  RB  CB  EB   Best",
+      " Race   Human        Height        4'8\"   STR:     17  +0  +3  +0  18/20",
+      " Class  Warrior      Weight    10st 0lb   INT:     10  +0  -2  +0      8",
+      " Title  Rookie       Turns used:          WIS:     10  +0  -2  +0      8",
+      " HP     20/20        Game             0   DEX:     16  +0  +2  +0     18",
+      " SP     0/0          Standard         0   CON:     16  +0  +2  +0     18",
+      "                     Resting          0",
+      " Level                  1    Armor         [0,+2]   Saving Throw     20%",
+      " Cur Exp                0                           Stealth          Bad",
+      " Max Exp                0    Melee         1d1,+3   Disarm - phys.   29%",
+      " Adv Exp               10    To-hit        24,+4    Disarm - magic   22%",
+      "                             Blows         2.7/turn Magic Devices     19",
+      " Gold                 600                           Searching        11%",
+      " Burden            0.0 lb    Shoot to-dam     +0    Infravision     0 ft",
+      " Overweight     -143.9 lb    To-hit        19,+4    Speed           Normal",
+      " Max Depth           Town    Shots         0.0/turn",
+      " You are one of several children of a Serf.  You are the black sheep of",
+      " the family.  You have brown eyes, straight auburn hair, and a very",
+      " fair complexion."
+    ],
+    "turn": 0,
+    "modal": true,
+    "driver": {
+      "kind": "player"
+    },
+    "token": {
+      "epoch": 1,
+      "revision": 0
+    },
+    "seed": 1471779398,
+    "size": {
+      "cols": 80,
+      "rows": 24
+    },
+    "fileInputs": [],
+    "userActivation": {
+      "active": true,
+      "ever": true
+    },
+    "player": {
+      "grid": {
+        "x": 41,
+        "y": 4
+      },
+      "hp": 19,
+      "depth": 0
+    },
+    "messages": [],
+    "dialogs": [],
+    "buttons": [],
+    "checkboxes": []
+  },
+  {
+    "type": "snapshot",
+    "tag": "21-name",
+    "url": "neo-angband://game/?labprocess=mandos&log=debug",
+    "ready": true,
+    "screen": [
+      "Enter a name for your character (* for a random name): MandosLab218",
+      " Name                Age             18          Self  RB  CB  EB   Best",
+      " Race   Human        Height        4'8\"   STR:     17  +0  +3  +0  18/20",
+      " Class  Warrior      Weight    10st 0lb   INT:     10  +0  -2  +0      8",
+      " Title  Rookie       Turns used:          WIS:     10  +0  -2  +0      8",
+      " HP     20/20        Game             0   DEX:     16  +0  +2  +0     18",
+      " SP     0/0          Standard         0   CON:     16  +0  +2  +0     18",
+      "                     Resting          0",
+      " Level                  1    Armor         [0,+2]   Saving Throw     20%",
+      " Cur Exp                0                           Stealth          Bad",
+      " Max Exp                0    Melee         1d1,+3   Disarm - phys.   29%",
+      " Adv Exp               10    To-hit        24,+4    Disarm - magic   22%",
+      "                             Blows         2.7/turn Magic Devices     19",
+      " Gold                 600                           Searching        11%",
+      " Burden            0.0 lb    Shoot to-dam     +0    Infravision     0 ft",
+      " Overweight     -143.9 lb    To-hit        19,+4    Speed           Normal",
+      " Max Depth           Town    Shots         0.0/turn",
+      " You are one of several children of a Serf.  You are the black sheep of",
+      " the family.  You have brown eyes, straight auburn hair, and a very",
+      " fair complexion."
+    ],
+    "turn": 0,
+    "modal": true,
+    "driver": {
+      "kind": "player"
+    },
+    "token": {
+      "epoch": 1,
+      "revision": 0
+    },
+    "seed": 1471779398,
+    "size": {
+      "cols": 80,
+      "rows": 24
+    },
+    "fileInputs": [],
+    "userActivation": {
+      "active": true,
+      "ever": true
+    },
+    "player": {
+      "grid": {
+        "x": 41,
+        "y": 4
+      },
+      "hp": 19,
+      "depth": 0
+    },
+    "messages": [],
+    "dialogs": [],
+    "buttons": [],
+    "checkboxes": []
+  },
+  {
+    "type": "snapshot",
+    "tag": "22-name-accepted",
+    "url": "neo-angband://game/?labprocess=mandos&log=debug",
+    "ready": true,
+    "screen": [
+      "Accept character history? [y/n]",
+      " Name   MandosLab218 Age             18          Self  RB  CB  EB   Best",
+      " Race   Human        Height        4'8\"   STR:     17  +0  +3  +0  18/20",
+      " Class  Warrior      Weight    10st 0lb   INT:     10  +0  -2  +0      8",
+      " Title  Rookie       Turns used:          WIS:     10  +0  -2  +0      8",
+      " HP     20/20        Game             0   DEX:     16  +0  +2  +0     18",
+      " SP     0/0          Standard         0   CON:     16  +0  +2  +0     18",
+      "                     Resting          0",
+      " Level                  1    Armor         [0,+2]   Saving Throw     20%",
+      " Cur Exp                0                           Stealth          Bad",
+      " Max Exp                0    Melee         1d1,+3   Disarm - phys.   29%",
+      " Adv Exp               10    To-hit        24,+4    Disarm - magic   22%",
+      "                             Blows         2.7/turn Magic Devices     19",
+      " Gold                 600                           Searching        11%",
+      " Burden            0.0 lb    Shoot to-dam     +0    Infravision     0 ft",
+      " Overweight     -143.9 lb    To-hit        19,+4    Speed           Normal",
+      " Max Depth           Town    Shots         0.0/turn",
+      " You are one of several children of a Guildsman.  You are a credit to",
+      " the family.  You have brown eyes, straight brown hair, and a dark",
+      " complexion."
+    ],
+    "turn": 0,
+    "modal": true,
+    "driver": {
+      "kind": "player"
+    },
+    "token": {
+      "epoch": 1,
+      "revision": 0
+    },
+    "seed": 1471779398,
+    "size": {
+      "cols": 80,
+      "rows": 24
+    },
+    "fileInputs": [],
+    "userActivation": {
+      "active": true,
+      "ever": true
+    },
+    "player": {
+      "grid": {
+        "x": 41,
+        "y": 4
+      },
+      "hp": 19,
+      "depth": 0
+    },
+    "messages": [],
+    "dialogs": [],
+    "buttons": [],
+    "checkboxes": []
+  },
+  {
+    "type": "snapshot",
+    "tag": "23-history-accepted",
+    "url": "neo-angband://game/?labprocess=mandos&log=debug",
+    "ready": true,
+    "screen": [
+      " Name   MandosLab218 Age             18          Self  RB  CB  EB   Best",
+      " Race   Human        Height        4'8\"   STR:     17  +0  +3  +0  18/20",
+      " Class  Warrior      Weight    10st 0lb   INT:     10  +0  -2  +0      8",
+      " Title  Rookie       Turns used:          WIS:     10  +0  -2  +0      8",
+      " HP     20/20        Game             0   DEX:     16  +0  +2  +0     18",
+      " SP     0/0          Standard         0   CON:     16  +0  +2  +0     18",
+      "                     Resting          0",
+      " Level                  1    Armor         [0,+2]   Saving Throw     20%",
+      " Cur Exp                0                           Stealth          Bad",
+      " Max Exp                0    Melee         1d1,+3   Disarm - phys.   29%",
+      " Adv Exp               10    To-hit        24,+4    Disarm - magic   22%",
+      "                             Blows         2.7/turn Magic Devices     19",
+      " Gold                 600                           Searching        11%",
+      " Burden            0.0 lb    Shoot to-dam     +0    Infravision     0 ft",
+      " Overweight     -143.9 lb    To-hit        19,+4    Speed           Normal",
+      " Max Depth           Town    Shots         0.0/turn",
+      " You are one of several children of a Guildsman.  You are a credit to",
+      " the family.  You have brown eyes, straight brown hair, and a dark",
+      " complexion.",
+      "     ['ESC' to step back, 'S' to start over, or any other key to continue]"
+    ],
+    "turn": 0,
+    "modal": true,
+    "driver": {
+      "kind": "player"
+    },
+    "token": {
+      "epoch": 1,
+      "revision": 0
+    },
+    "seed": 1471779398,
+    "size": {
+      "cols": 80,
+      "rows": 24
+    },
+    "fileInputs": [],
+    "userActivation": {
+      "active": true,
+      "ever": true
+    },
+    "player": {
+      "grid": {
+        "x": 41,
+        "y": 4
+      },
+      "hp": 19,
+      "depth": 0
+    },
+    "messages": [],
+    "dialogs": [],
+    "buttons": [],
+    "checkboxes": []
+  },
+  {
+    "type": "snapshot",
+    "tag": "24-native-character-started",
+    "url": "neo-angband://game/?labprocess=mandos&log=debug",
+    "ready": true,
+    "screen": [
+      "Human                            #####                   ################",
+      "Rookie                          ##...###  ####           #.##...........##",
+      "Warrior                 ###     #......# ##..#           #...............#",
+      "LEVEL      1           ##.#     ##.....# #...##### #######....####.......##",
+      "NXT       10           #.#####:#:#.....###.......###.#@.##....####........#",
+      "AU       146           #.:#..:.:#..............:..##..........#7##........###",
+      "|    ~(                #::.....::...............::.......t..................#",
+      "STR:   18/20            ##..................................................##",
+      "INT:       8            #....................................................#",
+      "WIS:       8     ########:.::..............#2#..##1.......................:..##",
+      "DEX:      18     #.......::::......:##::...###..###.....#5##..##3##.##6##..:..#",
+      "CON:      18     #.........#.......:##:#...###..###.....####..#####.#####.:::.#",
+      "                 #.........::........:..................####..#####.#####...###",
+      "Cur AC    10     ##....:.::.:.............:................................##",
+      "HP   20/  20      #....:.###:.............#..............###........#####..#",
+      "                  ######.###:...............:....##4.....8##.......##   ####",
+      "                       #....:............:..:....###...............##",
+      "                      ###.......####.#:##......................#....#",
+      "                      #.........#  ###  #..............#...######...#",
+      "                    #::........##       ##............###..#    ##.##",
+      "                    #......###.#         #............# #..#     ###",
+      "Town                ######## ###         ############## ####",
+      "             Light 3  Fed 89 % Down staircase"
+    ],
+    "turn": 0,
+    "modal": false,
+    "driver": {
+      "kind": "player"
+    },
+    "token": {
+      "epoch": 1,
+      "revision": 0
+    },
+    "seed": 1471779398,
+    "size": {
+      "cols": 80,
+      "rows": 24
+    },
+    "fileInputs": [],
+    "userActivation": {
+      "active": true,
+      "ever": true
+    },
+    "player": {
+      "grid": {
+        "x": 41,
+        "y": 4
+      },
+      "hp": 20,
+      "depth": 0
+    },
+    "messages": [
+      {
+        "text": " ",
+        "count": 1
+      },
+      {
+        "text": "  ",
+        "count": 1
+      },
+      {
+        "text": "====================",
+        "count": 1
+      },
+      {
+        "text": "  ",
+        "count": 1
+      },
+      {
+        "text": " ",
+        "count": 1
+      }
+    ],
+    "dialogs": [],
+    "buttons": [],
+    "checkboxes": []
+  },
+  {
+    "type": "snapshot",
+    "tag": "25-native-controller-consent",
+    "url": "neo-angband://game/?labprocess=mandos&log=debug",
+    "ready": true,
+    "screen": [
+      "Human                            #####                   ################",
+      "Rookie                          ##...###  ####           #.##...........##",
+      "Warrior                 ###     #......# ##..#           #...............#",
+      "LEVEL      1           ##.#     ##.....# #...##### #######....####.......##",
+      "NXT       10           #.#####:#:#.....###.......###.#@.##....####........#",
+      "AU       146           #.:#..:.:#..............:..##..........#7##........###",
+      "|    ~(                #::.....::...............::.......t..................#",
+      "STR:   18/20            ##..................................................##",
+      "INT:       8            #....................................................#",
+      "WIS:       8     ########:.::..............#2#..##1.......................:..##",
+      "DEX:      18     #.......::::......:##::...###..###.....#5##..##3##.##6##..:..#",
+      "CON:      18     #.........#.......:##:#...###..###.....####..#####.#####.:::.#",
+      "                 #.........::........:..................####..#####.#####...###",
+      "Cur AC    10     ##....:.::.:.............:................................##",
+      "HP   20/  20      #....:.###:.............#..............###........#####..#",
+      "                  ######.###:...............:....##4.....8##.......##   ####",
+      "                       #....:............:..:....###...............##",
+      "                      ###.......####.#:##......................#....#",
+      "                      #.........#  ###  #..............#...######...#",
+      "                    #::........##       ##............###..#    ##.##",
+      "                    #......###.#         #............# #..#     ###",
+      "Town                ######## ###         ############## ####",
+      "             Light 3  Fed 89 % Down staircase"
+    ],
+    "turn": 0,
+    "modal": true,
+    "driver": {
+      "kind": "player"
+    },
+    "token": {
+      "epoch": 1,
+      "revision": 0
+    },
+    "seed": 1471779398,
+    "size": {
+      "cols": 80,
+      "rows": 24
+    },
+    "fileInputs": [],
+    "userActivation": {
+      "active": true,
+      "ever": true
+    },
+    "player": {
+      "grid": {
+        "x": 41,
+        "y": 4
+      },
+      "hp": 20,
+      "depth": 0
+    },
+    "messages": [
+      {
+        "text": " ",
+        "count": 1
+      },
+      {
+        "text": "  ",
+        "count": 1
+      },
+      {
+        "text": "====================",
+        "count": 1
+      },
+      {
+        "text": "  ",
+        "count": 1
+      },
+      {
+        "text": " ",
+        "count": 1
+      }
+    ],
+    "dialogs": [
+      "Automatic gameplayMandosThis mod can play your character for you. Press Escape or Ctrl-Z to take back control.Your save is marked nondeterministic, and this character can never be scored.Start playingCancel"
+    ],
+    "buttons": [
+      "Start playing",
+      "Cancel"
+    ],
+    "checkboxes": []
+  },
+  {
+    "type": "observation-start",
+    "ceilingMs": 30000
+  },
+  {
+    "type": "snapshot",
+    "tag": "26-native-handoff",
+    "url": "neo-angband://game/?labprocess=mandos&log=debug",
+    "ready": true,
+    "screen": [
+      "You take the keyboard back from Mandos.",
+      "Human",
+      "Rookie",
+      "Warrior",
+      "LEVEL      1",
+      "NXT       10",
+      "AU       146",
+      "|    ~(",
+      "STR:   18/20                                 ###",
+      "INT:       8                                 ..#",
+      "WIS:       8                                 #C#",
+      "DEX:      18                                 #@#",
+      "CON:      18                                 #<#",
+      "                                             ###",
+      "Cur AC    10",
+      "HP   13/  20",
+      "50' (L1)",
+      "             LF:2-? Light 3  Fed 89 % Open floor"
+    ],
+    "turn": 30,
+    "modal": true,
+    "driver": {
+      "kind": "player"
+    },
+    "token": {
+      "epoch": 1,
+      "revision": 4
+    },
+    "seed": 1471779398,
+    "size": {
+      "cols": 80,
+      "rows": 24
+    },
+    "fileInputs": [],
+    "userActivation": {
+      "active": true,
+      "ever": true
+    },
+    "player": {
+      "grid": {
+        "x": 125,
+        "y": 41
+      },
+      "hp": 13,
+      "depth": 1
+    },
+    "messages": [
+      {
+        "text": "Saving failed.",
+        "count": 1
+      },
+      {
+        "text": "You enter a maze of down staircases.",
+        "count": 1
+      },
+      {
+        "text": "This seems a tame, sheltered place.",
+        "count": 1
+      },
+      {
+        "text": "Fang, Farmer Maggot's Dog, bites you.",
+        "count": 2
+      },
+      {
+        "text": "Fang, Farmer Maggot's Dog, misses you.",
+        "count": 1
+      },
+      {
+        "text": "Fang, Farmer Maggot's Dog, bites you.",
+        "count": 1
+      },
+      {
+        "text": "You take the keyboard back from Mandos.",
+        "count": 1
+      }
+    ],
+    "dialogs": [],
+    "buttons": [],
+    "checkboxes": []
+  },
+  {
+    "type": "autoplay-observation",
+    "baseline": {
+      "elapsedMs": 277,
+      "turn": 0,
+      "driver": {
+        "kind": "controller",
+        "owner": "mandos"
+      },
+      "player": {
+        "grid": {
+          "x": 41,
+          "y": 4
+        },
+        "hp": 20,
+        "depth": 0
+      },
+      "token": {
+        "epoch": 1,
+        "revision": 0
+      }
+    },
+    "after": {
+      "turn": 30,
+      "driver": {
+        "kind": "controller",
+        "owner": "mandos"
+      },
+      "player": {
+        "grid": {
+          "x": 125,
+          "y": 41
+        },
+        "hp": 13,
+        "depth": 1
+      }
+    },
+    "samples": [
+      {
+        "elapsedMs": 277,
+        "turn": 0,
+        "driver": {
+          "kind": "controller",
+          "owner": "mandos"
+        },
+        "player": {
+          "grid": {
+            "x": 41,
+            "y": 4
+          },
+          "hp": 20,
+          "depth": 0
+        },
+        "token": {
+          "epoch": 1,
+          "revision": 0
+        }
+      },
+      {
+        "elapsedMs": 319,
+        "turn": 0,
+        "driver": {
+          "kind": "controller",
+          "owner": "mandos"
+        },
+        "player": {
+          "grid": {
+            "x": 41,
+            "y": 4
+          },
+          "hp": 20,
+          "depth": 0
+        },
+        "token": {
+          "epoch": 1,
+          "revision": 0
+        }
+      },
+      {
+        "elapsedMs": 347,
+        "turn": 0,
+        "driver": {
+          "kind": "controller",
+          "owner": "mandos"
+        },
+        "player": {
+          "grid": {
+            "x": 41,
+            "y": 4
+          },
+          "hp": 20,
+          "depth": 0
+        },
+        "token": {
+          "epoch": 1,
+          "revision": 0
+        }
+      },
+      {
+        "elapsedMs": 416,
+        "turn": 0,
+        "driver": {
+          "kind": "controller",
+          "owner": "mandos"
+        },
+        "player": {
+          "grid": {
+            "x": 41,
+            "y": 4
+          },
+          "hp": 20,
+          "depth": 0
+        },
+        "token": {
+          "epoch": 1,
+          "revision": 0
+        }
+      },
+      {
+        "elapsedMs": 442,
+        "turn": 0,
+        "driver": {
+          "kind": "controller",
+          "owner": "mandos"
+        },
+        "player": {
+          "grid": {
+            "x": 41,
+            "y": 4
+          },
+          "hp": 20,
+          "depth": 0
+        },
+        "token": {
+          "epoch": 1,
+          "revision": 0
+        }
+      },
+      {
+        "elapsedMs": 468,
+        "turn": 0,
+        "driver": {
+          "kind": "controller",
+          "owner": "mandos"
+        },
+        "player": {
+          "grid": {
+            "x": 41,
+            "y": 4
+          },
+          "hp": 20,
+          "depth": 0
+        },
+        "token": {
+          "epoch": 1,
+          "revision": 0
+        }
+      },
+      {
+        "elapsedMs": 496,
+        "turn": 0,
+        "driver": {
+          "kind": "controller",
+          "owner": "mandos"
+        },
+        "player": {
+          "grid": {
+            "x": 41,
+            "y": 4
+          },
+          "hp": 20,
+          "depth": 0
+        },
+        "token": {
+          "epoch": 1,
+          "revision": 1
+        }
+      },
+      {
+        "elapsedMs": 522,
+        "turn": 0,
+        "driver": {
+          "kind": "controller",
+          "owner": "mandos"
+        },
+        "player": {
+          "grid": {
+            "x": 41,
+            "y": 4
+          },
+          "hp": 20,
+          "depth": 0
+        },
+        "token": {
+          "epoch": 1,
+          "revision": 1
+        }
+      },
+      {
+        "elapsedMs": 549,
+        "turn": 0,
+        "driver": {
+          "kind": "controller",
+          "owner": "mandos"
+        },
+        "player": {
+          "grid": {
+            "x": 41,
+            "y": 4
+          },
+          "hp": 20,
+          "depth": 0
+        },
+        "token": {
+          "epoch": 1,
+          "revision": 1
+        }
+      },
+      {
+        "elapsedMs": 576,
+        "turn": 0,
+        "driver": {
+          "kind": "controller",
+          "owner": "mandos"
+        },
+        "player": {
+          "grid": {
+            "x": 41,
+            "y": 4
+          },
+          "hp": 20,
+          "depth": 0
+        },
+        "token": {
+          "epoch": 1,
+          "revision": 1
+        }
+      },
+      {
+        "elapsedMs": 604,
+        "turn": 0,
+        "driver": {
+          "kind": "controller",
+          "owner": "mandos"
+        },
+        "player": {
+          "grid": {
+            "x": 41,
+            "y": 4
+          },
+          "hp": 20,
+          "depth": 0
+        },
+        "token": {
+          "epoch": 1,
+          "revision": 1
+        }
+      },
+      {
+        "elapsedMs": 671,
+        "turn": 0,
+        "driver": {
+          "kind": "controller",
+          "owner": "mandos"
+        },
+        "player": {
+          "grid": {
+            "x": 125,
+            "y": 42
+          },
+          "hp": 20,
+          "depth": 1
+        },
+        "token": {
+          "epoch": 1,
+          "revision": 3
+        }
+      },
+      {
+        "elapsedMs": 698,
+        "turn": 0,
+        "driver": {
+          "kind": "controller",
+          "owner": "mandos"
+        },
+        "player": {
+          "grid": {
+            "x": 125,
+            "y": 42
+          },
+          "hp": 20,
+          "depth": 1
+        },
+        "token": {
+          "epoch": 1,
+          "revision": 3
+        }
+      },
+      {
+        "elapsedMs": 724,
+        "turn": 0,
+        "driver": {
+          "kind": "controller",
+          "owner": "mandos"
+        },
+        "player": {
+          "grid": {
+            "x": 125,
+            "y": 42
+          },
+          "hp": 20,
+          "depth": 1
+        },
+        "token": {
+          "epoch": 1,
+          "revision": 3
+        }
+      },
+      {
+        "elapsedMs": 765,
+        "turn": 0,
+        "driver": {
+          "kind": "controller",
+          "owner": "mandos"
+        },
+        "player": {
+          "grid": {
+            "x": 125,
+            "y": 42
+          },
+          "hp": 20,
+          "depth": 1
+        },
+        "token": {
+          "epoch": 1,
+          "revision": 3
+        }
+      },
+      {
+        "elapsedMs": 792,
+        "turn": 0,
+        "driver": {
+          "kind": "controller",
+          "owner": "mandos"
+        },
+        "player": {
+          "grid": {
+            "x": 125,
+            "y": 42
+          },
+          "hp": 20,
+          "depth": 1
+        },
+        "token": {
+          "epoch": 1,
+          "revision": 3
+        }
+      },
+      {
+        "elapsedMs": 818,
+        "turn": 0,
+        "driver": {
+          "kind": "controller",
+          "owner": "mandos"
+        },
+        "player": {
+          "grid": {
+            "x": 125,
+            "y": 42
+          },
+          "hp": 20,
+          "depth": 1
+        },
+        "token": {
+          "epoch": 1,
+          "revision": 3
+        }
+      },
+      {
+        "elapsedMs": 844,
+        "turn": 0,
+        "driver": {
+          "kind": "controller",
+          "owner": "mandos"
+        },
+        "player": {
+          "grid": {
+            "x": 125,
+            "y": 42
+          },
+          "hp": 20,
+          "depth": 1
+        },
+        "token": {
+          "epoch": 1,
+          "revision": 3
+        }
+      },
+      {
+        "elapsedMs": 874,
+        "turn": 30,
+        "driver": {
+          "kind": "controller",
+          "owner": "mandos"
+        },
+        "player": {
+          "grid": {
+            "x": 125,
+            "y": 41
+          },
+          "hp": 13,
+          "depth": 1
+        },
+        "token": {
+          "epoch": 1,
+          "revision": 4
+        }
+      },
+      {
+        "elapsedMs": 984,
+        "turn": 30,
+        "driver": {
+          "kind": "controller",
+          "owner": "mandos"
+        },
+        "player": {
+          "grid": {
+            "x": 125,
+            "y": 41
+          },
+          "hp": 13,
+          "depth": 1
+        },
+        "token": {
+          "epoch": 1,
+          "revision": 4
+        }
+      }
+    ],
+    "stopped": {
+      "driver": {
+        "kind": "player"
+      },
+      "turn1": 30,
+      "turn2": 30
+    },
+    "noInputDuringSample": true,
+    "decisionCount": "not measured",
+    "elapsedMs": 1553
+  },
+  {
+    "type": "snapshot",
+    "tag": "autoplay-stopped",
+    "url": "neo-angband://game/?labprocess=mandos&log=debug",
+    "ready": true,
+    "screen": [
+      "You take the keyboard back from Mandos.",
+      "Human",
+      "Rookie",
+      "Warrior",
+      "LEVEL      1",
+      "NXT       10",
+      "AU       146",
+      "|    ~(",
+      "STR:   18/20                                 ###",
+      "INT:       8                                 ..#",
+      "WIS:       8                                 #C#",
+      "DEX:      18                                 #@#",
+      "CON:      18                                 #<#",
+      "                                             ###",
+      "Cur AC    10",
+      "HP   13/  20",
+      "50' (L1)",
+      "             LF:2-? Light 3  Fed 89 % Open floor"
+    ],
+    "turn": 30,
+    "modal": true,
+    "driver": {
+      "kind": "player"
+    },
+    "token": {
+      "epoch": 1,
+      "revision": 4
+    },
+    "seed": 1471779398,
+    "size": {
+      "cols": 80,
+      "rows": 24
+    },
+    "fileInputs": [],
+    "userActivation": {
+      "active": true,
+      "ever": true
+    },
+    "player": {
+      "grid": {
+        "x": 125,
+        "y": 41
+      },
+      "hp": 13,
+      "depth": 1
+    },
+    "messages": [
+      {
+        "text": "Saving failed.",
+        "count": 1
+      },
+      {
+        "text": "You enter a maze of down staircases.",
+        "count": 1
+      },
+      {
+        "text": "This seems a tame, sheltered place.",
+        "count": 1
+      },
+      {
+        "text": "Fang, Farmer Maggot's Dog, bites you.",
+        "count": 2
+      },
+      {
+        "text": "Fang, Farmer Maggot's Dog, misses you.",
+        "count": 1
+      },
+      {
+        "text": "Fang, Farmer Maggot's Dog, bites you.",
+        "count": 1
+      },
+      {
+        "text": "You take the keyboard back from Mandos.",
+        "count": 1
+      }
+    ],
+    "dialogs": [],
+    "buttons": [],
+    "checkboxes": []
+  },
+  {
+    "type": "closed"
+  }
+]

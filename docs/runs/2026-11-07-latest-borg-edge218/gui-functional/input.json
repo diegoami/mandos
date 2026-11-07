@@ -1,0 +1,13 @@
+{
+  "source": "06a2321ce30a414df20d1b20d486446e7688171c",
+  "build": "unmodified source; official edge218 stamp; documented Lab Web/Desktop build flags",
+  "consumerCommit": "a4f88c5d179d58d56f2177b67ab8f5e1c3793787",
+  "ownId": "mandos",
+  "sourceKind": "real portable mods folder",
+  "files": {
+    "manifest.json": "e02869b2a8e89a29c8750f04c7f9697f13faa1f943a7fc15814933a3dcc2765f",
+    "plugin.js": "05ec00ece395dd341088ffffc1ed62afe92b6e3269fe463faacd9114cb72b9db"
+  },
+  "officialDownloadedDesktopGUI": false,
+  "firstPartyRegistrationPatch": false
+}

@@ -1,0 +1,70 @@
+{
+  "README.md": {
+    "bytes": 5696,
+    "sha256": "705edd802093379555585e1dc18442f25b756392d7dafa77fb6a9c11a65946f3"
+  },
+  "autoplay-stopped.png": {
+    "bytes": 14352,
+    "sha256": "512fe6e1cfb28a5b0e9e5af60c62b7e67f23fad12d13866f844d87962416316f"
+  },
+  "autoplay.json": {
+    "bytes": 7449,
+    "sha256": "f6a41ae93f9edb74064ab049483b38bdca20e6070b581f851ab9b06207473843"
+  },
+  "console.json": {
+    "bytes": 5860,
+    "sha256": "c1c72166ea7f18da9b371f0515391031ba484674f55107d43e2c80ba6f3b2089"
+  },
+  "desktop-build.log": {
+    "bytes": 182,
+    "sha256": "ff7298eff666dbf4a4b0b780d3bc7374109550a9d11e4f8d826cebfb81e4faf3"
+  },
+  "desktop-shell.log": {
+    "bytes": 1431,
+    "sha256": "0c23f24314cb3f6ffc6ee1ddfaa6813793f4b815481eaa3b1f731ffd9c8fe4d3"
+  },
+  "engine-source-footprint.json": {
+    "bytes": 414,
+    "sha256": "6bc2a1dadce28dbfa7fe07db4a5bb5ff5b92380c7423c19c5afd0e0eda6c8325"
+  },
+  "input.json": {
+    "bytes": 557,
+    "sha256": "b565b29151132e0ddba8af9a6e845c172e13835b41318c619c243634107680be"
+  },
+  "keyboard-picker-attempt.json": {
+    "bytes": 852,
+    "sha256": "632506ae8d88f7c37df74bac57c86d4546f401d5a4be1c21f9e64522082765fe"
+  },
+  "native-controller-consent.png": {
+    "bytes": 36837,
+    "sha256": "aa804f43e9acac1edae7c1445ee6bd28b066dc7f06fe071274d380c2170ed6a8"
+  },
+  "native-human-warrior.png": {
+    "bytes": 19278,
+    "sha256": "ecbac227886b30bb370dd320f10cca8cde495bea50dd9c97bd823f8dc149333b"
+  },
+  "prelaunch-audit.json": {
+    "bytes": 762,
+    "sha256": "2e3733b1f701abaa8c1d4c65aace2a4f67613afded76720e6cca3e1bbb2a15b1"
+  },
+  "result.json": {
+    "bytes": 11022,
+    "sha256": "ecff8a675d290cc077fb6de1215588072e06b621e63b9f2f0167a5adf38b6ff5"
+  },
+  "ui-actions.json": {
+    "bytes": 77771,
+    "sha256": "f076893c4e264e119b1e5172fa73452f13731da56cee4c876b722c65c29426f0"
+  },
+  "ui-step-transcription.json": {
+    "bytes": 784,
+    "sha256": "e6e178c9f71f6ded0ff8bf939c42bb79665a1f682ede083f8272a1287b127747"
+  },
+  "web-zip-refusal.json": {
+    "bytes": 1005,
+    "sha256": "0422211502e7f9d935b8af5b24db8487c82f56406b054fa284431a1294c04b96"
+  },
+  "web-zip-worker-refusal.png": {
+    "bytes": 23017,
+    "sha256": "eaa03c47f0c725516f6d368c526aaf685c88201c75454cb005c8dbf8c5ca0c9d"
+  }
+}

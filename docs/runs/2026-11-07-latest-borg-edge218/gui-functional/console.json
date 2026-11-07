@@ -1,0 +1,132 @@
+[
+  {
+    "source": "page",
+    "level": "info",
+    "text": "2026-11-07T13:20:43.271Z INFO  [boot] Neo Angband 1.23.0-edge.218 | {\"level\":\"debug\"}"
+  },
+  {
+    "source": "page",
+    "level": "warning",
+    "text": "%cElectron Security Warning (Insecure Content-Security-Policy) font-weight: bold; This renderer process has either no Content Security\n  Policy set or a policy with \"unsafe-eval\" enabled. This exposes users of\n  this app to unnecessary security risks.\n\nFor more information and help, consult\nhttps://electronjs.org/docs/tutorial/security.\nThis warning will not show up\nonce the app is packaged."
+  },
+  {
+    "source": "page",
+    "level": "info",
+    "text": "2026-11-07T13:24:37.841Z INFO  [boot] Neo Angband 1.23.0-edge.218 | {\"level\":\"debug\"}"
+  },
+  {
+    "source": "page",
+    "level": "warning",
+    "text": "%cElectron Security Warning (Insecure Content-Security-Policy) font-weight: bold; This renderer process has either no Content Security\n  Policy set or a policy with \"unsafe-eval\" enabled. This exposes users of\n  this app to unnecessary security risks.\n\nFor more information and help, consult\nhttps://electronjs.org/docs/tutorial/security.\nThis warning will not show up\nonce the app is packaged."
+  },
+  {
+    "source": "page",
+    "level": "info",
+    "text": "2026-11-07T13:24:38.053Z INFO  [mod:mandos] the Borg has no title row, because this game gives it no title seam"
+  },
+  {
+    "source": "page",
+    "level": "info",
+    "text": "2026-11-07T13:24:38.054Z INFO  [mod:mandos] the Borg has the keyboard, with danger vision over the monsters the character perceives, activation identity, the in-shop signal and loadout evaluation"
+  },
+  {
+    "source": "page",
+    "level": "info",
+    "text": "2026-11-07T13:24:38.054Z INFO  [mod:mandos] the Borg is on upstream's stock settings"
+  },
+  {
+    "source": "page",
+    "level": "info",
+    "text": "2026-11-07T13:24:38.054Z INFO  [mod:mandos] the Borg cannot restart its character on this game: it was given no character-creation seam, so a death will end the session"
+  },
+  {
+    "source": "page",
+    "level": "info",
+    "text": "2026-11-07T13:26:02.372Z INFO  [boot] Neo Angband 1.23.0-edge.218 | {\"level\":\"debug\"}"
+  },
+  {
+    "source": "page",
+    "level": "warning",
+    "text": "%cElectron Security Warning (Insecure Content-Security-Policy) font-weight: bold; This renderer process has either no Content Security\n  Policy set or a policy with \"unsafe-eval\" enabled. This exposes users of\n  this app to unnecessary security risks.\n\nFor more information and help, consult\nhttps://electronjs.org/docs/tutorial/security.\nThis warning will not show up\nonce the app is packaged."
+  },
+  {
+    "source": "page",
+    "level": "info",
+    "text": "2026-11-07T13:26:02.542Z INFO  [mod:mandos] the Borg has no title row, because this game gives it no title seam"
+  },
+  {
+    "source": "page",
+    "level": "info",
+    "text": "2026-11-07T13:26:02.543Z INFO  [mod:mandos] the Borg has the keyboard, with danger vision over the monsters the character perceives, activation identity, the in-shop signal and loadout evaluation"
+  },
+  {
+    "source": "page",
+    "level": "info",
+    "text": "2026-11-07T13:26:02.544Z INFO  [mod:mandos] the Borg is on upstream's stock settings"
+  },
+  {
+    "source": "page",
+    "level": "info",
+    "text": "2026-11-07T13:26:02.544Z INFO  [mod:mandos] the Borg cannot restart its character on this game: it was given no character-creation seam, so a death will end the session"
+  },
+  {
+    "source": "page",
+    "level": "info",
+    "text": "2026-11-07T13:26:59.834Z INFO  [boot] Neo Angband 1.23.0-edge.218 | {\"level\":\"debug\"}"
+  },
+  {
+    "source": "page",
+    "level": "warning",
+    "text": "%cElectron Security Warning (Insecure Content-Security-Policy) font-weight: bold; This renderer process has either no Content Security\n  Policy set or a policy with \"unsafe-eval\" enabled. This exposes users of\n  this app to unnecessary security risks.\n\nFor more information and help, consult\nhttps://electronjs.org/docs/tutorial/security.\nThis warning will not show up\nonce the app is packaged."
+  },
+  {
+    "source": "page",
+    "level": "info",
+    "text": "2026-11-07T13:26:59.946Z INFO  [lore] 1 race(s) from /tmp/mandos-edge218-labdesktop-probe/data/user/lore.json"
+  },
+  {
+    "source": "page",
+    "level": "info",
+    "text": "2026-11-07T13:26:59.962Z INFO  [mod:mandos] installed an autoplayer"
+  },
+  {
+    "source": "page",
+    "level": "info",
+    "text": "2026-11-07T13:26:59.982Z INFO  [mod:mandos] the Borg has no title row, because this game gives it no title seam"
+  },
+  {
+    "source": "page",
+    "level": "info",
+    "text": "2026-11-07T13:26:59.983Z INFO  [mod:mandos] the Borg has the keyboard, with danger vision over the monsters the character perceives, activation identity, the in-shop signal and loadout evaluation"
+  },
+  {
+    "source": "page",
+    "level": "info",
+    "text": "2026-11-07T13:26:59.983Z INFO  [mod:mandos] the Borg is on upstream's stock settings"
+  },
+  {
+    "source": "page",
+    "level": "info",
+    "text": "2026-11-07T13:26:59.983Z INFO  [mod:mandos] the Borg cannot restart its character on this game: it was given no character-creation seam, so a death will end the session"
+  },
+  {
+    "source": "page",
+    "level": "info",
+    "text": "2026-11-07T13:27:00.123Z INFO  [mod:mandos] the Borg is playing"
+  },
+  {
+    "source": "page",
+    "level": "debug",
+    "text": "2026-11-07T13:27:00.325Z DEBUG [mod:mandos] answered a blocking prompt"
+  },
+  {
+    "source": "page",
+    "level": "debug",
+    "text": "2026-11-07T13:27:00.683Z DEBUG [mod:mandos] answered a blocking prompt"
+  },
+  {
+    "source": "page",
+    "level": "info",
+    "text": "2026-11-07T13:27:00.708Z INFO  [mod:mandos] handed the keyboard back (key Escape)"
+  }
+]

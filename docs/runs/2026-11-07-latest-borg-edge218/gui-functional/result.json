@@ -1,0 +1,505 @@
+{
+  "schema": "mandos/edge218-developer-GUI@1",
+  "engineSource": "06a2321ce30a414df20d1b20d486446e7688171c",
+  "build": "unmodified source; official edge218 stamp; documented Lab Web/Desktop build flags",
+  "pluginSha256": "05ec00ece395dd341088ffffc1ed62afe92b6e3269fe463faacd9114cb72b9db",
+  "manifestSha256": "e02869b2a8e89a29c8750f04c7f9697f13faa1f943a7fc15814933a3dcc2765f",
+  "consumerSource": "a4f88c5d179d58d56f2177b67ab8f5e1c3793787",
+  "realFolder": true,
+  "nativeEnableAndConsent": true,
+  "manualBirth": "Human Warrior, native point buy defaults, name MandosLab218",
+  "requestedInitialSeed": 3,
+  "actualCharacterSeed": 1471779398,
+  "nativeCtrlZAndControllerConsent": true,
+  "controllerFunctionalEvidence": {
+    "type": "autoplay-observation",
+    "baseline": {
+      "elapsedMs": 277,
+      "turn": 0,
+      "driver": {
+        "kind": "controller",
+        "owner": "mandos"
+      },
+      "player": {
+        "grid": {
+          "x": 41,
+          "y": 4
+        },
+        "hp": 20,
+        "depth": 0
+      },
+      "token": {
+        "epoch": 1,
+        "revision": 0
+      }
+    },
+    "after": {
+      "turn": 30,
+      "driver": {
+        "kind": "controller",
+        "owner": "mandos"
+      },
+      "player": {
+        "grid": {
+          "x": 125,
+          "y": 41
+        },
+        "hp": 13,
+        "depth": 1
+      }
+    },
+    "samples": [
+      {
+        "elapsedMs": 277,
+        "turn": 0,
+        "driver": {
+          "kind": "controller",
+          "owner": "mandos"
+        },
+        "player": {
+          "grid": {
+            "x": 41,
+            "y": 4
+          },
+          "hp": 20,
+          "depth": 0
+        },
+        "token": {
+          "epoch": 1,
+          "revision": 0
+        }
+      },
+      {
+        "elapsedMs": 319,
+        "turn": 0,
+        "driver": {
+          "kind": "controller",
+          "owner": "mandos"
+        },
+        "player": {
+          "grid": {
+            "x": 41,
+            "y": 4
+          },
+          "hp": 20,
+          "depth": 0
+        },
+        "token": {
+          "epoch": 1,
+          "revision": 0
+        }
+      },
+      {
+        "elapsedMs": 347,
+        "turn": 0,
+        "driver": {
+          "kind": "controller",
+          "owner": "mandos"
+        },
+        "player": {
+          "grid": {
+            "x": 41,
+            "y": 4
+          },
+          "hp": 20,
+          "depth": 0
+        },
+        "token": {
+          "epoch": 1,
+          "revision": 0
+        }
+      },
+      {
+        "elapsedMs": 416,
+        "turn": 0,
+        "driver": {
+          "kind": "controller",
+          "owner": "mandos"
+        },
+        "player": {
+          "grid": {
+            "x": 41,
+            "y": 4
+          },
+          "hp": 20,
+          "depth": 0
+        },
+        "token": {
+          "epoch": 1,
+          "revision": 0
+        }
+      },
+      {
+        "elapsedMs": 442,
+        "turn": 0,
+        "driver": {
+          "kind": "controller",
+          "owner": "mandos"
+        },
+        "player": {
+          "grid": {
+            "x": 41,
+            "y": 4
+          },
+          "hp": 20,
+          "depth": 0
+        },
+        "token": {
+          "epoch": 1,
+          "revision": 0
+        }
+      },
+      {
+        "elapsedMs": 468,
+        "turn": 0,
+        "driver": {
+          "kind": "controller",
+          "owner": "mandos"
+        },
+        "player": {
+          "grid": {
+            "x": 41,
+            "y": 4
+          },
+          "hp": 20,
+          "depth": 0
+        },
+        "token": {
+          "epoch": 1,
+          "revision": 0
+        }
+      },
+      {
+        "elapsedMs": 496,
+        "turn": 0,
+        "driver": {
+          "kind": "controller",
+          "owner": "mandos"
+        },
+        "player": {
+          "grid": {
+            "x": 41,
+            "y": 4
+          },
+          "hp": 20,
+          "depth": 0
+        },
+        "token": {
+          "epoch": 1,
+          "revision": 1
+        }
+      },
+      {
+        "elapsedMs": 522,
+        "turn": 0,
+        "driver": {
+          "kind": "controller",
+          "owner": "mandos"
+        },
+        "player": {
+          "grid": {
+            "x": 41,
+            "y": 4
+          },
+          "hp": 20,
+          "depth": 0
+        },
+        "token": {
+          "epoch": 1,
+          "revision": 1
+        }
+      },
+      {
+        "elapsedMs": 549,
+        "turn": 0,
+        "driver": {
+          "kind": "controller",
+          "owner": "mandos"
+        },
+        "player": {
+          "grid": {
+            "x": 41,
+            "y": 4
+          },
+          "hp": 20,
+          "depth": 0
+        },
+        "token": {
+          "epoch": 1,
+          "revision": 1
+        }
+      },
+      {
+        "elapsedMs": 576,
+        "turn": 0,
+        "driver": {
+          "kind": "controller",
+          "owner": "mandos"
+        },
+        "player": {
+          "grid": {
+            "x": 41,
+            "y": 4
+          },
+          "hp": 20,
+          "depth": 0
+        },
+        "token": {
+          "epoch": 1,
+          "revision": 1
+        }
+      },
+      {
+        "elapsedMs": 604,
+        "turn": 0,
+        "driver": {
+          "kind": "controller",
+          "owner": "mandos"
+        },
+        "player": {
+          "grid": {
+            "x": 41,
+            "y": 4
+          },
+          "hp": 20,
+          "depth": 0
+        },
+        "token": {
+          "epoch": 1,
+          "revision": 1
+        }
+      },
+      {
+        "elapsedMs": 671,
+        "turn": 0,
+        "driver": {
+          "kind": "controller",
+          "owner": "mandos"
+        },
+        "player": {
+          "grid": {
+            "x": 125,
+            "y": 42
+          },
+          "hp": 20,
+          "depth": 1
+        },
+        "token": {
+          "epoch": 1,
+          "revision": 3
+        }
+      },
+      {
+        "elapsedMs": 698,
+        "turn": 0,
+        "driver": {
+          "kind": "controller",
+          "owner": "mandos"
+        },
+        "player": {
+          "grid": {
+            "x": 125,
+            "y": 42
+          },
+          "hp": 20,
+          "depth": 1
+        },
+        "token": {
+          "epoch": 1,
+          "revision": 3
+        }
+      },
+      {
+        "elapsedMs": 724,
+        "turn": 0,
+        "driver": {
+          "kind": "controller",
+          "owner": "mandos"
+        },
+        "player": {
+          "grid": {
+            "x": 125,
+            "y": 42
+          },
+          "hp": 20,
+          "depth": 1
+        },
+        "token": {
+          "epoch": 1,
+          "revision": 3
+        }
+      },
+      {
+        "elapsedMs": 765,
+        "turn": 0,
+        "driver": {
+          "kind": "controller",
+          "owner": "mandos"
+        },
+        "player": {
+          "grid": {
+            "x": 125,
+            "y": 42
+          },
+          "hp": 20,
+          "depth": 1
+        },
+        "token": {
+          "epoch": 1,
+          "revision": 3
+        }
+      },
+      {
+        "elapsedMs": 792,
+        "turn": 0,
+        "driver": {
+          "kind": "controller",
+          "owner": "mandos"
+        },
+        "player": {
+          "grid": {
+            "x": 125,
+            "y": 42
+          },
+          "hp": 20,
+          "depth": 1
+        },
+        "token": {
+          "epoch": 1,
+          "revision": 3
+        }
+      },
+      {
+        "elapsedMs": 818,
+        "turn": 0,
+        "driver": {
+          "kind": "controller",
+          "owner": "mandos"
+        },
+        "player": {
+          "grid": {
+            "x": 125,
+            "y": 42
+          },
+          "hp": 20,
+          "depth": 1
+        },
+        "token": {
+          "epoch": 1,
+          "revision": 3
+        }
+      },
+      {
+        "elapsedMs": 844,
+        "turn": 0,
+        "driver": {
+          "kind": "controller",
+          "owner": "mandos"
+        },
+        "player": {
+          "grid": {
+            "x": 125,
+            "y": 42
+          },
+          "hp": 20,
+          "depth": 1
+        },
+        "token": {
+          "epoch": 1,
+          "revision": 3
+        }
+      },
+      {
+        "elapsedMs": 874,
+        "turn": 30,
+        "driver": {
+          "kind": "controller",
+          "owner": "mandos"
+        },
+        "player": {
+          "grid": {
+            "x": 125,
+            "y": 41
+          },
+          "hp": 13,
+          "depth": 1
+        },
+        "token": {
+          "epoch": 1,
+          "revision": 4
+        }
+      },
+      {
+        "elapsedMs": 984,
+        "turn": 30,
+        "driver": {
+          "kind": "controller",
+          "owner": "mandos"
+        },
+        "player": {
+          "grid": {
+            "x": 125,
+            "y": 41
+          },
+          "hp": 13,
+          "depth": 1
+        },
+        "token": {
+          "epoch": 1,
+          "revision": 4
+        }
+      }
+    ],
+    "stopped": {
+      "driver": {
+        "kind": "player"
+      },
+      "turn1": 30,
+      "turn2": 30
+    },
+    "noInputDuringSample": true,
+    "decisionCount": "not measured",
+    "elapsedMs": 1553
+  },
+  "controllerFunctionalPass": true,
+  "fullSaveOrManagementPass": false,
+  "savingFailedMessageObserved": true,
+  "saveFailureCause": "not yet attributed; persistSave false can arise from guard, encoding or storage",
+  "optionalBirthTitleSaveCapabilitiesGranted": false,
+  "profilesSessionManagement": "not available as first-party scopes",
+  "noObservePermissionAdded": true,
+  "noPrivateStateInjection": true,
+  "noCompiledMandosRegistrationPatch": true,
+  "firstPartyTrustFlagUsed": false,
+  "environmentSanitized": true,
+  "portableAudit": {
+    "data": {
+      "base": "/tmp/mandos-edge218-labdesktop-probe/data",
+      "kind": "env",
+      "portable": true
+    },
+    "forbiddenCalls": 0,
+    "initialUserDataArg": "/tmp/mandos-edge218-labdesktop-probe/data/chromium",
+    "runtimeMappings": {
+      "userData": "/tmp/mandos-edge218-labdesktop-probe/data/chromium",
+      "sessionData": "/tmp/mandos-edge218-labdesktop-probe/data/chromium",
+      "crashDumps": "/tmp/mandos-edge218-labdesktop-probe/data/chromium/crashes",
+      "logs": "/tmp/mandos-edge218-labdesktop-probe/data/chromium/logs"
+    },
+    "migrationRoots": {
+      "userDir": "/tmp/mandos-edge218-labdesktop-probe/data/user",
+      "sessionDir": "/tmp/mandos-edge218-labdesktop-probe/data/chromium"
+    },
+    "source": "official06a desktop main243\u2013250,2259\u20132272"
+  },
+  "officialDownloadedDesktopGUI": "not launched",
+  "setupLimitations": [
+    "initial documented-URL navigation raced initial loadURL and emitted ERR_ABORTED; not a Core/mod exception",
+    "unpackaged Electron CSP/GPU startup warnings recorded"
+  ],
+  "sourceCodeChanges": "official version stamp and documented Lab build flags only",
+  "noInputDuringMeasuredSample": true,
+  "decisions": "not measured; public token revisions are not decision counts",
+  "independentLives": "not a survival cohort or independent game statistic",
+  "processes": "owned browser/app closed; shared lock released"
+}

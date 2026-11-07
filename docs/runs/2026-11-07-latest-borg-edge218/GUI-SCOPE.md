@@ -36,3 +36,24 @@ engine372 and Mandos199. Original evidence is retained at
 /tmp/mandos-edge218-labdesktop-probe; the parent/engine owner publishes its
 reviewed receipt and screenshots. No owner lab/profile/save data was used; the
 owned app was closed and the shared validation lock released.
+
+## Durable initial GUI evidence and later save control
+
+The parent-approved exact initial bundle is now retained unchanged in
+[gui-functional/](gui-functional/README.md); its manifest SHA256 is
+6e8eb2d7027c3a81a4e4d73ba39faf3a0b7bf89dcc307f0ec1af55ea96b2b913.
+It contains the functional-control samples, native consent/manual-character/
+Escape screens and the original save-warning/failed transport/setup evidence,
+not raw browser storage or user profiles. Every listed file was rechecked by
+bytes/SHA256 before copying. Its save-unknown statement describes that initial
+stage and is not rewritten.
+
+A later **same-owned-profile** native Ctrl-S control after cancelling per-load
+controller consent reported “Saving game...done”. That is positive native manual
+save evidence, not proof that the latest30-turn interval was persisted. The
+initial no-input observation lasted about1.55s, below the3s autosave throttle,
+and the app was then force-cleaned up; no progress-loss claim follows. New
+read-only source controls address a possible early forced autosave before boot
+menus/catalogue initialization. Their later evidence is separate; no new engine
+code patch, private consent/arming mutation or management-permission explanation
+is inferred. Source owner/parent controls remain canonical.

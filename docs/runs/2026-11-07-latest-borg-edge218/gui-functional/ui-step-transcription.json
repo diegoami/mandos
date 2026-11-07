@@ -1,0 +1,17 @@
+{
+  "kind": "human-readable transcription from executed UI commands; snapshots are separately captured",
+  "steps": [
+    "Choose Vanilla(a)",
+    "Mods(m)",
+    "Enable real Mandos folder(Space)",
+    "Read warning(Escape), turn on(a)",
+    "Native checkboxes: command add, exact known-monster numbers, gameplay intents, prompt answer, controller, engine access",
+    "Apply choices; default features(a); Escape to apply/reload",
+    "New(n), Human(a), Warrior(a), Point buy(a), Enter accept defaults",
+    "Type MandosLab218, Enter; accept history(y); Enter start",
+    "Ctrl-Z; click native Start playing",
+    "No input while public driver/turn/known-grid sampled",
+    "Escape after observed game progress; stable public turn checked twice",
+    "Close only the owned app"
+  ]
+}

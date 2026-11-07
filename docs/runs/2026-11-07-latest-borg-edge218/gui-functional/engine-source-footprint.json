@@ -1,0 +1,10 @@
+{
+  "officialSource": "06a2321ce30a414df20d1b20d486446e7688171c",
+  "stamp": "official node tools/version.mjs edge 218",
+  "LabVsNonLabStampedTrackedFileDifferences": [],
+  "LabBuildChange": "only documented NEO_ANGBAND_LAB_BUILD=1 compilation defines",
+  "customMandosOriginRegistrationPatch": false,
+  "firstPartyTrustFlag": false,
+  "fullBrowserProfileCommitted": false,
+  "rawBrowserStorageCommitted": false
+}

@@ -91,8 +91,10 @@ cannot provide Mandos's raw Core access.
 A fresh Lab Desktop probe of the profile’s checked plugin demonstrated native
 consent, controller-owned game progress and Escape returning the keyboard.
 It did **not** certify full management or persistence: profile/session scopes
-remain first-party-only, and a “Saving failed.” message was observed with its
-cause still under investigation. Use disposable test characters for this mode.
+remain first-party-only. The initial probe showed “Saving failed.”; a later
+same-profile manual save succeeded. Startup/autosave timing remains separately
+investigated, and persistence of that short controller interval was not measured.
+Use disposable test characters for this qualification mode.
 The downloaded ordinary desktop release was not the GUI tested.
 [Task199](https://github.com/diegoami/mandos/issues/199) and the
 [pinned evidence/profile description](docs/runs/2026-11-07-latest-borg-edge218/README.md)

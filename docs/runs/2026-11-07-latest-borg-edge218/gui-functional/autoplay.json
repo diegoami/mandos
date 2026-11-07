@@ -1,0 +1,450 @@
+{
+  "type": "autoplay-observation",
+  "baseline": {
+    "elapsedMs": 277,
+    "turn": 0,
+    "driver": {
+      "kind": "controller",
+      "owner": "mandos"
+    },
+    "player": {
+      "grid": {
+        "x": 41,
+        "y": 4
+      },
+      "hp": 20,
+      "depth": 0
+    },
+    "token": {
+      "epoch": 1,
+      "revision": 0
+    }
+  },
+  "after": {
+    "turn": 30,
+    "driver": {
+      "kind": "controller",
+      "owner": "mandos"
+    },
+    "player": {
+      "grid": {
+        "x": 125,
+        "y": 41
+      },
+      "hp": 13,
+      "depth": 1
+    }
+  },
+  "samples": [
+    {
+      "elapsedMs": 277,
+      "turn": 0,
+      "driver": {
+        "kind": "controller",
+        "owner": "mandos"
+      },
+      "player": {
+        "grid": {
+          "x": 41,
+          "y": 4
+        },
+        "hp": 20,
+        "depth": 0
+      },
+      "token": {
+        "epoch": 1,
+        "revision": 0
+      }
+    },
+    {
+      "elapsedMs": 319,
+      "turn": 0,
+      "driver": {
+        "kind": "controller",
+        "owner": "mandos"
+      },
+      "player": {
+        "grid": {
+          "x": 41,
+          "y": 4
+        },
+        "hp": 20,
+        "depth": 0
+      },
+      "token": {
+        "epoch": 1,
+        "revision": 0
+      }
+    },
+    {
+      "elapsedMs": 347,
+      "turn": 0,
+      "driver": {
+        "kind": "controller",
+        "owner": "mandos"
+      },
+      "player": {
+        "grid": {
+          "x": 41,
+          "y": 4
+        },
+        "hp": 20,
+        "depth": 0
+      },
+      "token": {
+        "epoch": 1,
+        "revision": 0
+      }
+    },
+    {
+      "elapsedMs": 416,
+      "turn": 0,
+      "driver": {
+        "kind": "controller",
+        "owner": "mandos"
+      },
+      "player": {
+        "grid": {
+          "x": 41,
+          "y": 4
+        },
+        "hp": 20,
+        "depth": 0
+      },
+      "token": {
+        "epoch": 1,
+        "revision": 0
+      }
+    },
+    {
+      "elapsedMs": 442,
+      "turn": 0,
+      "driver": {
+        "kind": "controller",
+        "owner": "mandos"
+      },
+      "player": {
+        "grid": {
+          "x": 41,
+          "y": 4
+        },
+        "hp": 20,
+        "depth": 0
+      },
+      "token": {
+        "epoch": 1,
+        "revision": 0
+      }
+    },
+    {
+      "elapsedMs": 468,
+      "turn": 0,
+      "driver": {
+        "kind": "controller",
+        "owner": "mandos"
+      },
+      "player": {
+        "grid": {
+          "x": 41,
+          "y": 4
+        },
+        "hp": 20,
+        "depth": 0
+      },
+      "token": {
+        "epoch": 1,
+        "revision": 0
+      }
+    },
+    {
+      "elapsedMs": 496,
+      "turn": 0,
+      "driver": {
+        "kind": "controller",
+        "owner": "mandos"
+      },
+      "player": {
+        "grid": {
+          "x": 41,
+          "y": 4
+        },
+        "hp": 20,
+        "depth": 0
+      },
+      "token": {
+        "epoch": 1,
+        "revision": 1
+      }
+    },
+    {
+      "elapsedMs": 522,
+      "turn": 0,
+      "driver": {
+        "kind": "controller",
+        "owner": "mandos"
+      },
+      "player": {
+        "grid": {
+          "x": 41,
+          "y": 4
+        },
+        "hp": 20,
+        "depth": 0
+      },
+      "token": {
+        "epoch": 1,
+        "revision": 1
+      }
+    },
+    {
+      "elapsedMs": 549,
+      "turn": 0,
+      "driver": {
+        "kind": "controller",
+        "owner": "mandos"
+      },
+      "player": {
+        "grid": {
+          "x": 41,
+          "y": 4
+        },
+        "hp": 20,
+        "depth": 0
+      },
+      "token": {
+        "epoch": 1,
+        "revision": 1
+      }
+    },
+    {
+      "elapsedMs": 576,
+      "turn": 0,
+      "driver": {
+        "kind": "controller",
+        "owner": "mandos"
+      },
+      "player": {
+        "grid": {
+          "x": 41,
+          "y": 4
+        },
+        "hp": 20,
+        "depth": 0
+      },
+      "token": {
+        "epoch": 1,
+        "revision": 1
+      }
+    },
+    {
+      "elapsedMs": 604,
+      "turn": 0,
+      "driver": {
+        "kind": "controller",
+        "owner": "mandos"
+      },
+      "player": {
+        "grid": {
+          "x": 41,
+          "y": 4
+        },
+        "hp": 20,
+        "depth": 0
+      },
+      "token": {
+        "epoch": 1,
+        "revision": 1
+      }
+    },
+    {
+      "elapsedMs": 671,
+      "turn": 0,
+      "driver": {
+        "kind": "controller",
+        "owner": "mandos"
+      },
+      "player": {
+        "grid": {
+          "x": 125,
+          "y": 42
+        },
+        "hp": 20,
+        "depth": 1
+      },
+      "token": {
+        "epoch": 1,
+        "revision": 3
+      }
+    },
+    {
+      "elapsedMs": 698,
+      "turn": 0,
+      "driver": {
+        "kind": "controller",
+        "owner": "mandos"
+      },
+      "player": {
+        "grid": {
+          "x": 125,
+          "y": 42
+        },
+        "hp": 20,
+        "depth": 1
+      },
+      "token": {
+        "epoch": 1,
+        "revision": 3
+      }
+    },
+    {
+      "elapsedMs": 724,
+      "turn": 0,
+      "driver": {
+        "kind": "controller",
+        "owner": "mandos"
+      },
+      "player": {
+        "grid": {
+          "x": 125,
+          "y": 42
+        },
+        "hp": 20,
+        "depth": 1
+      },
+      "token": {
+        "epoch": 1,
+        "revision": 3
+      }
+    },
+    {
+      "elapsedMs": 765,
+      "turn": 0,
+      "driver": {
+        "kind": "controller",
+        "owner": "mandos"
+      },
+      "player": {
+        "grid": {
+          "x": 125,
+          "y": 42
+        },
+        "hp": 20,
+        "depth": 1
+      },
+      "token": {
+        "epoch": 1,
+        "revision": 3
+      }
+    },
+    {
+      "elapsedMs": 792,
+      "turn": 0,
+      "driver": {
+        "kind": "controller",
+        "owner": "mandos"
+      },
+      "player": {
+        "grid": {
+          "x": 125,
+          "y": 42
+        },
+        "hp": 20,
+        "depth": 1
+      },
+      "token": {
+        "epoch": 1,
+        "revision": 3
+      }
+    },
+    {
+      "elapsedMs": 818,
+      "turn": 0,
+      "driver": {
+        "kind": "controller",
+        "owner": "mandos"
+      },
+      "player": {
+        "grid": {
+          "x": 125,
+          "y": 42
+        },
+        "hp": 20,
+        "depth": 1
+      },
+      "token": {
+        "epoch": 1,
+        "revision": 3
+      }
+    },
+    {
+      "elapsedMs": 844,
+      "turn": 0,
+      "driver": {
+        "kind": "controller",
+        "owner": "mandos"
+      },
+      "player": {
+        "grid": {
+          "x": 125,
+          "y": 42
+        },
+        "hp": 20,
+        "depth": 1
+      },
+      "token": {
+        "epoch": 1,
+        "revision": 3
+      }
+    },
+    {
+      "elapsedMs": 874,
+      "turn": 30,
+      "driver": {
+        "kind": "controller",
+        "owner": "mandos"
+      },
+      "player": {
+        "grid": {
+          "x": 125,
+          "y": 41
+        },
+        "hp": 13,
+        "depth": 1
+      },
+      "token": {
+        "epoch": 1,
+        "revision": 4
+      }
+    },
+    {
+      "elapsedMs": 984,
+      "turn": 30,
+      "driver": {
+        "kind": "controller",
+        "owner": "mandos"
+      },
+      "player": {
+        "grid": {
+          "x": 125,
+          "y": 41
+        },
+        "hp": 13,
+        "depth": 1
+      },
+      "token": {
+        "epoch": 1,
+        "revision": 4
+      }
+    }
+  ],
+  "stopped": {
+    "driver": {
+      "kind": "player"
+    },
+    "turn1": 30,
+    "turn2": 30
+  },
+  "noInputDuringSample": true,
+  "decisionCount": "not measured",
+  "elapsedMs": 1553
+}

@@ -1,0 +1,20 @@
+{
+  "status": "blocked-before-controller",
+  "source": "06a2321ce30a414df20d1b20d486446e7688171c",
+  "build": "unmodified upstream stamped edge.218 Lab Web",
+  "pluginSha256": "05ec00ece395dd341088ffffc1ed62afe92b6e3269fe463faacd9114cb72b9db",
+  "zipSha256": "9d8e31eef3b6e140ed22aff65ffe0ae1db26102f70b010cc1167a7f95d3e208d",
+  "nativePointerChooser": true,
+  "nativeZIPInstalled": true,
+  "nativeConsentApplied": true,
+  "privateStateInjection": false,
+  "firstPartySpoof": false,
+  "BorgControllerArmed": false,
+  "BorgDecisions": "not observed",
+  "actualFinalSeed": 2470951744,
+  "requestedInitialSeed": 3,
+  "cause": "Documented labprocess developerInProcess requires sources.folder membership; installed ZIP is coerced to Worker and refuses Core/truth/management capabilities.",
+  "sourceEvidence": "packages/web/src/mod-code.ts:587-590",
+  "officialLinuxDesktopGUI": "not launched",
+  "nextRouteRequiresParentReview": "real browser-selected folder or fresh Desktop NEO_ANGBAND_DATA/mods folder"
+}
