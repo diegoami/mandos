@@ -1,0 +1,75 @@
+
+ RUN  v4.1.11 /tmp/mandos-armour-curse-consumer-125
+
+ ❯ src/store/armour-curse.test.ts (6 tests | 3 failed) 214ms
+   × rejects known negative-flag armour with unknown removability at full notice 4ms
+   × rejects known negative-flag armour with an explicit false removability reader 3ms
+   × applies the native5000 removable penalty under an explicit scorer knowledge profile 3ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 3 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/store/armour-curse.test.ts > rejects known negative-flag armour with unknown removability at full notice
+AssertionError: expected 2 to be null
+
+- Expected:
+null
+
++ Received:
+2
+
+ ❯ src/store/armour-curse.test.ts:33:69
+     31| });
+     32| it("rejects known negative-flag armour with unknown removability at fu…
+     33|   const s=scene();expect(getDerived(s.ctx.world).armourSwap.handle).to…
+       |                                                                     ^
+     34| });
+     35| it("rejects known negative-flag armour with an explicit false removabi…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/3]⎯
+
+ FAIL  src/store/armour-curse.test.ts > rejects known negative-flag armour with an explicit false removability reader
+AssertionError: expected 2 to be null
+
+- Expected:
+null
+
++ Received:
+2
+
+ ❯ src/store/armour-curse.test.ts:36:92
+     34| });
+     35| it("rejects known negative-flag armour with an explicit false removabi…
+     36|   const s=scene();expect(borgArmourSwap(s.ctx,{armourSwap:{uncursable:…
+       |                                                                                            ^
+     37| });
+     38| it("applies the native5000 removable penalty under an explicit scorer …
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/3]⎯
+
+ FAIL  src/store/armour-curse.test.ts > applies the native5000 removable penalty under an explicit scorer knowledge profile
+AssertionError: expected { handle: 2, value: 27159 } to deeply equal { handle: 2, value: 22159 }
+
+- Expected
++ Received
+
+  {
+    "handle": 2,
+-   "value": 22159,
++   "value": 27159,
+  }
+
+ ❯ src/store/armour-curse.test.ts:46:68
+     44|   expect([s.item.dd,s.item.ds,s.item.toH,s.item.toD]).toEqual([2,4,-4,…
+     45|   // -1 + 2*4*35*(1+1) -4*100 -AGGRAVATE8000 -removable5000 +IELEC2500…
+     46|   expect(borgArmourSwap(s.ctx,{armourSwap:{uncursable:()=>true}})).toE…
+       |                                                                    ^
+     47| });
+     48| it("keeps legitimate registered noncursed armour eligible",()=>{
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/3]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  3 failed | 3 passed (6)
+   Start at  20:46:35
+   Duration  595ms (transform 145ms, setup 155ms, import 143ms, tests 214ms, environment 0ms)

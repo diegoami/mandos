@@ -1,0 +1,19 @@
+{
+  "baseline": "6e03ca205a891de49fe3f0cf60bbdd2aa65480a0",
+  "unit": "patches/port-corrections/source51-armour-curse.patch",
+  "paths": [
+    {
+      "path": "src/trait/armour-swap.ts",
+      "result": "exact verified6e03 baseline",
+      "sha256": "9a02ec045172b33c42ec5859d366fb3236fde4d6f1c34988eb7a6a007819ae9a"
+    },
+    {
+      "path": "src/store/armour-curse.test.ts",
+      "result": "absent as at verified6e03 baseline"
+    }
+  ],
+  "source48ReverseTextAfter51Removal": "PASS",
+  "order": "51 then48 then accepted76 baseline",
+  "pluginRebuildAfterRemovalRequired": true,
+  "notAutomaticRetirementApproval": true
+}

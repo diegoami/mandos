@@ -1,0 +1,3 @@
+$ node tools/build.mjs
+[mod-build] building 1: mandos
+[mod-build] mandos: wrote plugin.js (748.7 KiB, api >=2.0.0 <3.0.0)
