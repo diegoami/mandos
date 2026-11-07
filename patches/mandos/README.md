@@ -12,5 +12,6 @@ Their issues may close after normal verified main delivery.
   control are recorded under docs/bugs/198-headless-fuel.
 
 Keep a unit until an equivalent owned refactor preserves its regression and
-normal relevant verification. Source-port and inherited-C units have independent
-provenance, source acceptance and consumer lifecycle.
+normal relevant verification. Source-port units retain their source-resolution lifecycle; C units follow
+reviewed native milestones with independent TS proof/retirement. See
+[the contract](../../docs/C-MILESTONE-ADOPTION.md).

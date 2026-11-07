@@ -4,6 +4,9 @@ Owner direction recorded in [181](https://github.com/diegoami/mandos/issues/181)
 coordinated with [runtime180](https://github.com/diegoami/mandos/issues/180) and
 [workspace22](https://github.com/diegoami/angband-workspace/issues/22).
 This supersedes old experimental roadmaps as the current Mandos purpose.
+The C-only tracking refinement in [203](https://github.com/diegoami/mandos/issues/203)
+and [the milestone contract](C-MILESTONE-ADOPTION.md) replaces per-source mirrors;
+it changes no gameplay or parked-work authorization.
 
 ## Active work
 
@@ -11,15 +14,18 @@ This supersedes old experimental roadmaps as the current Mandos purpose.
 2. Reproduce a specific defect with legal public-API inputs and negative controls.
    Fixed seeds are useful regression fixtures, not a mandate for broad cohorts.
 3. Apply the smallest applicable correction with provenance and a removal unit.
-   Port/Neo engine/C source repairs stay with their source owners. Translate a
-   validated original-C correction into Mandos only after applicability review;
+   Port/Neo engine/C source repairs stay with their source owners. C intake is
+   a reviewed immutable better-borg-c milestone after port-gate clearance, with
+   independent TS applicability/proof. Do not open per-source Mandos C mirrors;
    the faithful port is not a C-correction translation service.
 4. Verify the supported package/plugin and affected basic gameplay path. Keep
    targeted regressions and basic run/death/stall/archive evidence. Do not infer
    success from emitted commands or treat counters as measured survival benefit.
-5. Carry until actual upstream correction plus verified consumer adoption permits
-   the replacement backport to retire. Proposal, scope parking and removal of
-   an unneeded carry are not upstream resolution or a fixed bug.
+5. Engine/port carries retain their upstream-resolution/adoption lifecycle.
+   C milestone work closes ADOPTED after all applicable coverage is verified,
+   not source fixed. Per-unit TS retirement requires its actual Neo replacement
+   and controls; native patch removal alone is insufficient. No milestone code
+   starts while the classified port-first gate has a real missing parity leaf.
 
 Prefer an unpatched published engine. An engine carry requires evidence that a
 real supported Mandos gameplay path needs it, a focused regression and a named
@@ -31,10 +37,13 @@ or deploy the old lab; final package/plugin adoption checks stay explicit.
 PR433/seed-birth recording is not a mandatory default dependency. Preserve its
 optional patch and historical profile, without pretending missing metadata exists.
 
-At baseline6c7916a, the seven applied C units are164/165/168/171/172/175/176.
-Their code, controls, provenance and removal units remain. This is a preservation
-requirement for the current upgrade, not a second live status ledger: their
-canonical issues and patch ledger own actual state.
+The nine existing verified TS corrections and their controls/provenance/removal
+units remain intact. [The ledger](../patches/c-translations/README.md) links eight
+to reviewed native units, not a completed milestone audit. Enlightenment remains
+a grandfathered verified unit; native157's later adoption remains outside the
+reviewed M3 target. The21 old C-source
+mirrors are superseded tracking history, not source-fixed or removed-code claims;
+203 owns adoption coverage and the native producer owns per-bug follow-up.
 
 ## Interactive host boundary
 
@@ -93,6 +102,8 @@ parking is not permission to hide a required gameplay regression or false skip.
 
 [The open-issue audit](tasks/mandos-scope-181.md) is a **proposal** for parent
 review. Existing `backlog` is sufficient for parked work; do not create a second
-state taxonomy. Preserve source/consumer labels and open bug history. Scope
-parking is not `fixed`, `carried`, or resolution. Parent applies approved body,
-priority and label changes; this documentation worker changes none of them.
+state taxonomy. Engine/port labels and own-bug history keep their existing
+meaning. C milestones use ADOPTED coverage rather than per-source carried/fixed
+mirrors. Tracking-superseded closure preserves old C bodies/code/proofs and is
+not source resolution. Parent applies live issue changes; this documentation
+migration changes none of them and performs no milestone adoption.

@@ -28,21 +28,16 @@
    Default functionality and basic evidence remain required; parked advanced
    suites have an explicit optional profile, not blanket upgrade-gate status.
    Local-core testing is an explicit opt-in and must not masquerade as published.
-7. Adopt upstream corrections with local changes, rebuild and verify the
+7. For Neo engine/port corrections, adopt with local changes, rebuild and verify
    affected in-scope package/plugin/harness consumers before closing adoption.
-   Verify a lab only when separately authorized; otherwise record its unverified/
-   undeployed boundary. A private lab deployment is not an ordinary bug-fix gate.
-   A source merge is not a running-app deployment. No release wait alone.
-   Source forks do not have consumer carry/fixed/patch-active tags. Linked
-   Mandos issues own those states: carried means fixed on our side and OPEN
-   until the correction is fixed upstream AND adopted downstream, rebuilt and
-   verified. Then fixed/CLOSED. Partial scope stays open; patch-active remains
-   on required consumer backports independently of closure. A file/proposal is
-   not applied.
-   Close the original resolved scope once the accepted upstream correction is
-   adopted and normal required consumer checks pass. Do not keep it open for
-   hypothetical residual concerns. Partial requires an identified unapplied or
-   unverified component; a concrete post-adoption failure gets a new linked bug.
+   Verify a lab only when separately authorized; source merge is not deployment.
+   Source repair forks have no consumer carry/fixed labels. Mandos engine/port
+   carried issues stay OPEN until upstream resolves the correction and verified
+   adoption reaches us; then fixed/CLOSED. No release wait or speculative holds.
+   Partial needs a concrete missing component; new actual recurrences get new
+   linked bugs. patch-active maintenance is independent of closure.
+   C-origin tracking is the explicit exception in rule13: reviewed native
+   milestones close ADOPTED, without a per-source upstream-status mirror queue.
 8. Keep C defect catalogue, native evidence and active C proposals canonical
    in the engine/C fork. Historical Mandos evidence/patch copies stay immutable
    for old links. No angband/angband issues, PRs or comments from us; C posting
@@ -63,14 +58,25 @@
     A question alone is not an edit request; explicit owner tasks override
     local process defaults. Current source/issue evidence overrides old history.
 
-13. C correction translation is Mandos work: link the canonical C issue,
-    establish applicability, translate into TS under declared Neo APIs and
-    prove matching legal scenarios/controls on our runtime. No counterpart
-    means not applicable, not an invented patch. Keep the change marked as
-    a Mandos divergence from an unchanged C baseline until upstream alignment.
-    Do not send it to the fidelity-only port tracker as a port omission.
-    carried stays open until the C source correction is fixed upstream and
-    adopted/verified downstream; Rust translation is borg-rs's independent work.
+13. C translation remains Mandos work, but intake follows REVIEWED immutable
+    better-borg-c milestones, not individual neo-angband-tracker proposals or
+    moving native main. Canonical C defects stay in the source tracker; native
+    better-borg-c owns per-bug native/upstream follow-up. Read
+    docs/C-MILESTONE-ADOPTION.md and landing203 before selection.
+    One adoption issue per reviewed milestone records per-fix TS applicability,
+    existing equivalence, independent translations/proof/removal units and tests.
+    Close ADOPTED after all applicable coverage is verified; that is not a source
+    fixed claim. Legacy per-C Mandos issues are superseded tracking history.
+    Before NEW C milestone code, clear the classified port-first gate: a genuine
+    missing parity leaf blocks; mere proposed PRs are not verified carries.
+    Tests/audit umbrellas are assessed separately, without ignoring required reds.
+    Never auto-copy C-only memory changes, strategies, recording/death tooling.
+    Retire each TS unit only after its actual Neo/TS replacement and relevant
+    consumer controls/build are verified, even if native already removed its patch.
+    Keep existing verified units, including the grandfathered Enlightenment unit;
+    later native adoption outside the reviewed target does not roll it back or
+    silently expand that target. Reconcile it through a future reviewed milestone.
+    Faithful-port C parity and independent Rust ownership remain unchanged.
 
 14. Read current bug/source/action comments and mark agent receipts explicitly.
     Advanced death-analysis/feedback sessions and DISCUSSIONS.md are parked

@@ -1,13 +1,17 @@
 # Mandos
 
 Mandos is a **bug-fix consumer for the Neo Angband Borg**. It adopts verified
-port and engine corrections, translates applicable validated C fixes into its
-TypeScript derivative, and keeps their source and consumer evidence traceable.
+port and engine corrections, follows reviewed better-borg-c C milestones with
+independent TypeScript translations, and keeps producer/consumer proof traceable.
 Existing class/race choices and controller behavior remain; this repository is
 not the active platform for strategy research or experimental performance work.
 
-The routine is **intake → reproduce → verify → carry → track upstream
-resolution → retire the replaced backport**. Targeted legal scenarios, fixed-seed
+Neo engine/port work follows **intake → reproduce → verify → carry → upstream
+adoption → retire the replaced backport**. C work follows **reviewed immutable
+native milestone → TS applicability/translation → verify → ADOPTED**, with
+independent per-unit retirement later. [Landing203](https://github.com/diegoami/mandos/issues/203)
+replaces the old per-C-source mirror queue; [the contract](docs/C-MILESTONE-ADOPTION.md)
+requires the port-first gate before new C milestone code. Targeted legal scenarios, fixed-seed
 regressions and basic run/death/stall records support that work. Broad class/seed
 cohorts, stage/save-ladder research, trainer feedback and advanced death/replay
 analysis are parked optional tools. Their code, branches and evidence are
@@ -40,9 +44,13 @@ Start an agent at [AGENTS](AGENTS.md), [RULES](RULES.md), [PLAN](PLAN.md) and
 - Engine/C tracker: original C Borg, Angband game and Neo engine source defects.
 - Neo Borg mod tracker: faithful TypeScript port defects and source proposals.
 - Mandos: applicable consumer corrections, its own bugs and verified integration.
-- better-borg-c: independent native consumer/experiment work when owner-directed.
+- better-borg-c: independent native consumer, reviewed C milestone producer and
+  owner of its per-bug upstream/adoption status; experiments only when owner-directed.
 
-C corrections are translated here, not imposed on the fidelity-only port.
+Canonical original-C defects remain in the engine/C tracker. Mandos consumes
+reviewed native milestones rather than duplicating their per-bug status; C
+translations stay here, not in the fidelity-only port. Completing a milestone
+means ADOPTED by Mandos, not that every C defect is fixed upstream.
 borg-rs is independent and reports directly to our C board; no Rust polling,
 dispatch, code transfer or issue migration is implied. Future experimental work
 belongs in a separately authorized better-borg-c or borg-rs session, not this queue.
@@ -61,9 +69,11 @@ have their own requirements and do not gate a routine engine upgrade. Rebuild
 plugin.js when its runtime source changes. A source merge is not a lab deployment;
 owner saves/profiles and the running lab stay untouched without separate authorization.
 
-The seven applied C corrections at baseline6c7916a remain preserved, including
-their targeted regressions and independent removal units; parking research does
-not undo bug fixes. Upstream credit, GPL/Angband licences and AI_USAGE_POLICY
+Existing verified C corrections, targeted regressions and independent TS removal
+units are preserved. The [current ledger](patches/c-translations/README.md) maps
+existing coverage to reviewed native units, with a grandfathered Enlightenment
+exception; it is not a declaration that the full milestone is adopted. Closing
+legacy mirror issues as tracking-superseded does not remove code or fix its source. Upstream credit, GPL/Angband licences and AI_USAGE_POLICY
 remain intact. [Pre-split history](docs/history/repository-split) and
 [reorganization reviews](docs/migrations/reorganization-review/README.md) remain reference evidence.
 

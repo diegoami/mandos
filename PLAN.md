@@ -10,21 +10,25 @@ The current scope is [181](https://github.com/diegoami/mandos/issues/181) and
    whether any engine carry is genuinely required by supported Mandos gameplay.
    Keep optional PR433 out of default requirements. No package/version label alone
    proves a fix or requires an extra enhancement.
-3. Intake validated source proposals through111 and linked consumer issues.
-   Original C/Angband/Neo engine belong to the engine/C tracker, faithful port
-   defects to the port tracker. Translate applicable validated C corrections
-   here with source attribution; no counterpart means N/A, not an invented fix.
+3. Prioritize known port parity fixes and their applicable verified adoption.
+   Before NEW C code, pass [the classified port-first gate](docs/C-MILESTONE-ADOPTION.md).
+   C intake follows reviewed immutable better-borg-c milestones through
+   [203](https://github.com/diegoami/mandos/issues/203), not per-source mirrors
+   or moving main. Original C defects remain canonical in the engine/C tracker;
+   native owns per-bug follow-up, while Mandos assesses/translates the milestone.
 4. Reproduce the concrete bug with legal scenarios, public knowledge and controls.
-   Apply a bounded correction and preserve all seven existing C units. Avoid
+   Apply a bounded correction and preserve all existing verified C units. Avoid
    strategy retunes and experimental cohort work in a bug adoption batch.
 5. Run targeted regressions and the supported default gate, rebuilding affected
    plugin/package consumers. Retain basic run/death/stall/archive evidence.
    Optional replay/death-analysis suites are not blanket upgrade prerequisites;
    exact historical replay requires its original profile and inputs.
-6. After actual verification, record named source/package/plugin consumers and
-   carry state. Track upstream acceptance/import and retire only each replaced
-   backport. Dropping an unnecessary carry or parking an enhancement is not a
-   fixed upstream bug. Lab deployment/private backup is separate authorization.
+6. After actual verification, record named package/plugin/harness consumers.
+   Engine/port carries retain their source-resolution lifecycle. C milestone
+   adoption closes ADOPTED once applicable coverage is verified, not source fixed;
+   retirement still checks each actual Neo/TS replacement. Do not reapply an
+   already equivalent fix or auto-copy native memory/strategy/death infrastructure.
+   Lab deployment/private backup is separate authorization.
 7. Preserve historical records and experimental code/branches. Stage/save-ladder
    research, broad cohorts, trainer and advanced death-analysis work stay parked.
    Future experiments require their own owner-directed better-borg-c or borg-rs
@@ -33,11 +37,10 @@ The current scope is [181](https://github.com/diegoami/mandos/issues/181) and
    [open-issue recommendations](docs/tasks/mandos-scope-181.md); do not close
    unfixed bugs merely because their feature/research work is parked.
 
-Current integration199 consumes the accepted latest Borg94d wiring through
-source43/consumer200 before qualifying exact official edge.218 artifacts. The
-published beta.3 default remains; `tools/build.mjs --profile edge218 --out`
-materializes a separate exact developer folder with the same code/settings.
-Required default and stamped-source Node22 gates stay distinct. Lab startup/
-controller proof does not certify profile/session management or saving; the
-observed save message remains separately attributable work. Future C240
-assessment201 is metadata/triage only, not another C correction in this phase.
+Integration199/200 qualified the latest accepted Borg wiring and exact optional
+edge.218 developer profile at verified main878; published beta.3 remains default.
+Current tracking migration203 consolidates applied and pending C mirrors into
+reviewed native milestone coverage. No C milestone code is selected by this
+migration.203 owns the live port gate/coverage, including native157's post-review adoption
+for the already verified Enlightenment exception (outside reviewed M3). Historical issue/code/proof links
+remain; original C upstream status is not duplicated as Mandos work queues.

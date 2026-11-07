@@ -4,7 +4,7 @@
 | --- | --- | --- | --- |
 | C/game/engine fixes | [diegoami/neo-angband-tracker](https://github.com/diegoami/neo-angband-tracker) | neo-angband-tracker/ | C Borg, C Angband game, Neo engine; C branch/worktree in this same fork |
 | Port fixes | [diegoami/neo-angband-borg-mod-tracker](https://github.com/diegoami/neo-angband-borg-mod-tracker) | neo-angband-borg-mod-tracker/ | Upstream TypeScript Borg port defects and isolated Neo proposals |
-| Native C consumer | [diegoami/better-borg-c](https://github.com/diegoami/better-borg-c) | better-borg-c/ | Native product measurement, linked adoption/carry; source repairs stay on the engine/C tracker |
+| Native C consumer/producer | [diegoami/better-borg-c](https://github.com/diegoami/better-borg-c) | better-borg-c/ | Native application/reviewed milestones and per-bug upstream follow-up; source defects stay canonical on engine/C tracker |
 | Mandos bug-fix consumer | [diegoami/mandos](https://github.com/diegoami/mandos) | better-borg/ | Applicable bug adoption/C-to-TS translation, targeted regressions and basic records |
 
 Mandos's [current consumer scope](MANDOS-SCOPE.md) parks experimental cohorts,
@@ -42,13 +42,19 @@ migration ledger and each checkpoint for exact current issue numbers.
 
 ## C correction flow and independent Rust peer
 
-The engine/C tracker proves/proposes C fixes and reads incoming reports on its
-own board. borg-rs now posts directly there: do not poll/fetch its repository,
-files or external issues, and do not dispatch Rust work. Mandos independently
-translates applicable C corrections into TS and carries/adopts them. The
-fidelity-only Neo Borg mod tracker does not perform that translation service.
-borg-rs independently translates/adopts C corrections in Rust, without a Neo
-responsibility; its historical read-only reference is not a managed session.
+The engine/C tracker remains canonical for original-C defects/evidence/proposals.
+Native better-borg-c applies/reviews fixes and tracks its per-bug upstream state.
+Mandos follows one reviewed immutable native milestone per adoption issue,
+currently203's M3 cumulative target; it does not recreate per-source C mirrors.
+Read [the milestone contract](C-MILESTONE-ADOPTION.md) and its port-first gate
+before any new C code. Applicable TS translations/proof/removal units stay here;
+ADOPTED closure is not a source-fixed claim. Native patch retirement alone never
+proves the Neo/TS correction can be removed. Existing verified units remain.
+
+borg-rs reports directly to the source board; do not poll/fetch its repository,
+files or external issues or dispatch Rust work. Its historical reference clone
+is not managed. The faithful Neo port still does not translate C corrections;
+engine/port/Mandos-own bug routes and lifecycle are unchanged.
 
 The umbrella parent coordinates scoped dispatch, dependencies and verified
 recovery metadata; it does not take component code ownership. Read the owning

@@ -10,8 +10,10 @@ C worktree inside it. Port session: ../neo-angband-borg-mod-tracker. Mandos:
 ../better-borg. The original lab/pristine checkouts remain unchanged references.
 Transferred histories/redirects are in migrations/repository-split.json.
 
-Open a source defect in its owning fork with provenance, pins and reproduction;
-link Mandos-specific adoption/consumer work separately. Source repairs/proposals
+Open a source defect in its owning fork with provenance, pins and reproduction.
+Engine/port defects have separate Mandos consumer work. C defects remain canonical
+there, while Mandos consumes reviewed native milestones through203 instead of
+creating one mirror per source issue. Source repairs/proposals
 are implemented by that session from the correct pristine upstream base.
 Native C submissions remain paused; no repo performs them automatically.
 
@@ -59,56 +61,38 @@ owner integration issue and checkpoint36 at merge/stop. No background agent
 without owner direction; independent model review remains owner-launched,
 with a ready-to-paste read-only prompt in migrations/review.md.
 
-## Native C proposal intake
+## Reviewed native C milestone intake
 
-Canonical C source bugs, native evidence and reusable proposals remain in
-[neo-angband-tracker](https://github.com/diegoami/neo-angband-tracker/issues).
-Mandos owns the corresponding TypeScript applicability decision and translation.
-The separate better-borg-c product consumes C directly; its adoption is neither
-proof of Mandos applicability nor a replacement for our own tests.
+[The C milestone contract](C-MILESTONE-ADOPTION.md) is authoritative for C only.
+Canonical original-C defects remain in neo-angband-tracker. Native better-borg-c
+applies/reviews fixes and owns its per-bug upstream/adoption follow-up. Mandos
+uses one adoption issue per REVIEWED immutable milestone, currently
+[203's cumulative M3 target](https://github.com/diegoami/mandos/issues/203), not
+moving main or a per-source C mirror queue. Source issue links remain secondary
+provenance, not separate Mandos work items.
 
-On session startup and a producer-ready handoff, inspect the ready named C
-proposals and their existing Mandos dispositions on integration queue111 before
-choosing work. A validated clean local proposal is eligible **before upstream
-acceptance**, including a retained closed-unmerged/c-proposal branch. A source
-issue can remain open while Mandos carries the verified correction. Do not use
-an official merge or package release as an extra gate to start a useful carry.
-Keep broad upstream reconciliation weekly/manual; this adds no daemon, Rust
-polling or duplicate live C-defect catalogue.
+Before any new C code, inspect203's classified port-first gate. A known actual
+missing parity leaf blocks until applicable verified upstream adoption or a
+verified locally carried correction. Mere proposed PRs are insufficient. Tests
+and broad audit umbrellas are classified separately, without waiving required
+reds or hiding genuine missing components.
 
-For each ready correction:
-1. Record the canonical source issue, reviewed source/proposal and evidence
-   commits, native observed consequence and limits. Confirm producer/task
-   ownership; do not reimplement its source repair in this repository.
-2. Trace the exact defect into the current pinned TS call path. Distinguish
-   **applicable**, **already correct**, **absent/not applicable at this pin**
-   and **deferred behind a named missing subsystem**. For absent or unused
-   symbols, give a scoped exhaustive search and decisive caller context, not
-   just a matching name or a proposed patch. Record the inspected TS revision.
-3. Link the disposition from queue111 and the source issue. Applicable work gets
-   a distinct linked Mandos adoption issue before its isolated implementation
-   PR. An absent path gets a reasoned audit receipt, not an invented correction
-   or carried/fixed label. Deferred work names its existing dependency issue
-   and an explicit re-evaluation trigger; do not create duplicate omissions.
-4. Translate an applicable correction under declared Neo APIs, with provenance
-   and marked baseline departure. Prove legal TS fail-before/pass-after and
-   controls, rebuild the plugin and run the normal required consumer gates.
-   Keep original native versus translated evidence separate. Maintain actual
-   consumer patch/removal records where applicable; historical C patch copies
-   under patches/upstream-c are not an active Mandos implementation ledger.
-5. Verified local application is carried/OPEN until upstream resolves it and
-   the correction is adopted and normally verified here; then fixed/CLOSED.
-   Existing equivalent carries can already satisfy adoption: do not reimport
-   or repeat an unchanged full suite just to close the original scope.
-   Keep patch-active independent of closure and remove each hunk only after
-   its own package/build replacement is proved. Source state remains producer-
-   owned; new actual recurrences get new linked reports.
+Each selected milestone records per-unit TS disposition, existing equivalence,
+legal regressions and independent provenance/removal units. C-only memory code,
+strategies, measurements and recording/death infrastructure do not migrate
+automatically. Close ADOPTED once all applicable coverage is verified; this is
+not a source-fixed claim and does not wait for native/source upstream closure.
+Retirement still verifies the actual Neo/TS replacement per unit, even when the
+native patch has disappeared. Keep the grandfathered existing Enlightenment
+unit: native157 is now adopted after reviewed M3, not a reviewed-target extension.
+No rollback or blocking unrelated reviewed coverage is implied.
 
-Re-evaluate an absent/deferred disposition when its named counterpart arrives
-or the inspected TS path materially changes. Merely importing unrelated source
-history or a narrower HOME valuation leaf does not implement a tactical swap
-selector. The [dated intake audit](tasks/C-fix-intake-2026-11-06.md) records the
-first four dispositions and copyable evidence, not a second live status board.
+The [current TS ledger](../patches/c-translations/README.md) links existing proof
+and units. Legacy C issue IDs, old dated applicability receipts, FORK comments
+and migration *_at_split data are preserved history. Their former per-source
+queue/carried-open rule is superseded; their tracking-superseded closure removes
+no code and claims no upstream fix. Do not recreate those mirrors. Engine/port
+consumer and Mandos-owned bug lifecycle remains unchanged.
 
 ## Records and lab safety
 
@@ -132,5 +116,5 @@ to commit Mandos work on a fresh three-session setup.
 selected unique evidence and verification. The supplementary owner workspace
 records four Git submodules (including the independent native C consumer),
 directory inventory and exact recovery pins.
-This supplements the accepted session plan; it changes no source ownership or
-consumer lifecycle. OAuth migration remains tracked by Mandos #52.
+Recovery supplements the accepted session plan without changing source ownership;
+use the lane-specific adoption lifecycle above. OAuth migration remains tracked by Mandos #52.
