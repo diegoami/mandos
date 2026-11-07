@@ -11,6 +11,7 @@
 
 import type { BorgWorld } from "../world/model.js";
 import type { BorgTraitOpts } from "./config.js";
+import type { ArmourSwap } from "./armour-swap.js";
 import type { WeaponSwap } from "./weapon-swap.js";
 import { STAT_MAX } from "./trait-index.js";
 
@@ -21,6 +22,8 @@ export interface BorgDerived {
   weaponSwap: WeaponSwap;
   /** Same public scoring inputs for current and hypothetical HOME backups. */
   weaponSwapOpts: BorgTraitOpts;
+  armourSwap: ArmourSwap;
+  armourSwapOpts: BorgTraitOpts;
   /** borg.need_statgain[STAT_MAX]. */
   needStatgain: boolean[];
   /** borg.amt_statgain[STAT_MAX]. */
@@ -35,6 +38,8 @@ export function makeDerived(): BorgDerived {
     has: new Map(),
     weaponSwap: { handle: null, value: -1 },
     weaponSwapOpts: {},
+    armourSwap: { handle: null, value: -1 },
+    armourSwapOpts: {},
     needStatgain: new Array<boolean>(STAT_MAX).fill(false),
     amtStatgain: new Array<number>(STAT_MAX).fill(0),
     amtBook: new Array<number>(9).fill(0),
@@ -61,7 +66,7 @@ export function resetDerived(world: BorgWorld): BorgDerived {
 }
 
 /**
- * Give a scratch world the weapon backup the live world last found, so a
+ * Give a scratch world both backup snapshots the live world last found, so a
  * hypothetical notice (borg_notice(false)) reads it as the C's globals do.
  */
 export function inheritWeaponSwap(scratch: BorgWorld, live: BorgWorld): void {
@@ -69,6 +74,8 @@ export function inheritWeaponSwap(scratch: BorgWorld, live: BorgWorld): void {
   const d = makeDerived();
   d.weaponSwap = from.weaponSwap;
   d.weaponSwapOpts = from.weaponSwapOpts;
+  d.armourSwap = from.armourSwap;
+  d.armourSwapOpts = from.armourSwapOpts;
   store.set(scratch, d);
 }
 
