@@ -1,0 +1,3 @@
+$ node tools/build.mjs --check
+[mod-build] checking 1: mandos
+[mod-build] mandos: ok, and the committed plugin.js is current (761.4 KiB, api >=2.0.0 <3.0.0)
