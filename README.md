@@ -132,3 +132,8 @@ our faithful port-fix build and this full Mandos main. Port-only builds start
 from official upstream ancestry and contain no Mandos C translations or own
 controller/strategy/tooling changes. Main retains all nine C units and existing
 consumer behavior. A version tag is not an engine update or lab deployment.
+
+
+External measurements can use the [single-run zoo harness](docs/ZOO-HARNESS.md):
+build once, then run one seed to a game-tick cap with explicit JSON/JSONL outputs.
+The zoo owns suites/statistics; this adds no Borg behavior or Mandos cohort program.

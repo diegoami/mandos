@@ -107,3 +107,15 @@ meaning. C milestones use ADOPTED coverage rather than per-source carried/fixed
 mirrors. Tracking-superseded closure preserves old C bodies/code/proofs and is
 not source resolution. Parent applies live issue changes; this documentation
 migration changes none of them and performs no milestone adoption.
+
+
+## Owner-authorized external measurement interface (2026-11-08)
+
+[Task213](https://github.com/diegoami/mandos/issues/213) adds a
+[single-run headless interface](ZOO-HARNESS.md) for an outside zoo repository.
+The zoo owns suites, cohorts and their results; Mandos supplies the measurement
+entry point without changing Borg decisions. Ordinary assigned births and
+controller settings are explicit run inputs, not new strategy policy. The small
+contract cohort and bounded speed checks are interface verification only.
+Existing broad class/seed research remains parked here; no automatic C/Rust/zoo
+changes, desktop/lab deployment or replay engine requirement is authorized.
