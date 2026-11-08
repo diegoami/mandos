@@ -137,3 +137,8 @@ consumer behavior. A version tag is not an engine update or lab deployment.
 External measurements can use the [single-run zoo harness](docs/ZOO-HARNESS.md):
 build once, then run one seed to a game-tick cap with explicit JSON/JSONL outputs.
 The zoo owns suites/statistics; this adds no Borg behavior or Mandos cohort program.
+
+The zoo also has [upstream-head and port-only measurement lanes](docs/ZOO-BASELINES.md),
+with the same API2 controller harness and no Mandos C corrections. Full main
+keeps its existing legacy measurement profile and C carries; do not conflate
+their command hashes.

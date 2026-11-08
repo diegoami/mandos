@@ -33,7 +33,11 @@
     "upstream_tag": "v1.4.0-beta.4",
     "upstream_tag_object": "9775b2a7ae574499387e515930fb37577e55d5a3",
     "upstream_release_commit": "48ee6e1c4640ca66bdcb946952539690f558a5d9",
-    "port_only_tag": "v1.4.0-beta.4-port.1",
-    "main_includes_c_translations": true
+    "port_only_tag": "v1.4.0-beta.4-port.2",
+    "main_includes_c_translations": true,
+    "upstream_measurement_tag": "v1.4.0-beta.4-upstream.a10655c3-zoo.1",
+    "upstream_measurement_borg_commit": "a10655c3b8113848092a7d66405ca3ec5e2222f9",
+    "port_only_legacy_tag": "v1.4.0-beta.4-port.1",
+    "measurement_policy": "docs/ZOO-BASELINES.md"
   }
 }

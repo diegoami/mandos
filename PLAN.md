@@ -85,3 +85,10 @@ one reproducible life, assigned ordinary births, actual settings, counters,
 streams/hash and provenance. Existing Borg behavior, runners, records and C fixes
 remain. The bounded contract cohort/speed proof is verification of this interface,
 not activation of parked strategy/cohort research. No zoo repository edit.
+
+
+Owner task [215](https://github.com/diegoami/mandos/issues/215) supplies two
+[sealed zoo baselines](docs/ZOO-BASELINES.md) from frozen official/clean-port
+ancestry, sharing a tools-only actual-plugin API2 host. No C corrections or
+Mandos policy enter these snapshots; existing main/records/tags remain.
+Publication follows each own gate, review and immutable-tag checks.

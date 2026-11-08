@@ -62,7 +62,8 @@ try {
   const states = args.states === undefined ? null : open(args.states);
   const commands = args.commands === undefined ? null : open(args.commands);
   const entry = await import(pathToFileURL(bundle).href);
-  const run = entry.measure(packDir, { seed: args.seed, turns: args.turns, decisions: args.decisions, cfg,
+  const run = await entry.measure(packDir, { seed: args.seed, turns: args.turns, decisions: args.decisions, cfg,
+    ...(build.lane === undefined ? {} : { flags: Object.fromEntries(Object.entries(rules).map(([flag, rule]) => [flag, flags[flag] ?? rule.default])) }),
     ...(args.race === undefined ? {} : { race: args.race }), ...(args.class === undefined ? {} : { class: args.class }),
     ...(states === null ? {} : { onState: state => writeFileSync(states.fd, entry.canonicalJson(state) + '\n') }),
     ...(commands === null ? {} : { onCommand: line => writeFileSync(commands.fd, line) }) });
