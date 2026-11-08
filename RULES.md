@@ -86,3 +86,11 @@
     parking experiments. Do not silently move tasks/code to better-borg-c or
     independent borg-rs, poll Rust or dispatch a Rust worker. Parent reviews
     scope labels; parking/unapplying a carry is never a fixed-bug closure.
+
+16. Version lanes follow docs/VERSION-LANES.md. Exact upstream tags preserve
+    the original upstream tag object and commit; port-only tags are built from
+    official ancestry plus explicit faithful-port deltas, never full Mandos
+    files or a subtraction from main. Keep all main C corrections/history.
+    Verify source projection, truthful identity, artifact digest and full gate
+    before adding immutable tags. Automatic inherited release/Nexus workflows
+    stay disabled; default-branch guards cannot protect historical tag workflows.

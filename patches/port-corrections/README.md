@@ -1,5 +1,16 @@
 # Faithful-port correction units and adopted baselines
 
+Current reconciliation (2026-11-08): official a10655c incorporates accepted
+light-base PR74 and armour/HOME/known-curse PR78. Mandos already carries their
+equivalent TS behavior; the independent original-C light modifier stays applied.
+These stored units are retained provenance/removal records, not claims those
+port defects remain unaccepted. Tactical source50/PR79 remains a separate
+verified local carry; consumer125 stays carried/OPEN for that actual pending
+upstream scope, rather than partially carried. Exact source/consumer final gates
+and resolution receipts are recorded by [version task211](https://github.com/diegoami/mandos/issues/211).
+Historical leaf boundaries below retain their original context and do not
+restart completed implementation or remove C fixes.
+
 These are source/test provenance units, not pnpm engine patches. The source
 tracker owns the Neo Borg defect; Mandos consumer issues own carry/adoption
 state. A stored patch or work-branch commit is not a carried main correction.

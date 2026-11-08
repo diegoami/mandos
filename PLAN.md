@@ -68,3 +68,11 @@ C behavioral correction. Parent verifies source+consumer actual main and then
 updates125's remaining scope and203's classified gate. Earlier leaf exclusions
 are historical boundaries, not instructions to keep delivered behavior missing.
 No new C milestone starts merely because a work branch or source PR exists.
+
+## Separate upstream and port-only version tags
+
+[Version lanes](docs/VERSION-LANES.md) separates the exact upstream Borg release,
+our faithful port-fix build and this full Mandos main. Port-only builds start
+from official upstream ancestry and contain no Mandos C translations or own
+controller/strategy/tooling changes. Main retains all nine C units and existing
+consumer behavior. A version tag is not an engine update or lab deployment.

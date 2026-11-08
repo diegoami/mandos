@@ -21,8 +21,11 @@ seeds, timeouts, missing-content behavior or consumer lifecycle changes here.
 
 Workflow/script changes themselves take this route. Manual dispatch, missing or
 unusable history, an empty/unrecognized diff, deletions and renames also take
-full verification. The unchanged GitHub product-release tag workflow remains
-intentional; Nexus publishing retains its upstream-repository-only guard.
+full verification. Version tags no longer automatically publish GitHub Releases: the default
+release workflow is manual-only, and inherited release/Nexus workflows are
+disabled at repository level before mirroring historical upstream tags.
+Default-branch YAML alone cannot guard workflows present on an old tag. See
+[version lanes](VERSION-LANES.md); Nexus also retains its upstream-only guard.
 
 ## Small prose changes
 

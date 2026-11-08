@@ -124,3 +124,11 @@ The downloaded ordinary desktop release was not the GUI tested.
 [Task199](https://github.com/diegoami/mandos/issues/199) and the
 [pinned evidence/profile description](docs/runs/2026-11-07-latest-borg-edge218/README.md)
 own the current exact qualification and limits. The existing lab/data are untouched.
+
+## Separate upstream and port-only version tags
+
+[Version lanes](docs/VERSION-LANES.md) separates the exact upstream Borg release,
+our faithful port-fix build and this full Mandos main. Port-only builds start
+from official upstream ancestry and contain no Mandos C translations or own
+controller/strategy/tooling changes. Main retains all nine C units and existing
+consumer behavior. A version tag is not an engine update or lab deployment.
