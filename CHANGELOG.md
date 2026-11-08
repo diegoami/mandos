@@ -22,6 +22,13 @@ were not retagged.
 
 ### Fixed
 
+- [Visible] **The Borg no longer overstates how far its light reaches.** It started its light value from the radius the game had already worked out for the player and then added the equipped light again, so a fueled Wooden Torch counted as radius 4 instead of 2, and its lighting and recovery checks used the inflated radius. It now builds the value from zero out of its own equipment, as the original does. A Phial of Galadriel now reads 8 instead of 12 and a Necromancer's unlight radius 7 instead of 10, because the original adds the light modifier twice and the port keeps that quirk (neostryder/neo-angband#478).
+- [Visible] **The Borg now carries a spare piece of armour and can fetch one from the home.** A carried backup armour piece used to score nothing, so the Borg's power total left it out (the original counts minus one when there is none) and the home-shopping step never picked one. It now scores a carried armour piece the way the original does (gates by depth and armour type, weights for each resistance and ability, later items winning ties, and resistances discounted against the backup weapon it already carries) and counts it in the power total. At the home it takes a piece only when that piece scores strictly higher than the current backup and a pack slot is free, and it skips any piece the game shows as cursed. Wearing the backup in the middle of a fight is not part of this change (neostryder/neo-angband#485).
+
+## 1.4.0-beta.4 - 2026-11-07
+
+### Fixed
+
 - [Visible] **The Borg now carries a spare weapon and can fetch one from the home.** Before this, it gave a carried backup weapon no value, so its home-shopping step never picked a backup and a good weapon sat in the home forever. It now scores a carried weapon the way the original Borg does, counting damage, blows, to-hit and to-dam, slays and brands it lacks, resistances, immunities, a digger early on, and penalties for aggravation and bad curses, and its overall power includes the backup. At the home it takes a weapon only when that weapon scores strictly higher than its current backup, so a tie keeps the old one, and it needs one free pack slot to fetch it because the game cannot swap an occupied backup slot in one step. It skips any cursed weapon, since the game shows the Borg a curse's name but not its strength. Switching weapons during a fight and backup armour are not part of this change.
 
 ## 1.4.0-beta.3 - 2026-11-05

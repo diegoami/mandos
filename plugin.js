@@ -7711,7 +7711,6 @@ function borgNoticePlayer(c) {
     t[127 /* ISFIXSTR */ + i] = drained?.[i] ? 1 : 0;
   }
   t[44 /* SPEED */] = p.speed;
-  t[26 /* LIGHT */] = p.light;
   t[52 /* INFRA */] = p.seeInfra;
 }
 function borgNoticeEquipment(c) {
