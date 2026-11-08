@@ -2,7 +2,7 @@
 
 This branch contains the faithful upstream Borg plus explicitly listed port
 repairs. It is not the full Mandos consumer. The mod retains upstream's `borg`
-identity, author and licence; the fork version is `1.4.0-beta.4-port.1`.
+identity, author and licence; repository/homepage identify this distributing fork; the fork version is `1.4.0-beta.4-port.1`.
 Hosting it in diegoami/mandos does not establish stock desktop authorization or
 upstream catalogue/hash acceptance. No npm publication or lab deployment occurs.
 
