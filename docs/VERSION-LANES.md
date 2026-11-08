@@ -67,3 +67,10 @@ build. Never automatically deploy either into the existing lab or change saves,
 profiles or private data. Any future release operation needs its own explicit
 scope and a fresh workflow-state/target/digest check. Preserve all prior branches
 and evidence; tags are immutable once published.
+
+The supported fork suffix is `-port.N`: published SDK beta.3 rejects SemVer
+`+build` metadata. The failed initial attempt and its logs are preserved in the
+[version reconciliation receipt](runs/2026-11-08-version-lanes/README.md).
+The fork manifest repository and package homepage identify diegoami/mandos;
+upstream Borg identity and original authorship remain intact. Final candidate
+source/artifact identities are in [the projection](runs/2026-11-08-version-lanes/projection.json).

@@ -29,9 +29,11 @@ Both original-C flaws and faithful quirks deliberately remain in that lane.
   no success was claimed. Its hosted result remains separately recorded.
 - Normala4bd8ef extends that parser to accept the same prerelease hyphen syntax
   as the SDK; original manifest/package/changelog equality assertions remain.
-  Targeted3/3 version tests, grant validation and current691.0KiB build pass.
-- Exact release-candidate full pushCI42488349397 and privacy42488349392 verify
-  a4bd8eff5d618b5ef2e56a302bdd4f3eb5617294. Their actual outcome is recorded on211;
+  Targeted 3/3 version tests, grant validation and current691.0KiB build pass.
+- Final identity-only follow-up b076ffb5e1c90983c910e588c99e1bbd1b84e84e points
+  repository/homepage to this distributing fork, preserving Borg identity,
+  original authorship and the same artifact digest. Its exact full pushCI
+  42488553670 and privacy42488553656 verify the final target. Outcomes are recorded on211;
   this preparation receipt does not borrow a source or Mandos-main test count.
 
 No local heavy gate waits behind the independent native C validation holder.

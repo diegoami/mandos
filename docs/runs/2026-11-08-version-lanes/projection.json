@@ -5,7 +5,7 @@
   "upstream_release_commit": "48ee6e1c4640ca66bdcb946952539690f558a5d9",
   "accepted_post_release_commit": "a10655c3b8113848092a7d66405ca3ec5e2222f9",
   "port_only_tag": "v1.4.0-beta.4-port.1",
-  "port_only_commit": "a4bd8eff5d618b5ef2e56a302bdd4f3eb5617294",
+  "port_only_commit": "b076ffb5e1c90983c910e588c99e1bbd1b84e84e",
   "faithful_port_producer": "cc64c1ccc62f7197f5bef24a4a6d23cc96155e5f",
   "projection_paths": [
     "src",
@@ -47,5 +47,6 @@
     "Constructive origin/projection proof of excluding Mandos C translations; not a statement that upstream has no original-C defects.",
     "Core/harness verification does not establish stock desktop controller or catalogue digest acceptance.",
     "Full gates and publication state are separate recorded receipts; this file alone does not claim they passed."
-  ]
+  ],
+  "port_only_repository": "https://github.com/diegoami/mandos"
 }
