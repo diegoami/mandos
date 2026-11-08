@@ -12,7 +12,7 @@
  * drivers over ONE loop body:
  *
  *   - playSession (B02's): the STOCK Borg. One boot per seed, race and class
- *     rolled, one character per life, the next life the engine's own
+ *     default Human Warrior first birth, one character per life, the next life the engine's own
  *     reincarnation in the same session. This is the instrument behind
  *     B01/B02/B14's committed records, and its survivor runs reproduce
  *     bit-for-bit (the seed-1 door-close census, 771 closes, is the
@@ -67,6 +67,7 @@ import type {
   RunReport as SdkRunReport,
 } from "@rpgm-tools/neo-angband-mod-sdk";
 import { createBorg } from "./controller.js";
+import { borgCfg, type BorgCfg } from "./trait/config.js";
 import { aimedGrid, createStallWatch, forgetGrid, sceneKey } from "./loop/stall.js";
 import { bindCore, coreIsBound } from "./core-api.js";
 import { makeCoreResolvers } from "./resolvers.js";
@@ -322,10 +323,18 @@ interface LifeObservation {
  * this same observation (the census it verifies against the record is this
  * census), so the replay rides the one copy rather than growing a second.
  */
+/** Optional harness-only observation; absent for all existing callers. */
+export interface LifeInstrumentation {
+  readonly cfg?: Partial<BorgCfg>;
+  readonly settingsRead?: (cfg: Readonly<BorgCfg>) => void;
+  readonly event?: (event: unknown) => void;
+}
+
 export function observingLife(
   core: typeof Core,
   game: StartedGame,
   pack: GamePack,
+  instrumentation?: LifeInstrumentation,
 ): LifeObservation {
   const state: GameState = game.state;
   /* FORK: Mandos #99 keeps the measurement on the shipped API2 item analysis. */
@@ -340,6 +349,7 @@ export function observingLife(
     playerClasses: game.players.classes,
   });
   const borg = createBorg({
+    ...(instrumentation?.cfg === undefined ? {} : { cfg: instrumentation.cfg }),
     /* FORK: Mandos #54, DEFECT in our measurement/replay driver. Use the
      * shipped plugin's default private stream; hashing the world seed here
      * made this a different Borg even with an identical game state. Tests
@@ -364,6 +374,7 @@ export function observingLife(
       blowMethods: game.booted.registries.monsters.blowMethods.values(),
     }),
   });
+  instrumentation?.settingsRead?.({ ...borgCfg() });
   /* FORK Mandos198: shadow ItemViews need the same public description as
    * the host so KnownItem fuel survives hypothetical loadout conversion. */
   const viewDeps: Core.AgentViewDeps = { resolver, reg: game.booted.registries.objects,
@@ -402,7 +413,22 @@ export function observingLife(
         const actual = core.knownMonsterMidx(state, id);
         return actual === null ? false : legacyAct.setTargetMonster(actual);
       } };
+      // Observation hooks do not change target arguments, results or order.
+      if (instrumentation?.event !== undefined) {
+        const targetMonster = act.setTargetMonster;
+        act.setTargetMonster = (id) => {
+          const accepted = targetMonster(id);
+          instrumentation.event?.({ type: "target_monster", args: { id }, accepted });
+          return accepted;
+        };
+        const targetLocation = act.setTargetLocation;
+        act.setTargetLocation = (x, y) => {
+          targetLocation(x, y);
+          instrumentation.event?.({ type: "target_location", args: { x, y } });
+        };
+      }
       const cmd = borg.controller(view, act);
+      if (cmd !== null) instrumentation?.event?.({ type: "command", command: cmd });
       if (cmd) {
         issuedCommands++;
         commands[cmd.code] = (commands[cmd.code] ?? 0) + 1;
@@ -490,6 +516,7 @@ export function driveLife(
   seed: number,
   stage: StageDefinition | undefined = undefined,
   visit: (() => void) | undefined = undefined,
+  measurement?: { readonly turnCap?: number; readonly afterLoop?: (status: ReturnType<typeof Core.runGameLoop>) => void },
 ): { dead: boolean; taken: number; attained: boolean; attempts: number; noCommandReplies: number; stopped: string | null } {
   const state: GameState = game.state;
   let dead = false;
@@ -507,12 +534,15 @@ export function driveLife(
   // unbounded number of extra attempts to the requested budget.
   for (let calls = 0; calls < decisions; calls++) {
     visit?.();
+    // Core can advance multiple game ticks in one call: stop at its next boundary.
+    if (measurement?.turnCap !== undefined && state.turn >= measurement.turnCap) break;
     if (attainedNow()) {
       attained = true;
       break;
     }
     life.arm();
     const status = core.runGameLoop(state, game.registry);
+    measurement?.afterLoop?.(status);
     // Command replies are counted independently from their per-code census.
     // This still includes the killing command; empty replies stay attempts.
     taken = life.issuedCommands;
@@ -706,9 +736,11 @@ export interface PlaySessionOptions {
  * That is the only honest way a deterministic engine can offer "N lives per
  * seed": a second fresh boot of the same seed would replay the first life
  * bit-for-bit, while a reincarnation is a genuinely new draw that is still a
- * pure function of the seed. Race and class are ROLLED, upstream's default
- * (BORG_RESPAWN_RACE/CLASS are -1 unless configured); each life's entry
- * records what it rolled.
+ * pure function of the seed. The published beta.3 startGame default first
+ * birth is Human Warrior; only subsequent reincarnations roll race/class
+ * (BORG_RESPAWN_RACE/CLASS are -1 unless configured). Each entry records the
+ * actual pair. The historical comment describing the first birth as rolled
+ * was inaccurate; the instrument does not change that existing behavior.
  *
  * The turn tail is the host's job in the real shell (main.ts); here it is the
  * three lines inside the loop, which is all a level change needs when nothing

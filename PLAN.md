@@ -76,3 +76,12 @@ our faithful port-fix build and this full Mandos main. Port-only builds start
 from official upstream ancestry and contain no Mandos C translations or own
 controller/strategy/tooling changes. Main retains all nine C units and existing
 consumer behavior. A version tag is not an engine update or lab deployment.
+
+
+Owner task [213](https://github.com/diegoami/mandos/issues/213), 2026-11-08,
+authorizes the [external zoo measurement entry point](docs/ZOO-HARNESS.md).
+This is harness-only: cohorts/results remain in borg-zoo, while Mandos exposes
+one reproducible life, assigned ordinary births, actual settings, counters,
+streams/hash and provenance. Existing Borg behavior, runners, records and C fixes
+remain. The bounded contract cohort/speed proof is verification of this interface,
+not activation of parked strategy/cohort research. No zoo repository edit.
