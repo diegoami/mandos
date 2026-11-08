@@ -92,7 +92,8 @@ export function outputPath(root, requested) {
     tail.unshift(relative(parent, existing)); existing = parent;
   }
   const actual = resolve(realpathSync(existing), ...tail);
-  const forbidden = realpathSync(join(root, 'docs', 'runs'));
+  const ownRuns = join(root, 'docs', 'runs');
+  const forbidden = existsSync(ownRuns) ? realpathSync(ownRuns) : resolve(ownRuns);
   if (inRuns(actual) || actual === forbidden || actual.startsWith(forbidden + sep)) throw new Error('The zoo entry point never writes under docs/runs');
   return actual;
 }

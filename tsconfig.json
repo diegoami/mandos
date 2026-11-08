@@ -32,7 +32,8 @@
     "types": [
       "node"
     ],
-    "noEmit": true
+    "noEmit": true,
+    "allowImportingTsExtensions": true
   },
   "include": [
     "*.ts",

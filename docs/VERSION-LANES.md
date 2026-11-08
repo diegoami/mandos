@@ -74,3 +74,12 @@ The supported fork suffix is `-port.N`: published SDK beta.3 rejects SemVer
 The fork manifest repository and package homepage identify diegoami/mandos;
 upstream Borg identity and original authorship remain intact. Final candidate
 source/artifact identities are in [the projection](runs/2026-11-08-version-lanes/projection.json).
+
+
+## Zoo-ready snapshots
+
+[Task #215](https://github.com/diegoami/mandos/issues/215) adds the shared API2
+measurement harness to exact upstream-head and port-only policy snapshots.
+See [the baseline contract](ZOO-BASELINES.md) for the new immutable tag names,
+source seals, profiles and limits. These do not replace or move old tags,
+change full main C corrections, or promote the legacy main measurement profile.
