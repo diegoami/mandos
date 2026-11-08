@@ -92,3 +92,13 @@ Owner task [215](https://github.com/diegoami/mandos/issues/215) supplies two
 ancestry, sharing a tools-only actual-plugin API2 host. No C corrections or
 Mandos policy enter these snapshots; existing main/records/tags remain.
 Publication follows each own gate, review and immutable-tag checks.
+
+## Shared decision-boundary fixture POC (owner task217, 2026-11-08)
+
+The [cross-engine fixture POC](docs/CROSS-ENGINE-FIXTURE-POC.md) compares the
+actual inherited backup selector with native-observed inputs and an explicitly
+unshipped diagnostic C82 overlay. It adopts no C fix, changes no Borg behaviour,
+and does not complete milestone203. The parent owns the common contract and
+comparator; native better-borg-c owns its actual before/fixed exporter. No world,
+damage, complete fix-set or seed equivalence is claimed. Existing main C9,
+comparison tags, ordinary runners and records remain unchanged.

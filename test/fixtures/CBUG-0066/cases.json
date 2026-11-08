@@ -1,0 +1,646 @@
+{
+  "boundary": "backup-swap/post-evaluation",
+  "cases": [
+    {
+      "expected": {
+        "corrected": {
+          "kind": "wield",
+          "role": "armour"
+        },
+        "inherited": {
+          "kind": "none"
+        }
+      },
+      "id": "armour-better",
+      "inputs": {
+        "avoidance": 263,
+        "baseCritical": {
+          "fract": 0,
+          "rblind": 0,
+          "rconf": 0
+        },
+        "candidates": {
+          "armour": {
+            "evaluation": {
+              "critical": {
+                "fract": 0,
+                "rblind": 0,
+                "rconf": 0,
+                "rdark": 0,
+                "rlite": 0,
+                "sav": 59
+              },
+              "rawDanger": 47
+            },
+            "item": {
+              "artifact": false,
+              "category": "SHIELD",
+              "cursed": false,
+              "identified": true,
+              "quantity": 1,
+              "uncursable": false
+            }
+          },
+          "weapon": {
+            "evaluation": {
+              "critical": {
+                "fract": 0,
+                "rblind": 0,
+                "rconf": 0,
+                "rdark": 0,
+                "rlite": 0,
+                "sav": 59
+              },
+              "rawDanger": 99
+            },
+            "item": {
+              "artifact": false,
+              "category": "SWORD",
+              "cursed": false,
+              "identified": true,
+              "quantity": 1,
+              "uncursable": false
+            }
+          }
+        },
+        "currentDanger": 99,
+        "gates": {
+          "hungry": false,
+          "maxDepth": 50,
+          "nearbyUnique": false,
+          "panelCount": 0,
+          "usesSwaps": true,
+          "weak": false
+        },
+        "randarts": false
+      }
+    },
+    {
+      "expected": {
+        "corrected": {
+          "kind": "wield",
+          "role": "weapon"
+        },
+        "inherited": {
+          "kind": "none"
+        }
+      },
+      "id": "weapon-better",
+      "inputs": {
+        "avoidance": 263,
+        "baseCritical": {
+          "fract": 0,
+          "rblind": 0,
+          "rconf": 0
+        },
+        "candidates": {
+          "armour": {
+            "evaluation": {
+              "critical": {
+                "fract": 0,
+                "rblind": 0,
+                "rconf": 0,
+                "rdark": 0,
+                "rlite": 0,
+                "sav": 59
+              },
+              "rawDanger": 99
+            },
+            "item": {
+              "artifact": false,
+              "category": "SHIELD",
+              "cursed": false,
+              "identified": true,
+              "quantity": 1,
+              "uncursable": false
+            }
+          },
+          "weapon": {
+            "evaluation": {
+              "critical": {
+                "fract": 0,
+                "rblind": 0,
+                "rconf": 0,
+                "rdark": 0,
+                "rlite": 0,
+                "sav": 59
+              },
+              "rawDanger": 47
+            },
+            "item": {
+              "artifact": false,
+              "category": "SWORD",
+              "cursed": false,
+              "identified": true,
+              "quantity": 1,
+              "uncursable": false
+            }
+          }
+        },
+        "currentDanger": 99,
+        "gates": {
+          "hungry": false,
+          "maxDepth": 50,
+          "nearbyUnique": false,
+          "panelCount": 0,
+          "usesSwaps": true,
+          "weak": false
+        },
+        "randarts": false
+      }
+    },
+    {
+      "expected": {
+        "corrected": {
+          "kind": "wield",
+          "role": "armour"
+        },
+        "inherited": {
+          "kind": "none"
+        }
+      },
+      "id": "fire-armour",
+      "inputs": {
+        "avoidance": 245,
+        "baseCritical": {
+          "fract": 0,
+          "rblind": 0,
+          "rconf": 0
+        },
+        "candidates": {
+          "armour": {
+            "evaluation": {
+              "critical": {
+                "fract": 0,
+                "rblind": 0,
+                "rconf": 0,
+                "rdark": 0,
+                "rlite": 0,
+                "sav": 59
+              },
+              "rawDanger": 70
+            },
+            "item": {
+              "artifact": false,
+              "category": "SHIELD",
+              "cursed": false,
+              "identified": true,
+              "quantity": 1,
+              "uncursable": false
+            }
+          },
+          "weapon": {
+            "evaluation": {
+              "critical": {
+                "fract": 0,
+                "rblind": 0,
+                "rconf": 0,
+                "rdark": 0,
+                "rlite": 0,
+                "sav": 59
+              },
+              "rawDanger": 128
+            },
+            "item": {
+              "artifact": false,
+              "category": "SWORD",
+              "cursed": false,
+              "identified": true,
+              "quantity": 1,
+              "uncursable": false
+            }
+          }
+        },
+        "currentDanger": 128,
+        "gates": {
+          "hungry": false,
+          "maxDepth": 50,
+          "nearbyUnique": false,
+          "panelCount": 0,
+          "usesSwaps": true,
+          "weak": false
+        },
+        "randarts": false
+      }
+    },
+    {
+      "expected": {
+        "corrected": {
+          "kind": "wield",
+          "role": "weapon"
+        },
+        "inherited": {
+          "kind": "none"
+        }
+      },
+      "id": "electric-weapon",
+      "inputs": {
+        "avoidance": 263,
+        "baseCritical": {
+          "fract": 0,
+          "rblind": 0,
+          "rconf": 0
+        },
+        "candidates": {
+          "armour": {
+            "evaluation": {
+              "critical": {
+                "fract": 0,
+                "rblind": 0,
+                "rconf": 0,
+                "rdark": 0,
+                "rlite": 0,
+                "sav": 59
+              },
+              "rawDanger": 99
+            },
+            "item": {
+              "artifact": false,
+              "category": "SHIELD",
+              "cursed": false,
+              "identified": true,
+              "quantity": 1,
+              "uncursable": false
+            }
+          },
+          "weapon": {
+            "evaluation": {
+              "critical": {
+                "fract": 0,
+                "rblind": 0,
+                "rconf": 0,
+                "rdark": 0,
+                "rlite": 0,
+                "sav": 59
+              },
+              "rawDanger": 47
+            },
+            "item": {
+              "artifact": false,
+              "category": "SWORD",
+              "cursed": false,
+              "identified": true,
+              "quantity": 1,
+              "uncursable": false
+            }
+          }
+        },
+        "currentDanger": 99,
+        "gates": {
+          "hungry": false,
+          "maxDepth": 50,
+          "nearbyUnique": false,
+          "panelCount": 0,
+          "usesSwaps": true,
+          "weak": false
+        },
+        "randarts": false
+      }
+    },
+    {
+      "expected": {
+        "corrected": {
+          "kind": "wield",
+          "role": "armour"
+        },
+        "inherited": {
+          "kind": "wield",
+          "role": "weapon"
+        }
+      },
+      "id": "both-helpful",
+      "inputs": {
+        "avoidance": 450,
+        "baseCritical": {
+          "fract": 0,
+          "rblind": 0,
+          "rconf": 0
+        },
+        "candidates": {
+          "armour": {
+            "evaluation": {
+              "critical": {
+                "fract": 0,
+                "rblind": 0,
+                "rconf": 0,
+                "rdark": 0,
+                "rlite": 0,
+                "sav": 62
+              },
+              "rawDanger": 120
+            },
+            "item": {
+              "artifact": false,
+              "category": "SHIELD",
+              "cursed": false,
+              "identified": true,
+              "quantity": 1,
+              "uncursable": false
+            }
+          },
+          "weapon": {
+            "evaluation": {
+              "critical": {
+                "fract": 0,
+                "rblind": 0,
+                "rconf": 0,
+                "rdark": 0,
+                "rlite": 0,
+                "sav": 62
+              },
+              "rawDanger": 174
+            },
+            "item": {
+              "artifact": false,
+              "category": "SWORD",
+              "cursed": false,
+              "identified": true,
+              "quantity": 1,
+              "uncursable": false
+            }
+          }
+        },
+        "currentDanger": 239,
+        "gates": {
+          "hungry": false,
+          "maxDepth": 50,
+          "nearbyUnique": false,
+          "panelCount": 0,
+          "usesSwaps": true,
+          "weak": false
+        },
+        "randarts": false
+      }
+    },
+    {
+      "expected": {
+        "corrected": {
+          "kind": "wield",
+          "role": "armour"
+        },
+        "inherited": {
+          "kind": "wield",
+          "role": "armour"
+        }
+      },
+      "id": "armour-only",
+      "inputs": {
+        "avoidance": 251,
+        "baseCritical": {
+          "fract": 0,
+          "rblind": 0,
+          "rconf": 0
+        },
+        "candidates": {
+          "armour": {
+            "evaluation": {
+              "critical": {
+                "fract": 0,
+                "rblind": 0,
+                "rconf": 0,
+                "rdark": 0,
+                "rlite": 0,
+                "sav": 59
+              },
+              "rawDanger": 49
+            },
+            "item": {
+              "artifact": false,
+              "category": "SHIELD",
+              "cursed": false,
+              "identified": true,
+              "quantity": 1,
+              "uncursable": false
+            }
+          },
+          "weapon": null
+        },
+        "currentDanger": 105,
+        "gates": {
+          "hungry": false,
+          "maxDepth": 50,
+          "nearbyUnique": false,
+          "panelCount": 0,
+          "usesSwaps": true,
+          "weak": false
+        },
+        "randarts": false
+      }
+    },
+    {
+      "expected": {
+        "corrected": {
+          "kind": "wield",
+          "role": "weapon"
+        },
+        "inherited": {
+          "kind": "wield",
+          "role": "weapon"
+        }
+      },
+      "id": "weapon-only",
+      "inputs": {
+        "avoidance": 251,
+        "baseCritical": {
+          "fract": 0,
+          "rblind": 0,
+          "rconf": 0
+        },
+        "candidates": {
+          "armour": null,
+          "weapon": {
+            "evaluation": {
+              "critical": {
+                "fract": 0,
+                "rblind": 0,
+                "rconf": 0,
+                "rdark": 0,
+                "rlite": 0,
+                "sav": 59
+              },
+              "rawDanger": 49
+            },
+            "item": {
+              "artifact": false,
+              "category": "SWORD",
+              "cursed": false,
+              "identified": true,
+              "quantity": 1,
+              "uncursable": false
+            }
+          }
+        },
+        "currentDanger": 105,
+        "gates": {
+          "hungry": false,
+          "maxDepth": 50,
+          "nearbyUnique": false,
+          "panelCount": 0,
+          "usesSwaps": true,
+          "weak": false
+        },
+        "randarts": false
+      }
+    },
+    {
+      "expected": {
+        "corrected": {
+          "kind": "wield",
+          "role": "weapon"
+        },
+        "inherited": {
+          "kind": "wield",
+          "role": "weapon"
+        }
+      },
+      "id": "tie",
+      "inputs": {
+        "avoidance": 263,
+        "baseCritical": {
+          "fract": 0,
+          "rblind": 0,
+          "rconf": 0
+        },
+        "candidates": {
+          "armour": {
+            "evaluation": {
+              "critical": {
+                "fract": 0,
+                "rblind": 0,
+                "rconf": 0,
+                "rdark": 0,
+                "rlite": 0,
+                "sav": 59
+              },
+              "rawDanger": 47
+            },
+            "item": {
+              "artifact": false,
+              "category": "SHIELD",
+              "cursed": false,
+              "identified": true,
+              "quantity": 1,
+              "uncursable": false
+            }
+          },
+          "weapon": {
+            "evaluation": {
+              "critical": {
+                "fract": 0,
+                "rblind": 0,
+                "rconf": 0,
+                "rdark": 0,
+                "rlite": 0,
+                "sav": 59
+              },
+              "rawDanger": 47
+            },
+            "item": {
+              "artifact": false,
+              "category": "SWORD",
+              "cursed": false,
+              "identified": true,
+              "quantity": 1,
+              "uncursable": false
+            }
+          }
+        },
+        "currentDanger": 99,
+        "gates": {
+          "hungry": false,
+          "maxDepth": 50,
+          "nearbyUnique": false,
+          "panelCount": 0,
+          "usesSwaps": true,
+          "weak": false
+        },
+        "randarts": false
+      }
+    },
+    {
+      "expected": {
+        "corrected": {
+          "kind": "none"
+        },
+        "inherited": {
+          "kind": "none"
+        }
+      },
+      "id": "no-benefit",
+      "inputs": {
+        "avoidance": 263,
+        "baseCritical": {
+          "fract": 0,
+          "rblind": 0,
+          "rconf": 0
+        },
+        "candidates": {
+          "armour": {
+            "evaluation": {
+              "critical": {
+                "fract": 0,
+                "rblind": 0,
+                "rconf": 0,
+                "rdark": 0,
+                "rlite": 0,
+                "sav": 59
+              },
+              "rawDanger": 99
+            },
+            "item": {
+              "artifact": false,
+              "category": "SHIELD",
+              "cursed": false,
+              "identified": true,
+              "quantity": 1,
+              "uncursable": false
+            }
+          },
+          "weapon": {
+            "evaluation": {
+              "critical": {
+                "fract": 0,
+                "rblind": 0,
+                "rconf": 0,
+                "rdark": 0,
+                "rlite": 0,
+                "sav": 59
+              },
+              "rawDanger": 99
+            },
+            "item": {
+              "artifact": false,
+              "category": "SWORD",
+              "cursed": false,
+              "identified": true,
+              "quantity": 1,
+              "uncursable": false
+            }
+          }
+        },
+        "currentDanger": 99,
+        "gates": {
+          "hungry": false,
+          "maxDepth": 50,
+          "nearbyUnique": false,
+          "panelCount": 0,
+          "usesSwaps": true,
+          "weak": false
+        },
+        "randarts": false
+      }
+    }
+  ],
+  "mechanism": "CBUG-0066",
+  "provenance": {
+    "beforeRuntime": "e473720ed88a0f0c7ca66815cef3000eb4a38bc3",
+    "fixedRuntime": "39986cc52f3f70727ada24b6def5de98d0bd36c8",
+    "fixtureCommit": "1b67370d0dc56d9b7ef34e5356e63d21a7095545",
+    "fixtureSha256": "b26f955689acaf552545019189ade029e82344a0c508d9c77d5b1581015a70b6",
+    "nativeBeforeResultSha256": "b47c6b7571a7c09281aa6c84e189274ada217094b555793eac7086139269b408",
+    "nativeFixedResultSha256": "c5ad409c89a0280609ed0107f6c310ee06ca62d2e0d8e5fde5ab20ce0a68ccfb",
+    "scope": "Recorded native decision facts; no shared-world/damage/Neo-danger equivalence claim",
+    "sourceCorrection": "ebcd255ba9064fc44a35d693f42f9df3dc00bd88"
+  },
+  "schema": "angband/borg-fixture-corpus@1"
+}
