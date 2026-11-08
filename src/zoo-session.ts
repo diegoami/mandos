@@ -13,7 +13,7 @@ export function canonicalJson(value: unknown): string {
       if (!Number.isFinite(v)) throw new Error("Command numbers must be finite");
       return JSON.stringify(v);
     }
-    if (Array.isArray(v)) return "[" + v.map(item => item === undefined ? "null" : encode(item)).join(",") + "]";
+    if (Array.isArray(v)) return "[" + Array.from(v, item => item === undefined ? "null" : encode(item)).join(",") + "]";
     if (typeof v === "object" && v !== null && (Object.getPrototypeOf(v) === Object.prototype || Object.getPrototypeOf(v) === null)) {
       return "{" + Object.keys(v).sort().filter(key => (v as Record<string, unknown>)[key] !== undefined)
         .map(key => JSON.stringify(key) + ":" + encode((v as Record<string, unknown>)[key])).join(",") + "}";

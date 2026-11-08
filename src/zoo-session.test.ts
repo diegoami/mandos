@@ -18,6 +18,8 @@ describe("zoo command fingerprint", () => {
     expect(commandLine({ type: "command", command: { code: "walk", dir: 6 } })).toBe('{"command":{"code":"walk","dir":6},"type":"command"}\n');
     expect(commandLine({ type: "command", command: { dir: 6, code: "walk" } })).toBe(commandLine({ type: "command", command: { code: "walk", dir: 6 } }));
     expect(commandLine({ type: "command", command: { code: "walk", dir: 4 } })).not.toBe(commandLine({ type: "command", command: { code: "walk", dir: 6 } }));
+    expect(canonicalJson(new Array(2))).toBe('[null,null]');
+    expect(canonicalJson([, 1])).toBe('[null,1]');
     expect(canonicalJson({ 2: 'two', 10: 'ten' })).toBe('{"10":"ten","2":"two"}');
     expect(() => canonicalJson({ bad: Number.NaN })).toThrow(/finite/);
   });
