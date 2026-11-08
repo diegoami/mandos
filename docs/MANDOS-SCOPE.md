@@ -119,3 +119,14 @@ controller settings are explicit run inputs, not new strategy policy. The small
 contract cohort and bounded speed checks are interface verification only.
 Existing broad class/seed research remains parked here; no automatic C/Rust/zoo
 changes, desktop/lab deployment or replay engine requirement is authorized.
+
+## Owner-authorized shared-fixture proof of concept (2026-11-08)
+
+[Task217](https://github.com/diegoami/mandos/issues/217) authorizes a small
+[decision-boundary interoperability POC](CROSS-ENGINE-FIXTURE-POC.md), using
+actual native CBUG-0066 fixture observations and the existing TS selector.
+The compile-only corrected variant is labelled diagnostic and unshipped; it
+never changes production source, the default plugin or C-adoption coverage.
+This is a targeted regression/evidence tool, not strategy research or a new
+cohort program. Before/after input equality and declared fix states precede
+interpreting differences; a mismatch alone is not a port-bug declaration.

@@ -1,0 +1,12 @@
+{
+  "schema": "angband/borg-fixture-origin@1",
+  "sourceRepository": "diegoami/better-borg-c",
+  "toolingCommit": "23e052f0dc8284f72ae9a1ea131614eb3871fb86",
+  "nativeIssue": "https://github.com/diegoami/better-borg-c/issues/315",
+  "fixtureCommit": "1b67370d0dc56d9b7ef34e5356e63d21a7095545",
+  "fixtureSha256": "b26f955689acaf552545019189ade029e82344a0c508d9c77d5b1581015a70b6",
+  "corpusRawSha256": "aed6a5a41dff7640578726bdbb98d4085d72b45a7bdd9db0a4e3d44b2ae9ba1f",
+  "nativeBeforeCanonicalSha256": "b47c6b7571a7c09281aa6c84e189274ada217094b555793eac7086139269b408",
+  "nativeFixedCanonicalSha256": "c5ad409c89a0280609ed0107f6c310ee06ca62d2e0d8e5fde5ab20ce0a68ccfb",
+  "scope": "Native-observed post-evaluation selector facts; not world or Neo danger equivalence"
+}
