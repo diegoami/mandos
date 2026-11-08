@@ -16,7 +16,7 @@
   },
   "baselines": {
     "engine": "06a2321ce30a414df20d1b20d486446e7688171c",
-    "port": "235a6f9b28beb82a8bb4b30dc8d3a6c807108170",
+    "port": "a10655c3b8113848092a7d66405ca3ec5e2222f9",
     "c": "e473720ed88a0f0c7ca66815cef3000eb4a38bc3"
   },
   "c_adoption": {
@@ -27,5 +27,13 @@
     "per_source_issue_mirrors": false,
     "moving_main_is_review_qualified": false,
     "port_first_gate_required": true
+  },
+  "version_lanes": {
+    "policy": "docs/VERSION-LANES.md",
+    "upstream_tag": "v1.4.0-beta.4",
+    "upstream_tag_object": "9775b2a7ae574499387e515930fb37577e55d5a3",
+    "upstream_release_commit": "48ee6e1c4640ca66bdcb946952539690f558a5d9",
+    "port_only_tag": "v1.4.0-beta.4-port.1",
+    "main_includes_c_translations": true
   }
 }

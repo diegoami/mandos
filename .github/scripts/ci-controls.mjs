@@ -97,5 +97,10 @@ test('CI and privacy trigger once per PR update, on main pushes and manual runs 
   }
   assert.match(ci, /CI: '1'/);
   assert.match(readFileSync(join(repo, '.github/workflows/nexus-publish.yml'), 'utf8'), /if: github.repository == 'neostryder\/neo-angband-mod-borg'/);
-  assert.match(readFileSync(join(repo, '.github/workflows/github-release.yml'), 'utf8'), /tags: \["v\*"\]/);
+  const release = readFileSync(join(repo, '.github/workflows/github-release.yml'), 'utf8');
+  assert.match(release, /on:\n  workflow_dispatch:/);
+  assert.doesNotMatch(release, /\n  push:|\n  pull_request:|\n  schedule:/);
+  assert.match(release, /github.repository == 'diegoami\/mandos' && github.ref == 'refs\/heads\/main'/);
+  assert.match(release, /git rev-parse --verify "refs\/tags\/\$TAG\^\{commit\}"/);
+  assert.match(release, /--prerelease --verify-tag/);
 });

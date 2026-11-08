@@ -1,35 +1,46 @@
-# Create the GitHub Release that the Ledger reads whenever a version is tagged.
-# This mod is distributed directly from the repository, so there is no build
-# artifact to attach: the exact CHANGELOG.md section is the release note.
+# FORK: tag mirroring must not publish inherited releases. Kept disabled at
+# repository level; any future release requires an explicit owner-directed run.
 name: GitHub release
 
 on:
-  push:
-    tags: ["v*"]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Existing verified version tag
+        required: true
+        type: string
+      title:
+        description: Explicit release title naming the upstream or port-only lane
+        required: true
+        type: string
+      notes:
+        description: Reviewed release notes with provenance and verification links
+        required: true
+        type: string
 
 permissions:
   contents: write
 
 jobs:
   release:
+    if: github.repository == 'diegoami/mandos' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
         with:
           fetch-depth: 0
-      - uses: actions/setup-node@v7
-        with:
-          node-version: 22
-      - name: Extract changelog notes
-        run: node .github/scripts/release-notes.mjs "${{ github.ref_name }}" release-notes.md
-      - name: Create GitHub Release
+      - name: Validate existing tag and explicit release notes
+        env:
+          TAG: ${{ inputs.tag }}
+          RELEASE_NOTES: ${{ inputs.notes }}
+        run: |
+          git check-ref-format "refs/tags/$TAG"
+          git rev-parse --verify "refs/tags/$TAG^{commit}"
+          test -n "$RELEASE_NOTES"
+          printf '%s\n' "$RELEASE_NOTES" > release-notes.md
+      - name: Create explicitly requested prerelease
         env:
           GH_TOKEN: ${{ github.token }}
-        run: |
-          tag="${{ github.ref_name }}"
-          version="${tag#v}"
-          if [[ "$version" == 0.* ]]; then
-            gh release create "$tag" --repo "$GITHUB_REPOSITORY" --title "Neo Angband: Borg $version" --notes-file release-notes.md --prerelease --verify-tag
-          else
-            gh release create "$tag" --repo "$GITHUB_REPOSITORY" --title "Neo Angband: Borg $version" --notes-file release-notes.md --verify-tag
-          fi
+          TAG: ${{ inputs.tag }}
+          RELEASE_TITLE: ${{ inputs.title }}
+        run: gh release create "$TAG" --repo "$GITHUB_REPOSITORY" --title "$RELEASE_TITLE" --notes-file release-notes.md --prerelease --verify-tag

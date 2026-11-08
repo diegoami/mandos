@@ -1,0 +1,51 @@
+{
+  "schema": "mandos/version-lane-projection@1",
+  "exact_upstream_tag": "v1.4.0-beta.4",
+  "upstream_tag_object": "9775b2a7ae574499387e515930fb37577e55d5a3",
+  "upstream_release_commit": "48ee6e1c4640ca66bdcb946952539690f558a5d9",
+  "accepted_post_release_commit": "a10655c3b8113848092a7d66405ca3ec5e2222f9",
+  "port_only_tag": "v1.4.0-beta.4-port.1",
+  "port_only_commit": "a4bd8eff5d618b5ef2e56a302bdd4f3eb5617294",
+  "faithful_port_producer": "cc64c1ccc62f7197f5bef24a4a6d23cc96155e5f",
+  "projection_paths": [
+    "src",
+    "test",
+    "plugin.ts",
+    "plugin.js"
+  ],
+  "source_projection_sha256": "a270d1cf27c9fab1f15d10283c3ac72bb57a4483c7ad23ee047b61b8ff1af168",
+  "producer_projection_sha256": "a270d1cf27c9fab1f15d10283c3ac72bb57a4483c7ad23ee047b61b8ff1af168",
+  "projection_matches": true,
+  "only_additional_changed_paths": [
+    "CHANGELOG.md",
+    "PORT-ONLY.md",
+    "manifest.json",
+    "package.json",
+    "version-sync.test.ts"
+  ],
+  "port_only_plugin_sha256": "25c2835df1e6cbf92924bbd642fd1ec83031c55e64fa778a19c7df4e53d290fd",
+  "exact_upstream_plugin_sha256": "23e717878b28fc82ff7413beba5f200234f853fa9fef5d29c3077d11e5153fa6",
+  "preserved_main_base": "dcd1b9c1bfecce9902b4caabda5d040d5aa130a5",
+  "preserved_main_plugin_sha256": "d4b8351cb5eb4b8ad9d86bfee47b456b218d3e3df1bf787c37dd5d75b9212d7c",
+  "preserved_main_c_patches": {
+    "patches/c-translations/CBUG-0004-cold-melee.patch": "16d1a7d416850d6cee024b11ce38ee47f54155cf5c1395fce113faa964278b18",
+    "patches/c-translations/CBUG-0061-ccw-timing.patch": "53c711c3ed981b5dce80fe23d97c88ec9792abcbc8b4b1b79b7ef78a5cc45156",
+    "patches/c-translations/CBUG-0065-enlightenment.patch": "41e5b2ad41adc7a4481a5c0671123c4b219cb1a4839f892cdbb691639e83e271",
+    "patches/c-translations/CBUG-0086-exact-unseen-name.patch": "8a618e4d32dcd9a6c900f60942d5a25abf074b9b0de2aaec3b417e21803be873",
+    "patches/c-translations/shot-path-279-caster-origin.patch": "84eb3a73178596d6aa7c9ea0e8fbbd19ccde4c8814beb13e5c175ba5520b2ca4",
+    "patches/c-translations/source238-light-modifier.patch": "d4a87f4c800f832064e43ca6948dd0a8bfcd28568ee1c07ebe73655866bcd675",
+    "patches/c-translations/source239-equipment-slays.patch": "08e58d2e47531762e238b1443504ca92387401acd5508f1a2c4a09ed736ef3a5",
+    "patches/c-translations/source248-dispel-living.patch": "0bc84b002b2ecbddbe659bd632a56c52738a2964789ef9cc1a28d3a934892317",
+    "patches/c-translations/source257-vampire-selected-distance.patch": "2a68d549bf521ae1a0f880e3b4e209ef974aa09ed481babacdd97147d7b5ac05"
+  },
+  "engine_packages": {
+    "core": "1.23.0-beta.3",
+    "mod-sdk": "1.23.0-beta.3",
+    "content": "1.23.0-beta.3"
+  },
+  "proof_limits": [
+    "Constructive origin/projection proof of excluding Mandos C translations; not a statement that upstream has no original-C defects.",
+    "Core/harness verification does not establish stock desktop controller or catalogue digest acceptance.",
+    "Full gates and publication state are separate recorded receipts; this file alone does not claim they passed."
+  ]
+}
