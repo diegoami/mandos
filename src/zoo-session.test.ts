@@ -6,7 +6,7 @@ import { createStallWatch } from "./loop/stall.js";
 import { createRequire } from "node:module";
 import { dirname } from "node:path";
 import { loadPack, playSession } from "./play-session.js";
-import { canonicalJson, commandLine, classifyZooOutcome, runZooSession } from "./zoo-session.js";
+import { canonicalJson, commandLine, classifyZooOutcome, runZooSession } from "../tools/zoo-session.js";
 
 const require = createRequire(import.meta.url);
 const pack = loadPack(dirname(require.resolve("@rpgm-tools/neo-angband-content/pack/constants.json")));

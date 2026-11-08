@@ -1,6 +1,5 @@
 #!/usr/bin/env node
 /** One explicit build; zoo-run never invokes a bundler. */
-import { build } from 'esbuild';
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -14,6 +13,7 @@ try {
   const dir = outputPath(root, args[1]);
   mkdirSync(dirname(dir), { recursive: true });
   mkdirSync(dir); // Atomic fresh-directory claim: never mutate a bundle in use.
+  const { build } = await import('esbuild');
   const file = join(dir, 'entry.mjs');
   const result = await build({ absWorkingDir: root, entryPoints: ['tools/zoo-entry.ts'], outfile: file,
     bundle: true, format: 'esm', platform: 'node', target: 'node22', logLevel: 'silent', metafile: true, minifyWhitespace: true });

@@ -38,7 +38,7 @@ describe('zoo entry point contract', () => {
     const clone = join(dir, 'layout'); mkdirSync(clone);
     cpSync(join(root, 'src'), join(clone, 'src'), { recursive: true });
     mkdirSync(join(clone, 'tools'));
-    for (const file of ['zoo-build.mjs', 'zoo-common.mjs', 'zoo-entry.ts', 'zoo-run.mjs']) cpSync(join(root, 'tools', file), join(clone, 'tools', file));
+    for (const file of ['zoo-build.mjs', 'zoo-common.mjs', 'zoo-entry.ts', 'zoo-run.mjs', 'zoo-session.ts']) cpSync(join(root, 'tools', file), join(clone, 'tools', file));
     for (const file of ['package.json', 'manifest.json', 'plugin.ts', 'tsconfig.json', 'pnpm-lock.yaml', 'pnpm-workspace.yaml']) cpSync(join(root, file), join(clone, file));
     mkdirSync(join(clone, 'docs/runs'), { recursive: true });
     symlinkSync(join(root, 'node_modules'), join(clone, 'node_modules'));
@@ -52,7 +52,7 @@ describe('zoo entry point contract', () => {
   it('refuses to overwrite an existing bundle', () => {
     const original = readFileSync(join(bundle, 'entry.mjs'));
     const result = spawnSync(process.execPath, [join(root, 'tools/zoo-build.mjs'), '--out', bundle], { cwd: root });
-    expect(result.status).toBe(1); expect(readFileSync(join(bundle, 'entry.mjs'))).toEqual(original);
+    expect(result.status).toBe(1); expect(readFileSync(join(bundle, 'entry.mjs')).equals(original)).toBe(true);
   });
   it('keeps available provenance when an invalid settings profile fails', () => {
     const settings = join(dir, 'invalid-settings.json'), out = join(dir, 'invalid-settings-run.json');

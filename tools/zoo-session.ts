@@ -1,9 +1,9 @@
 /** External measurement adapter (Mandos #213), never imported by plugin.ts. */
 import { createHash } from "node:crypto";
 import type * as Core from "@rpgm-tools/neo-angband-core";
-import { bindCore } from "./core-api.js";
-import { driveLife, observingLife, type LifeStall } from "./play-session.js";
-import type { BorgCfg } from "./trait/config.js";
+import { bindCore } from "../src/core-api.js";
+import { driveLife, observingLife, type LifeStall } from "../src/play-session.js";
+import type { BorgCfg } from "../src/trait/config.js";
 
 /** Sorted object keys, JSON scalars/arrays, UTF-8 at the stream boundary. */
 export function canonicalJson(value: unknown): string {
