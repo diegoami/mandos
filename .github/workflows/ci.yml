@@ -1,89 +1,113 @@
-# Typecheck, test, and prove the committed plugin.js is current.
-#
-# This mod is tested by booting a REAL game: its hooks run against levels
-# generated from Angband 4.2.6 gamedata, because a staircase-reachability fix
-# proven against a hand-built cave is a fix proven against a fixture. That
-# gamedata used to require a sparse checkout of the game's repository, because
-# @rpgm-tools/neo-angband-content was not published. It is, from 0.12.0, and it
-# exports the pack - so the checkout, the NEO_ANGBAND_REPO variable and the
-# guard that the pack had actually landed are all gone. This workflow now
-# proves the mod against exactly what a third-party author would install.
-#
-# Mandos (#46): this repo had not taken that dependency, so CI skipped the
-# whole play harness. It is a devDependency now, and with CI set (GitHub sets
-# it) a missing pack or an unplayable engine FAILS the play suite.
-
+# ONE-OFF proof213 branch only. Never merge this workflow into main.
 name: ci
-
 on:
-  push:
-    branches: [main]
-  pull_request:
-    branches: [main]
-    types: [opened, synchronize, reopened]
   workflow_dispatch:
-
 permissions:
   contents: read
-
 concurrency:
-  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
-  cancel-in-progress: true
-
+  group: zoo-proof-213-${{ github.ref }}
+  cancel-in-progress: false
 jobs:
   verify:
-    runs-on: ubuntu-latest
-    timeout-minutes: 15
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v7
         with:
           fetch-depth: 0
-      - uses: actions/setup-node@v7
-        with:
-          node-version: 22
-      - name: Check CI classification and trigger controls
-        run: node --test .github/scripts/ci-controls.mjs
-      - name: Classify the complete event diff
-        id: scope
-        env:
-          CI_SCOPE_FILE: ${{ runner.temp }}/ci-scope.json
-        run: node .github/scripts/ci-scope.mjs
-      - name: Check prose and session metadata
-        if: steps.scope.outputs.full == 'false'
-        env:
-          CI_SCOPE_FILE: ${{ runner.temp }}/ci-scope.json
-        run: |
-          node tools/check-session.mjs
-          node .github/scripts/ci-docs.mjs
-
       - uses: pnpm/action-setup@v6
-        if: steps.scope.outputs.full == 'true'
       - uses: actions/setup-node@v7
-        if: steps.scope.outputs.full == 'true'
         with:
           node-version: 22
           cache: pnpm
-
-      - name: Install local backup fixture dependency
-        if: steps.scope.outputs.full == 'true'
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y rclone
-          rclone --config /dev/null version
-
       - run: pnpm install --frozen-lockfile
-        if: steps.scope.outputs.full == 'true'
-
-      # Fail when the manifest asks for a wildcard state grant or the real map, so every
-      # state domain the mod reads stays listed by name.
-      - run: node tools/check-grants.mjs
-        if: steps.scope.outputs.full == 'true'
-
-      # typecheck, then test, then confirm the committed plugin.js is a current build of
-      # the source. That last one is the check nothing else in the chain can make: the
-      # catalogue's SHA-256 is taken FROM plugin.js, so a stale artefact verifies
-      # perfectly and is the file players run.
-      - run: pnpm verify
-        if: steps.scope.outputs.full == 'true'
+      - name: Build once from the measured source
+        run: node tools/zoo-build.mjs --out "$RUNNER_TEMP/zoo-bundle"
+      - name: Bounded contract and measurement proof on one CPU
         env:
-          CI: '1'
+          ZOO_BUNDLE: ${{ runner.temp }}/zoo-bundle
+          ZOO_PROOF_OUT: ${{ runner.temp }}/zoo-proof
+        shell: bash
+        run: |
+          set -euo pipefail
+          cat > "$RUNNER_TEMP/zoo-proof.mjs" <<'NODE'
+          import { execFileSync, spawnSync } from 'node:child_process';
+          import { createHash } from 'node:crypto';
+          import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+          import { join } from 'node:path';
+          import { availableParallelism } from 'node:os';
+          import { performance } from 'node:perf_hooks';
+          const out = process.env.ZOO_PROOF_OUT;
+          const bundle = process.env.ZOO_BUNDLE;
+          mkdirSync(out, { recursive: true });
+          const proof = { schema: 'mandos/zoo-proof213@1', candidate: 'de77e7bbf49d683e5226d326257c3013d6936aed',
+            runtime: { node: process.version, platform: process.platform, arch: process.arch, availableParallelism: availableParallelism(), affinity: process.env.ZOO_AFFINITY },
+            birthPairs: 99, rows: [], speed: [], determinism: null };
+          const hash = bytes => createHash('sha256').update(bytes).digest('hex');
+          const read = file => JSON.parse(readFileSync(file, 'utf8'));
+          const flags = join(out, 'flags.json');
+          writeFileSync(flags, JSON.stringify({ 'borg.playsRisky': false, 'borg.selfScum': true }) + '\n');
+          function run(name, seed, cls, race, turns, timeout) {
+            const record = join(out, `${name}.json`), states = join(out, `${name}.states.jsonl`), commands = join(out, `${name}.commands.jsonl`);
+            const args = ['tools/zoo-run.mjs', '--bundle', bundle, '--seed', String(seed), '--turns', String(turns), '--race', race, '--class', cls,
+              '--settings', flags, '--out', record, '--states', states, '--commands', commands];
+            const start = performance.now();
+            const result = spawnSync(process.execPath, args, { encoding: 'utf8', timeout, maxBuffer: 16 * 1024 * 1024 });
+            writeFileSync(join(out, `${name}.stdout.log`), result.stdout ?? '');
+            writeFileSync(join(out, `${name}.stderr.log`), result.stderr ?? '');
+            if (result.status !== 0) {
+              const failure = { name, seed, class: cls, race, requestedTurns: turns, outcome: 'harness_failure',
+                error: result.error?.message ?? result.stderr ?? `status ${result.status}`, status: result.status, signal: result.signal,
+                wallTimeMs: performance.now() - start };
+              writeFileSync(join(out, `${name}.proof-failure.json`), JSON.stringify(failure, null, 2) + '\n');
+              return failure;
+            }
+            const value = read(record);
+            const commandBytes = readFileSync(commands);
+            if (hash(commandBytes) !== value.playSha256) throw new Error(`Command file/hash mismatch ${name}`);
+            const lines = readFileSync(states, 'utf8').trim().split('\n').map(JSON.parse);
+            if (lines[0].kind !== 'birth' || lines.at(-1).kind !== 'stop') throw new Error(`Missing terminal states ${name}`);
+            const row = { name, seed, class: cls, race, requestedTurns: turns, actualTurns: value.turn, outcome: value.outcome,
+              causeOfDeath: value.causeOfDeath, maxDepth: value.maxDepth, level: value.level, maxLevel: value.maxLevel,
+              decisions: value.decisions, loopCalls: value.loopCalls, wallTimeMs: value.metadata.wallTimeMs,
+              processWallTimeMs: performance.now() - start, playSha256: value.playSha256, stateLines: lines.length,
+              periodicStates: lines.filter(line => line.kind === 'periodic').length };
+            console.log(JSON.stringify(row));
+            return row;
+          }
+          try {
+            if (availableParallelism() !== 1) throw new Error('Proof process is not restricted to one CPU');
+            const tests = execFileSync('pnpm', ['exec', 'vitest', 'run', 'src/zoo-session.test.ts'], { encoding: 'utf8', timeout: 180000 });
+            writeFileSync(join(out, 'targeted-tests.log'), tests);
+            const seeds = [1, 7, 42], classes = ['Warrior', 'Mage', 'Rogue'], races = ['Human', 'Elf', 'Dwarf'];
+            for (let s = 0; s < seeds.length; s++) for (let c = 0; c < classes.length; c++) {
+              const row = run(`cohort-${seeds[s]}-${classes[c]}`, seeds[s], classes[c], races[(s + c) % races.length], 20000, 180000);
+              proof.rows.push(row);
+              if (row.outcome === 'harness_failure') throw new Error(`Mandatory cohort entry failed: ${row.name}`);
+            }
+            const originalName = 'cohort-7-Warrior';
+            const repeated = run('repeat-7-Warrior', 7, 'Warrior', 'Elf', 20000, 180000);
+            if (repeated.outcome === 'harness_failure') throw new Error('Repeated measurement failed');
+            const a = read(join(out, `${originalName}.json`)), b = read(join(out, 'repeat-7-Warrior.json'));
+            delete a.metadata.wallTimeMs; delete b.metadata.wallTimeMs;
+            if (JSON.stringify(a) !== JSON.stringify(b)) throw new Error('Same inputs differ after excluding wall time');
+            for (const stream of ['states', 'commands']) if (hash(readFileSync(join(out, `${originalName}.${stream}.jsonl`))) !== hash(readFileSync(join(out, `repeat-7-Warrior.${stream}.jsonl`)))) throw new Error(`Repeated ${stream} differ`);
+            proof.determinism = { identicalRecordExceptWall: true, identicalStates: true, identicalCommands: true, normalizedRecordSha256: hash(JSON.stringify(a)) };
+            proof.speed.push(run('speed-100k', 7, 'Warrior', 'Human', 100000, 300000));
+            if (proof.speed[0].outcome === 'harness_failure') throw new Error('100k cap measurement failed');
+            proof.speed.push(run('speed-400k', 7, 'Warrior', 'Human', 400000, 300000));
+            proof.optional400kCompleted = proof.speed[1].outcome !== 'harness_failure';
+            if (!proof.rows.some(row => row.periodicStates > 0)) throw new Error('No periodic states observed in cohort');
+            proof.complete = true;
+          } catch (error) {
+            proof.complete = false; proof.error = error.stack ?? String(error); process.exitCode = 1;
+          } finally { writeFileSync(join(out, 'proof.json'), JSON.stringify(proof, null, 2) + '\n'); }
+          NODE
+          python3 -c 'import os,sys; cpu=min(os.sched_getaffinity(0)); os.sched_setaffinity(0,{cpu}); os.environ["ZOO_AFFINITY"]=str(cpu); os.execvp("node",["node",sys.argv[1]])' "$RUNNER_TEMP/zoo-proof.mjs"
+      - name: Retain every attempt and stream
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: mandos-zoo-proof213
+          path: ${{ runner.temp }}/zoo-proof
+          if-no-files-found: error
