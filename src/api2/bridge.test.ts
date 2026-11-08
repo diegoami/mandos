@@ -394,3 +394,20 @@ describe("default monster symbols through the API 2 bridge", () => {
     await bridge.dispose();
   });
 });
+
+
+describe("public birth options for backup equipment",()=>{
+  it.each([true,false,null] as const)("preserves the declared birth flag or denial (%s)",async flag=>{
+    const game=fakeGame({engine:{api:"1",core:Core,state:{actor:{player:{noscore:0}}}}});
+    const mod={...game.mod,view:{...game.mod.view,options:async()=>flag===null?{ok:false as const,reason:"not-granted",code:"not-granted",message:"player read denied"}:{ok:true as const,value:{birth:{birth_randarts:flag},values:{},hitpointWarn:0,delayFactor:0,lazymoveDelay:0}}}};
+    const bridge=createBridge(mod as never);await bridge.prime();await bridge.readWorld();
+    expect(bridge.resolverInput().birthRandarts?.()).toBe(flag);
+    expect(makeCoreResolvers(bridge.resolverInput()).birthRandarts?.()).toBe(flag);await bridge.dispose();
+  });
+  it("refreshes birth options on a new public world frame",async()=>{
+    const game=fakeGame({engine:{api:"1",core:Core,state:{actor:{player:{noscore:0}}}}});let flag=true;
+    const mod={...game.mod,view:{...game.mod.view,options:async()=>({ok:true as const,value:{birth:{birth_randarts:flag},values:{},hitpointWarn:0,delayFactor:0,lazymoveDelay:0}})}};
+    const bridge=createBridge(mod as never);await bridge.prime();await bridge.readWorld();expect(bridge.resolverInput().birthRandarts?.()).toBe(true);
+    flag=false;await bridge.readWorld();expect(bridge.resolverInput().birthRandarts?.()).toBe(false);await bridge.dispose();
+  });
+});

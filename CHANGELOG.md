@@ -18,6 +18,14 @@ what kind of change it is. Lists appear in this order and each is omitted
 when empty for a release: Added, Changed, Removed, Fixed. Earlier entries
 were not retagged.
 
+## 1.4.0-beta.4+port.1 - 2026-11-08
+
+Fork port-only build. Starts at the exact upstream beta.4 release, incorporates
+upstream's subsequent light-base and armour/HOME fixes through a10655c, and adds
+our pending tactical backup/SR port-fidelity proposal (upstream PR79).
+No Mandos original-C translations, strategy changes, controller/harness changes
+or independent gameplay policies are included. See PORT-ONLY.md for provenance.
+
 ## [Unreleased]
 
 ### Fixed

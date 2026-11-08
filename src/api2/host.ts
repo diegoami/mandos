@@ -107,6 +107,7 @@ export function createBridge(mod: ModApi2): Bridge {
         raceRecord: (ridx) => races.get(ridx),
         raceSymbol: (ridx) => symbols.get(ridx),
         objects,
+        birthRandarts: () => facts.birthRandarts ?? null,
         shopnum: () => facts.shopnum,
         kindCost: (tval, sval) => facts.kinds.get(`${String(tval)}:${String(sval)}`) ?? null,
         blowMethods: blows.map((message) => ({ messages: [message] })),

@@ -71,6 +71,7 @@ import type { ItemView, PlayerView } from "@rpgm-tools/neo-angband-core";
 import type { BorgView } from "../core-api.js";
 import type { BorgContext } from "../context.js";
 import type { BorgWorld } from "../world/model.js";
+import { BI } from "./trait-index.js";
 import { borgNotice } from "./trait.js";
 import { inheritWeaponSwap } from "./state.js";
 import { borgPower } from "./power.js";
@@ -213,7 +214,11 @@ export function borgSimulatePower(
 }
 
 /** borg-item-wear.c:874,955 rejects a ring swap that raises local danger. */
-export function borgSimulateDanger(ctx: BorgContext, change: BorgLoadoutChange): number | null {
+export interface BorgLoadoutDangerAnswer {
+  readonly danger: number;
+  readonly traits: { readonly rconf: number; readonly rblind: number; readonly rlite: number; readonly rdark: number; readonly fract: number; readonly sav: number };
+}
+export function borgSimulateDangerAnswer(ctx: BorgContext, change: BorgLoadoutChange): BorgLoadoutDangerAnswer | null {
   const answer = (ctx.view as LoadoutCapableView).simulateLoadout?.(change);
   if (!answer) return null;
   const simCtx: BorgContext = { ...ctx, world: shadowWorld(ctx.world), view: shadowView(ctx.view, answer) };
@@ -225,5 +230,12 @@ export function borgSimulateDanger(ctx: BorgContext, change: BorgLoadoutChange):
   scratch.globals = { ...live.globals, tpOtherIndices: [...live.globals.tpOtherIndices] };
   scratch.fear = live.fear;
   scratch.maxRange = live.maxRange;
-  return borgDanger(simCtx, ctx.world.self.c.y, ctx.world.self.c.x, 1, true, false);
+  const t=simCtx.world.self.trait;
+  return { danger: borgDanger(simCtx, ctx.world.self.c.y, ctx.world.self.c.x, 1, true, false),
+    traits: {rconf:t[BI.RCONF]??0,rblind:t[BI.RBLIND]??0,rlite:t[BI.RLITE]??0,rdark:t[BI.RDARK]??0,fract:t[BI.FRACT]??0,sav:t[BI.SAV]??0} };
+}
+
+/** Existing scalar callers retain the same absolute local-danger answer. */
+export function borgSimulateDanger(ctx: BorgContext, change: BorgLoadoutChange): number | null {
+  return borgSimulateDangerAnswer(ctx,change)?.danger ?? null;
 }

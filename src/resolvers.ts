@@ -41,7 +41,7 @@ import type { BorgResolvers } from "./think-session.js";
 import type { BlowFacts, FactsResolver, MonsterFacts } from "./danger/facts.js";
 import { defaultResolveMonsterFacts } from "./danger/facts.js";
 import { borgMonBlowEffect } from "./danger/tables.js";
-import { borgSimulatePower, borgSimulateDanger } from "./trait/simulate.js";
+import { borgSimulatePower, borgSimulateDanger, borgSimulateDangerAnswer } from "./trait/simulate.js";
 
 /** The one field every activation source (kind/ego/artifact) carries. */
 interface ActivationLike {
@@ -76,6 +76,7 @@ export interface CoreShopLookup {
 
 /** What the host supplies to build real resolvers. */
 export interface CoreResolverInput {
+  birthRandarts?: () => boolean | null;
   /** Default race symbols from composed content, indexed by bound race index. */
   raceSymbol?: (ridx: number) => string | undefined;
   bookKind?: BorgContext["bookKind"];
@@ -277,5 +278,7 @@ export function makeCoreResolvers(input: CoreResolverInput): BorgResolvers {
     // correct without asking the host anything.
     loadoutPower: (ctx, change) => borgSimulatePower(ctx, change),
     loadoutDanger: (ctx, change) => borgSimulateDanger(ctx, change),
+    loadoutDangerAnswer: (ctx, change) => borgSimulateDangerAnswer(ctx, change),
+    birthRandarts: () => input.birthRandarts?.() ?? null,
   };
 }

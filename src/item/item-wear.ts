@@ -19,6 +19,11 @@ import type { ItemDeps } from "./deps.js";
 import { trait, isAware, isIdent, isCursed, isOneRing, itemValue, canRest, clockOf, danger, needsIdent, packItems } from "./deps.js";
 import { SVAL } from "./svals.js";
 import { mod as modOf } from "../trait/item-util.js";
+import { getDerived } from "../trait/state.js";
+import { borgCfg } from "../trait/config.js";
+import { getDangerGlobals } from "../danger/index.js";
+import { getFightState } from "../fight/state.js";
+import type { BorgLoadoutDangerAnswer } from "../trait/simulate.js";
 import type { BorgLoadoutChange, BorgLoadoutRef } from "../trait/simulate.js";
 import {
   BORG_HOME, borgHomeFull, borgInventoryFull, homeWares, isOneRing as isOneRingAt,
@@ -31,6 +36,8 @@ export interface WearDeps extends ItemDeps {
   hasHole?: boolean;
   /** birth_randarts option (skip un-IDd randart artifacts); default false. */
   randarts?: boolean;
+  /** Public known-loadout danger and critical traits for a backup candidate. */
+  backupEval?: (item: ItemView, slot: number) => BorgLoadoutDangerAnswer | null;
   /** borg.power if `item` were worn (the C's borg_notice/borg_power sim). */
   wearEval?: (item: ItemView, slot?: number) => number;
   /** Power for a complete equipment combination (borg-item-wear.c:1229). */
@@ -388,4 +395,40 @@ export function borgWearStuff(
     return ctx.act.wear(best.handle);
   }
   return null;
+}
+
+/** borg_backup_swap (4.2.6/current wear.c:534–727), preserving original C82. */
+export function borgBackupSwap(ctx: BorgContext, p: number, d?: WearDeps): AgentCommand | null {
+  if (!borgCfg().usesSwaps || trait(ctx,BI.MAXDEPTH)>=90 || trait(ctx,BI.ISHUNGRY) || trait(ctx,BI.ISWEAK)
+    || ctx.world.self.timeThisPanel>300) return null;
+  const derived=getDerived(ctx.world), pack=packItems(ctx);
+  const armour=pack.find(item=>item.handle===derived.armourSwap.handle), weapon=pack.find(item=>item.handle===derived.weaponSwap.handle);
+  if ((!armour && !weapon) || !d?.backupEval) return null;
+  // Native initializes these only in the armour branch; preserve the weapon-only oddity.
+  const initial=armour ? {rconf:trait(ctx,BI.RCONF),rblind:trait(ctx,BI.RBLIND),fract:trait(ctx,BI.FRACT)} : {rconf:0,rblind:0,fract:0};
+  const evaluate=(item:ItemView):number|null => {
+    const category=wieldSlot(item);
+    if (!category) return null;
+    const slots: Record<Slot,number>={weapon:0,bow:1,ring:LEFT_RING,amulet:4,light:5,body:6,cloak:7,shield:8,helm:9,gloves:10,boots:11};
+    const answer=d.backupEval!(item,slots[category]);
+    if (!answer) return null;
+    const t=answer.traits;
+    if ((initial.rconf&&!t.rconf) || (initial.rblind&&!t.rblind&&!t.rlite&&!t.rdark&&t.sav<100)
+      || (initial.fract&&!t.fract&&t.sav<100)) return 9999;
+    // Missing birth-option knowledge cannot authorize an unidentified artifact.
+    if (d.randarts!==false && item.artifact && !isIdent(item,d)) return 9999;
+    const uncursable=category==="weapon" ? derived.weaponSwapOpts.weaponSwap?.uncursable :
+      derived.armourSwapOpts.armourSwap?.uncursable ?? derived.armourSwapOpts.weaponSwap?.uncursable;
+    if (isCursed(item) && !uncursable?.(item)) return 9999;
+    return answer.danger;
+  };
+  const ap=armour ? evaluate(armour) : 0, wp=weapon ? evaluate(weapon) : 0;
+  if (ap===null || wp===null) return null; // Let unresolved public loadout requests settle; no invented score.
+  // C82 is intentionally retained: the higher danger wins; ties choose weapon.
+  const chosen=ap<=wp ? weapon : armour, score=ap<=wp ? wp : ap;
+  const avoidance=getDangerGlobals(ctx.world).avoidance;
+  const ceiling=getFightState(ctx.world).fightingUnique ? Math.trunc(avoidance*2/3) : Math.trunc(avoidance/2);
+  // Native can select an absent sentinel on a zero tie. No public command expresses an invalid handle.
+  if (!chosen || p<=score || score>ceiling) return null;
+  return ctx.act.wear(chosen.handle);
 }

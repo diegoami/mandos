@@ -69,6 +69,8 @@ export interface WorldReads {
 
 /** What the resolvers answer from, as of the last reading. */
 export interface WorldFacts {
+  /** Public birth option; missing/denied reads never become an invented false. */
+  readonly birthRandarts?: boolean | null;
   /** Index into the stores of the shop entrance the character stands on, or null. */
   readonly shopnum: number | null;
   /** The cost and awareness of each object kind the character can see, by "tval:sval". */
@@ -223,6 +225,8 @@ export async function readWorld(api: Api2Reads, reads: WorldReads): Promise<Worl
   const known: KnownWorldData | null = await valueOf(api.view.world());
   if (known === null || known.player === null) return null;
 
+  const options = typeof api.view.options === "function" ? await valueOf(api.view.options()) : null;
+  const birthRandarts = typeof options?.birth?.birth_randarts === "boolean" ? options.birth.birth_randarts : null;
   const { statics } = reads;
   const player = playerView(known.player, statics.floors);
   const analyze = await itemAnalyzer(api);
@@ -303,5 +307,5 @@ export async function readWorld(api: Api2Reads, reads: WorldReads): Promise<Worl
     inputToken: () => ({ epoch: known.token.epoch, revision: known.token.revision }),
     simulateLoadout: (change) => reads.loadouts.answer(change as never),
   };
-  return { view, facts: { shopnum: known.player.shopnum, kinds } };
+  return { view, facts: { shopnum: known.player.shopnum, kinds, birthRandarts } };
 }

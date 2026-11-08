@@ -28,6 +28,7 @@
  */
 
 import type { ItemView, PlayerView } from "@rpgm-tools/neo-angband-core";
+import { backupCaps, foldBackupCaps } from "./backup-caps.js";
 import type { BorgContext } from "../context.js";
 import {
   BI,
@@ -169,13 +170,19 @@ export function borgNotice(ctx: BorgContext, opts: BorgTraitOpts = {}): void {
     d.armourSwapOpts = { ...d.weaponSwapOpts, ...(opts.armourSwap ? { armourSwap: { ...opts.armourSwap } } : {}) };
     const selectedWeapon = ctx.view.inventory().find(item => item.handle === d.weaponSwap.handle) ?? null;
     d.armourSwap = borgArmourSwap(ctx, d.armourSwapOpts, c.inven, selectedWeapon);
+    d.weaponSwapCaps = backupCaps(selectedWeapon ?? undefined, true);
+    d.armourSwapCaps = backupCaps(c.inven.find(item => item.handle === d.armourSwap.handle), false);
   } else {
     // borg_notice(false): the backup stays whatever the last full notice found.
     d.weaponSwapOpts = previous.weaponSwapOpts;
     d.weaponSwap = previous.weaponSwap;
     d.armourSwapOpts = previous.armourSwapOpts;
     d.armourSwap = previous.armourSwap;
+    d.weaponSwapCaps = previous.weaponSwapCaps;
+    d.armourSwapCaps = previous.armourSwapCaps;
   }
+
+  foldBackupCaps(ctx, d, opts.spells ?? d.weaponSwapOpts.spells);
 
   /* borg_game_ratio (trait.c:2926): game-turns per borg-turn, from the FINAL
    * speed, so it is computed here rather than inside finishNotice. Every timed
@@ -1084,30 +1091,6 @@ function applySpellGrants(c: Ctx): void {
 /** Final folds (trait.c:2865-2953): swap-resists, carry, ratio, prep-fight. */
 function finishNotice(c: Ctx): void {
   const { t, R } = c;
-  const s = R.spells;
-
-  /* Swap subsystem is out of scope; swap resists resolve to base + any spell
-   * resistance the seam grants (trait.c:2865). Defaults: SR* == R*. */
-  const resSpell = s.spellLegalFail("RESISTANCE", 15);
-  t[BI.SRACID] = t[BI.RACID]! || resSpell ? 1 : 0;
-  t[BI.SRELEC] = t[BI.RELEC]! || resSpell ? 1 : 0;
-  t[BI.SRFIRE] = t[BI.RFIRE]! || resSpell ? 1 : 0;
-  t[BI.SRCOLD] = t[BI.RCOLD]! || resSpell ? 1 : 0;
-  t[BI.SRPOIS] = t[BI.RPOIS]! || s.spellLegalFail("RESIST_POISON", 15) ? 1 : 0;
-  t[BI.SRFEAR] = t[BI.RFEAR]!;
-  t[BI.SRLITE] = t[BI.RLITE]!;
-  t[BI.SRDARK] = t[BI.RDARK]!;
-  t[BI.SRBLIND] = t[BI.RBLIND]!;
-  t[BI.SRCONF] = t[BI.RCONF]!;
-  t[BI.SRSND] = t[BI.RSND]!;
-  t[BI.SRSHRD] = t[BI.RSHRD]!;
-  t[BI.SRNXUS] = t[BI.RNXUS]!;
-  t[BI.SRNTHR] = t[BI.RNTHR]!;
-  t[BI.SRKAOS] = t[BI.RKAOS]!;
-  t[BI.SRDIS] = t[BI.RDIS]!;
-  t[BI.SHLIFE] = t[BI.HLIFE]!;
-  t[BI.SFRACT] = t[BI.FRACT]!;
-
   /* Carry capacity (trait.c:2914). Encumbrance speed penalty is already folded
    * into the game-derived BI_SPEED, so it is not re-applied here. */
   t[BI.CARRY] = BORG_ADJ_STR_WGT[t[BI.STR_INDEX]!]! * 100;

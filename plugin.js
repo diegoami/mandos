@@ -4089,6 +4089,142 @@ var BORG_MAGIC_HIGH = 2;
 var BORG_MAGIC_OKAY = 3;
 var BORG_MAGIC_TEST = 4;
 var BORG_MAGIC_KNOW = 5;
+var Spell = /* @__PURE__ */ ((Spell2) => {
+  Spell2[Spell2["MAGIC_MISSILE"] = 0] = "MAGIC_MISSILE";
+  Spell2[Spell2["LIGHT_ROOM"] = 1] = "LIGHT_ROOM";
+  Spell2[Spell2["FIND_TRAPS_DOORS_STAIRS"] = 2] = "FIND_TRAPS_DOORS_STAIRS";
+  Spell2[Spell2["PHASE_DOOR"] = 3] = "PHASE_DOOR";
+  Spell2[Spell2["ELECTRIC_ARC"] = 4] = "ELECTRIC_ARC";
+  Spell2[Spell2["DETECT_MONSTERS"] = 5] = "DETECT_MONSTERS";
+  Spell2[Spell2["FIRE_BALL"] = 6] = "FIRE_BALL";
+  Spell2[Spell2["RECHARGING"] = 7] = "RECHARGING";
+  Spell2[Spell2["IDENTIFY_RUNE"] = 8] = "IDENTIFY_RUNE";
+  Spell2[Spell2["TREASURE_DETECTION"] = 9] = "TREASURE_DETECTION";
+  Spell2[Spell2["FROST_BOLT"] = 10] = "FROST_BOLT";
+  Spell2[Spell2["REVEAL_MONSTERS"] = 11] = "REVEAL_MONSTERS";
+  Spell2[Spell2["ACID_SPRAY"] = 12] = "ACID_SPRAY";
+  Spell2[Spell2["DISABLE_TRAPS_DESTROY_DOORS"] = 13] = "DISABLE_TRAPS_DESTROY_DOORS";
+  Spell2[Spell2["TELEPORT_SELF"] = 14] = "TELEPORT_SELF";
+  Spell2[Spell2["TELEPORT_OTHER"] = 15] = "TELEPORT_OTHER";
+  Spell2[Spell2["RESISTANCE"] = 16] = "RESISTANCE";
+  Spell2[Spell2["TAP_MAGICAL_ENERGY"] = 17] = "TAP_MAGICAL_ENERGY";
+  Spell2[Spell2["MANA_CHANNEL"] = 18] = "MANA_CHANNEL";
+  Spell2[Spell2["DOOR_CREATION"] = 19] = "DOOR_CREATION";
+  Spell2[Spell2["MANA_BOLT"] = 20] = "MANA_BOLT";
+  Spell2[Spell2["TELEPORT_LEVEL"] = 21] = "TELEPORT_LEVEL";
+  Spell2[Spell2["DETECTION"] = 22] = "DETECTION";
+  Spell2[Spell2["DIMENSION_DOOR"] = 23] = "DIMENSION_DOOR";
+  Spell2[Spell2["THRUST_AWAY"] = 24] = "THRUST_AWAY";
+  Spell2[Spell2["SHOCK_WAVE"] = 25] = "SHOCK_WAVE";
+  Spell2[Spell2["EXPLOSION"] = 26] = "EXPLOSION";
+  Spell2[Spell2["BANISHMENT"] = 27] = "BANISHMENT";
+  Spell2[Spell2["MASS_BANISHMENT"] = 28] = "MASS_BANISHMENT";
+  Spell2[Spell2["MANA_STORM"] = 29] = "MANA_STORM";
+  Spell2[Spell2["DETECT_LIFE"] = 30] = "DETECT_LIFE";
+  Spell2[Spell2["FOX_FORM"] = 31] = "FOX_FORM";
+  Spell2[Spell2["REMOVE_HUNGER"] = 32] = "REMOVE_HUNGER";
+  Spell2[Spell2["STINKING_CLOUD"] = 33] = "STINKING_CLOUD";
+  Spell2[Spell2["CONFUSE_MONSTER"] = 34] = "CONFUSE_MONSTER";
+  Spell2[Spell2["SLOW_MONSTER"] = 35] = "SLOW_MONSTER";
+  Spell2[Spell2["CURE_POISON"] = 36] = "CURE_POISON";
+  Spell2[Spell2["RESIST_POISON"] = 37] = "RESIST_POISON";
+  Spell2[Spell2["TURN_STONE_TO_MUD"] = 38] = "TURN_STONE_TO_MUD";
+  Spell2[Spell2["SENSE_SURROUNDINGS"] = 39] = "SENSE_SURROUNDINGS";
+  Spell2[Spell2["LIGHTNING_STRIKE"] = 40] = "LIGHTNING_STRIKE";
+  Spell2[Spell2["EARTH_RISING"] = 41] = "EARTH_RISING";
+  Spell2[Spell2["TRANCE"] = 42] = "TRANCE";
+  Spell2[Spell2["MASS_SLEEP"] = 43] = "MASS_SLEEP";
+  Spell2[Spell2["BECOME_PUKEL_MAN"] = 44] = "BECOME_PUKEL_MAN";
+  Spell2[Spell2["EAGLES_FLIGHT"] = 45] = "EAGLES_FLIGHT";
+  Spell2[Spell2["BEAR_FORM"] = 46] = "BEAR_FORM";
+  Spell2[Spell2["TREMOR"] = 47] = "TREMOR";
+  Spell2[Spell2["HASTE_SELF"] = 48] = "HASTE_SELF";
+  Spell2[Spell2["REVITALIZE"] = 49] = "REVITALIZE";
+  Spell2[Spell2["RAPID_REGENERATION"] = 50] = "RAPID_REGENERATION";
+  Spell2[Spell2["HERBAL_CURING"] = 51] = "HERBAL_CURING";
+  Spell2[Spell2["METEOR_SWARM"] = 52] = "METEOR_SWARM";
+  Spell2[Spell2["RIFT"] = 53] = "RIFT";
+  Spell2[Spell2["ICE_STORM"] = 54] = "ICE_STORM";
+  Spell2[Spell2["VOLCANIC_ERUPTION"] = 55] = "VOLCANIC_ERUPTION";
+  Spell2[Spell2["RIVER_OF_LIGHTNING"] = 56] = "RIVER_OF_LIGHTNING";
+  Spell2[Spell2["CALL_LIGHT"] = 57] = "CALL_LIGHT";
+  Spell2[Spell2["DETECT_EVIL"] = 58] = "DETECT_EVIL";
+  Spell2[Spell2["MINOR_HEALING"] = 59] = "MINOR_HEALING";
+  Spell2[Spell2["BLESS"] = 60] = "BLESS";
+  Spell2[Spell2["SENSE_INVISIBLE"] = 61] = "SENSE_INVISIBLE";
+  Spell2[Spell2["HEROISM"] = 62] = "HEROISM";
+  Spell2[Spell2["ORB_OF_DRAINING"] = 63] = "ORB_OF_DRAINING";
+  Spell2[Spell2["SPEAR_OF_LIGHT"] = 64] = "SPEAR_OF_LIGHT";
+  Spell2[Spell2["DISPEL_UNDEAD"] = 65] = "DISPEL_UNDEAD";
+  Spell2[Spell2["DISPEL_EVIL"] = 66] = "DISPEL_EVIL";
+  Spell2[Spell2["PROTECTION_FROM_EVIL"] = 67] = "PROTECTION_FROM_EVIL";
+  Spell2[Spell2["REMOVE_CURSE"] = 68] = "REMOVE_CURSE";
+  Spell2[Spell2["PORTAL"] = 69] = "PORTAL";
+  Spell2[Spell2["REMEMBRANCE"] = 70] = "REMEMBRANCE";
+  Spell2[Spell2["WORD_OF_RECALL"] = 71] = "WORD_OF_RECALL";
+  Spell2[Spell2["HEALING"] = 72] = "HEALING";
+  Spell2[Spell2["RESTORATION"] = 73] = "RESTORATION";
+  Spell2[Spell2["CLAIRVOYANCE"] = 74] = "CLAIRVOYANCE";
+  Spell2[Spell2["ENCHANT_WEAPON"] = 75] = "ENCHANT_WEAPON";
+  Spell2[Spell2["ENCHANT_ARMOUR"] = 76] = "ENCHANT_ARMOUR";
+  Spell2[Spell2["SMITE_EVIL"] = 77] = "SMITE_EVIL";
+  Spell2[Spell2["GLYPH_OF_WARDING"] = 78] = "GLYPH_OF_WARDING";
+  Spell2[Spell2["DEMON_BANE"] = 79] = "DEMON_BANE";
+  Spell2[Spell2["BANISH_EVIL"] = 80] = "BANISH_EVIL";
+  Spell2[Spell2["WORD_OF_DESTRUCTION"] = 81] = "WORD_OF_DESTRUCTION";
+  Spell2[Spell2["HOLY_WORD"] = 82] = "HOLY_WORD";
+  Spell2[Spell2["SPEAR_OF_OROME"] = 83] = "SPEAR_OF_OROME";
+  Spell2[Spell2["LIGHT_OF_MANWE"] = 84] = "LIGHT_OF_MANWE";
+  Spell2[Spell2["NETHER_BOLT"] = 85] = "NETHER_BOLT";
+  Spell2[Spell2["CREATE_DARKNESS"] = 86] = "CREATE_DARKNESS";
+  Spell2[Spell2["BAT_FORM"] = 87] = "BAT_FORM";
+  Spell2[Spell2["READ_MINDS"] = 88] = "READ_MINDS";
+  Spell2[Spell2["TAP_UNLIFE"] = 89] = "TAP_UNLIFE";
+  Spell2[Spell2["CRUSH"] = 90] = "CRUSH";
+  Spell2[Spell2["SLEEP_EVIL"] = 91] = "SLEEP_EVIL";
+  Spell2[Spell2["SHADOW_SHIFT"] = 92] = "SHADOW_SHIFT";
+  Spell2[Spell2["DISENCHANT"] = 93] = "DISENCHANT";
+  Spell2[Spell2["FRIGHTEN"] = 94] = "FRIGHTEN";
+  Spell2[Spell2["VAMPIRE_STRIKE"] = 95] = "VAMPIRE_STRIKE";
+  Spell2[Spell2["DISPEL_LIFE"] = 96] = "DISPEL_LIFE";
+  Spell2[Spell2["DARK_SPEAR"] = 97] = "DARK_SPEAR";
+  Spell2[Spell2["WARG_FORM"] = 98] = "WARG_FORM";
+  Spell2[Spell2["BANISH_SPIRITS"] = 99] = "BANISH_SPIRITS";
+  Spell2[Spell2["ANNIHILATE"] = 100] = "ANNIHILATE";
+  Spell2[Spell2["GRONDS_BLOW"] = 101] = "GRONDS_BLOW";
+  Spell2[Spell2["UNLEASH_CHAOS"] = 102] = "UNLEASH_CHAOS";
+  Spell2[Spell2["FUME_OF_MORDOR"] = 103] = "FUME_OF_MORDOR";
+  Spell2[Spell2["STORM_OF_DARKNESS"] = 104] = "STORM_OF_DARKNESS";
+  Spell2[Spell2["POWER_SACRIFICE"] = 105] = "POWER_SACRIFICE";
+  Spell2[Spell2["ZONE_OF_UNMAGIC"] = 106] = "ZONE_OF_UNMAGIC";
+  Spell2[Spell2["VAMPIRE_FORM"] = 107] = "VAMPIRE_FORM";
+  Spell2[Spell2["CURSE"] = 108] = "CURSE";
+  Spell2[Spell2["COMMAND"] = 109] = "COMMAND";
+  Spell2[Spell2["SINGLE_COMBAT"] = 110] = "SINGLE_COMBAT";
+  Spell2[Spell2["OBJECT_DETECTION"] = 111] = "OBJECT_DETECTION";
+  Spell2[Spell2["DETECT_STAIRS"] = 112] = "DETECT_STAIRS";
+  Spell2[Spell2["HIT_AND_RUN"] = 113] = "HIT_AND_RUN";
+  Spell2[Spell2["COVER_TRACKS"] = 114] = "COVER_TRACKS";
+  Spell2[Spell2["CREATE_ARROWS"] = 115] = "CREATE_ARROWS";
+  Spell2[Spell2["DECOY"] = 116] = "DECOY";
+  Spell2[Spell2["BRAND_AMMUNITION"] = 117] = "BRAND_AMMUNITION";
+  Spell2[Spell2["SEEK_BATTLE"] = 118] = "SEEK_BATTLE";
+  Spell2[Spell2["BERSERK_STRENGTH"] = 119] = "BERSERK_STRENGTH";
+  Spell2[Spell2["WHIRLWIND_ATTACK"] = 120] = "WHIRLWIND_ATTACK";
+  Spell2[Spell2["SHATTER_STONE"] = 121] = "SHATTER_STONE";
+  Spell2[Spell2["LEAP_INTO_BATTLE"] = 122] = "LEAP_INTO_BATTLE";
+  Spell2[Spell2["GRIM_PURPOSE"] = 123] = "GRIM_PURPOSE";
+  Spell2[Spell2["MAIM_FOE"] = 124] = "MAIM_FOE";
+  Spell2[Spell2["HOWL_OF_THE_DAMNED"] = 125] = "HOWL_OF_THE_DAMNED";
+  Spell2[Spell2["RELENTLESS_TAUNTING"] = 126] = "RELENTLESS_TAUNTING";
+  Spell2[Spell2["VENOM"] = 127] = "VENOM";
+  Spell2[Spell2["WEREWOLF_FORM"] = 128] = "WEREWOLF_FORM";
+  Spell2[Spell2["BLOODLUST"] = 129] = "BLOODLUST";
+  Spell2[Spell2["UNHOLY_REPRIEVE"] = 130] = "UNHOLY_REPRIEVE";
+  Spell2[Spell2["FORCEFUL_BLOW"] = 131] = "FORCEFUL_BLOW";
+  Spell2[Spell2["QUAKE"] = 132] = "QUAKE";
+  return Spell2;
+})(Spell || {});
 var R = (rating, spell) => ({ rating, spell });
 var RATINGS_MAGE = [
   R(95, 0 /* MAGIC_MISSILE */),
@@ -4618,6 +4754,55 @@ function borgWeaponSwap(ctx, opts = {}, inventory = ctx.view.inventory()) {
   return best;
 }
 
+// src/trait/backup-caps.ts
+var noBackupCaps = () => Object.freeze({});
+function backupCaps(item, weapon) {
+  if (!item) return noBackupCaps();
+  const caps = {};
+  for (const [sr, element] of [
+    [90 /* SRACID */, weapon ? "ELEC" : "ACID"],
+    [89 /* SRELEC */, "ELEC"],
+    [87 /* SRFIRE */, "FIRE"],
+    [88 /* SRCOLD */, "COLD"],
+    [91 /* SRPOIS */, "POIS"],
+    [93 /* SRLITE */, "LIGHT"],
+    [94 /* SRDARK */, "DARK"],
+    [97 /* SRSND */, "SOUND"],
+    [98 /* SRSHRD */, "SHARD"],
+    [99 /* SRNXUS */, "NEXUS"],
+    [100 /* SRNTHR */, "NETHER"],
+    [101 /* SRKAOS */, "CHAOS"],
+    [102 /* SRDIS */, "DISEN"]
+  ]) caps[sr] = resLevel(item, element) > 0;
+  for (const [sr, flag] of [[95 /* SRBLIND */, "PROT_BLIND"], [96 /* SRCONF */, "PROT_CONF"], [103 /* SHLIFE */, "HOLD_LIFE"], [104 /* SFRACT */, "FREE_ACT"]])
+    caps[sr] = hasFlag2(item, flag);
+  return Object.freeze(caps);
+}
+function foldBackupCaps(ctx, d, spells) {
+  const t = ctx.world.self.trait;
+  const legal = (name) => spells ? spells.spellLegalFail(name, 15) : borgSpellLegalFail(ctx, Spell[name], 15);
+  const resist = legal("RESISTANCE"), poison = legal("RESIST_POISON");
+  const available = (sr, base, spell = false) => t[base] || d.weaponSwapCaps[sr] || d.armourSwapCaps[sr] || spell ? 1 : 0;
+  t[90 /* SRACID */] = available(90 /* SRACID */, 72 /* RACID */, resist);
+  t[89 /* SRELEC */] = available(89 /* SRELEC */, 71 /* RELEC */, resist);
+  t[87 /* SRFIRE */] = available(87 /* SRFIRE */, 69 /* RFIRE */, resist);
+  t[88 /* SRCOLD */] = available(88 /* SRCOLD */, 70 /* RCOLD */, resist);
+  t[91 /* SRPOIS */] = available(91 /* SRPOIS */, 73 /* RPOIS */, poison);
+  t[92 /* SRFEAR */] = available(92 /* SRFEAR */, 74 /* RFEAR */);
+  t[93 /* SRLITE */] = available(93 /* SRLITE */, 75 /* RLITE */);
+  t[94 /* SRDARK */] = available(94 /* SRDARK */, 76 /* RDARK */);
+  t[95 /* SRBLIND */] = available(95 /* SRBLIND */, 77 /* RBLIND */);
+  t[96 /* SRCONF */] = available(96 /* SRCONF */, 78 /* RCONF */);
+  t[97 /* SRSND */] = available(97 /* SRSND */, 79 /* RSND */);
+  t[98 /* SRSHRD */] = available(98 /* SRSHRD */, 80 /* RSHRD */);
+  t[99 /* SRNXUS */] = available(99 /* SRNXUS */, 81 /* RNXUS */);
+  t[100 /* SRNTHR */] = available(100 /* SRNTHR */, 82 /* RNTHR */);
+  t[101 /* SRKAOS */] = available(101 /* SRKAOS */, 83 /* RKAOS */);
+  t[102 /* SRDIS */] = available(102 /* SRDIS */, 84 /* RDIS */);
+  t[103 /* SHLIFE */] = available(103 /* SHLIFE */, 85 /* HLIFE */);
+  t[104 /* SFRACT */] = available(104 /* SFRACT */, 86 /* FRACT */);
+}
+
 // src/trait/state.ts
 function makeDerived() {
   return {
@@ -4626,6 +4811,8 @@ function makeDerived() {
     weaponSwapOpts: {},
     armourSwap: { handle: null, value: -1 },
     armourSwapOpts: {},
+    weaponSwapCaps: noBackupCaps(),
+    armourSwapCaps: noBackupCaps(),
     needStatgain: new Array(STAT_MAX).fill(false),
     amtStatgain: new Array(STAT_MAX).fill(0),
     amtBook: new Array(9).fill(0)
@@ -4652,6 +4839,8 @@ function inheritWeaponSwap(scratch, live) {
   d.weaponSwapOpts = from.weaponSwapOpts;
   d.armourSwap = from.armourSwap;
   d.armourSwapOpts = from.armourSwapOpts;
+  d.weaponSwapCaps = from.weaponSwapCaps;
+  d.armourSwapCaps = from.armourSwapCaps;
   store.set(scratch, d);
 }
 function has(d, role) {
@@ -4659,6 +4848,38 @@ function has(d, role) {
 }
 function addHas(d, role, n) {
   d.has.set(role, (d.has.get(role) ?? 0) + n);
+}
+
+// src/fight/state.ts
+var STATES2 = /* @__PURE__ */ new WeakMap();
+function getFightState(world) {
+  let st2 = STATES2.get(world);
+  if (!st2) {
+    st2 = {
+      simulate: true,
+      pending: null,
+      tempX: [],
+      tempY: [],
+      tempN: 0,
+      successfulTarget: 0,
+      targetClosest: 0,
+      fightingUnique: 0,
+      fightingSummoner: false,
+      fightingEvilUnique: false,
+      tAntisummon: 0,
+      began: 0,
+      timeTown: 0,
+      playsRisky: false
+    };
+    STATES2.set(world, st2);
+  }
+  return st2;
+}
+function idiv(a, b) {
+  return Math.trunc(a / b);
+}
+function iabs(a) {
+  return a < 0 ? -a : a;
 }
 
 // src/store/store.ts
@@ -5069,6 +5290,33 @@ function borgWearStuff(ctx, d) {
     return ctx.act.wear(best.handle);
   }
   return null;
+}
+function borgBackupSwap(ctx, p, d) {
+  if (!borgCfg().usesSwaps || trait3(ctx, 106 /* MAXDEPTH */) >= 90 || trait3(ctx, 109 /* ISHUNGRY */) || trait3(ctx, 108 /* ISWEAK */) || ctx.world.self.timeThisPanel > 300) return null;
+  const derived = getDerived(ctx.world), pack = packItems(ctx);
+  const armour = pack.find((item) => item.handle === derived.armourSwap.handle), weapon = pack.find((item) => item.handle === derived.weaponSwap.handle);
+  if (!armour && !weapon || !d?.backupEval) return null;
+  const initial = armour ? { rconf: trait3(ctx, 78 /* RCONF */), rblind: trait3(ctx, 77 /* RBLIND */), fract: trait3(ctx, 86 /* FRACT */) } : { rconf: 0, rblind: 0, fract: 0 };
+  const evaluate = (item) => {
+    const category = wieldSlot(item);
+    if (!category) return null;
+    const slots = { weapon: 0, bow: 1, ring: LEFT_RING, amulet: 4, light: 5, body: 6, cloak: 7, shield: 8, helm: 9, gloves: 10, boots: 11 };
+    const answer = d.backupEval(item, slots[category]);
+    if (!answer) return null;
+    const t = answer.traits;
+    if (initial.rconf && !t.rconf || initial.rblind && !t.rblind && !t.rlite && !t.rdark && t.sav < 100 || initial.fract && !t.fract && t.sav < 100) return 9999;
+    if (d.randarts !== false && item.artifact && !isIdent(item, d)) return 9999;
+    const uncursable = category === "weapon" ? derived.weaponSwapOpts.weaponSwap?.uncursable : derived.armourSwapOpts.armourSwap?.uncursable ?? derived.armourSwapOpts.weaponSwap?.uncursable;
+    if (isCursed(item) && !uncursable?.(item)) return 9999;
+    return answer.danger;
+  };
+  const ap = armour ? evaluate(armour) : 0, wp = weapon ? evaluate(weapon) : 0;
+  if (ap === null || wp === null) return null;
+  const chosen = ap <= wp ? weapon : armour, score = ap <= wp ? wp : ap;
+  const avoidance4 = getDangerGlobals(ctx.world).avoidance;
+  const ceiling = getFightState(ctx.world).fightingUnique ? Math.trunc(avoidance4 * 2 / 3) : Math.trunc(avoidance4 / 2);
+  if (!chosen || p <= score || score > ceiling) return null;
+  return ctx.act.wear(chosen.handle);
 }
 
 // src/flow/flow.ts
@@ -7397,12 +7645,17 @@ function borgNotice(ctx, opts = {}) {
     d.armourSwapOpts = { ...d.weaponSwapOpts, ...opts.armourSwap ? { armourSwap: { ...opts.armourSwap } } : {} };
     const selectedWeapon = ctx.view.inventory().find((item) => item.handle === d.weaponSwap.handle) ?? null;
     d.armourSwap = borgArmourSwap(ctx, d.armourSwapOpts, c.inven, selectedWeapon);
+    d.weaponSwapCaps = backupCaps(selectedWeapon ?? void 0, true);
+    d.armourSwapCaps = backupCaps(c.inven.find((item) => item.handle === d.armourSwap.handle), false);
   } else {
     d.weaponSwapOpts = previous.weaponSwapOpts;
     d.weaponSwap = previous.weaponSwap;
     d.armourSwapOpts = previous.armourSwapOpts;
     d.armourSwap = previous.armourSwap;
+    d.weaponSwapCaps = previous.weaponSwapCaps;
+    d.armourSwapCaps = previous.armourSwapCaps;
   }
+  foldBackupCaps(ctx, d, opts.spells ?? d.weaponSwapOpts.spells);
   const speed = t[44 /* SPEED */] ?? 110;
   ctx.world.self.gameRatio = speed > 110 ? Math.trunc(1e5 / ((speed - 110) * 10 + 100)) : 1e3;
 }
@@ -8097,26 +8350,6 @@ function applySpellGrants(c) {
 }
 function finishNotice(c) {
   const { t, R: R2 } = c;
-  const s = R2.spells;
-  const resSpell = s.spellLegalFail("RESISTANCE", 15);
-  t[90 /* SRACID */] = t[72 /* RACID */] || resSpell ? 1 : 0;
-  t[89 /* SRELEC */] = t[71 /* RELEC */] || resSpell ? 1 : 0;
-  t[87 /* SRFIRE */] = t[69 /* RFIRE */] || resSpell ? 1 : 0;
-  t[88 /* SRCOLD */] = t[70 /* RCOLD */] || resSpell ? 1 : 0;
-  t[91 /* SRPOIS */] = t[73 /* RPOIS */] || s.spellLegalFail("RESIST_POISON", 15) ? 1 : 0;
-  t[92 /* SRFEAR */] = t[74 /* RFEAR */];
-  t[93 /* SRLITE */] = t[75 /* RLITE */];
-  t[94 /* SRDARK */] = t[76 /* RDARK */];
-  t[95 /* SRBLIND */] = t[77 /* RBLIND */];
-  t[96 /* SRCONF */] = t[78 /* RCONF */];
-  t[97 /* SRSND */] = t[79 /* RSND */];
-  t[98 /* SRSHRD */] = t[80 /* RSHRD */];
-  t[99 /* SRNXUS */] = t[81 /* RNXUS */];
-  t[100 /* SRNTHR */] = t[82 /* RNTHR */];
-  t[101 /* SRKAOS */] = t[83 /* RKAOS */];
-  t[102 /* SRDIS */] = t[84 /* RDIS */];
-  t[103 /* SHLIFE */] = t[85 /* HLIFE */];
-  t[104 /* SFRACT */] = t[86 /* FRACT */];
   t[261 /* CARRY */] = BORG_ADJ_STR_WGT[t[15 /* STR_INDEX */]] * 100;
   t[264 /* PREP_BIG_FIGHT */] = 0;
   if (t[106 /* MAXDEPTH */] >= 99) {
@@ -8176,38 +8409,6 @@ function emptyItem() {
     };
   }
   return _empty;
-}
-
-// src/fight/state.ts
-var STATES2 = /* @__PURE__ */ new WeakMap();
-function getFightState(world) {
-  let st2 = STATES2.get(world);
-  if (!st2) {
-    st2 = {
-      simulate: true,
-      pending: null,
-      tempX: [],
-      tempY: [],
-      tempN: 0,
-      successfulTarget: 0,
-      targetClosest: 0,
-      fightingUnique: 0,
-      fightingSummoner: false,
-      fightingEvilUnique: false,
-      tAntisummon: 0,
-      began: 0,
-      timeTown: 0,
-      playsRisky: false
-    };
-    STATES2.set(world, st2);
-  }
-  return st2;
-}
-function idiv(a, b) {
-  return Math.trunc(a / b);
-}
-function iabs(a) {
-  return a < 0 ? -a : a;
 }
 
 // src/store/home.ts
@@ -9601,7 +9802,7 @@ function borgSimulatePower(ctx, change, opts = {}) {
   borgNotice(simCtx, { ...opts, noticeSwap: false });
   return borgPower(simCtx, opts);
 }
-function borgSimulateDanger(ctx, change) {
+function borgSimulateDangerAnswer(ctx, change) {
   const answer = ctx.view.simulateLoadout?.(change);
   if (!answer) return null;
   const simCtx = { ...ctx, world: shadowWorld(ctx.world), view: shadowView(ctx.view, answer) };
@@ -9612,7 +9813,14 @@ function borgSimulateDanger(ctx, change) {
   scratch.globals = { ...live.globals, tpOtherIndices: [...live.globals.tpOtherIndices] };
   scratch.fear = live.fear;
   scratch.maxRange = live.maxRange;
-  return borgDanger(simCtx, ctx.world.self.c.y, ctx.world.self.c.x, 1, true, false);
+  const t = simCtx.world.self.trait;
+  return {
+    danger: borgDanger(simCtx, ctx.world.self.c.y, ctx.world.self.c.x, 1, true, false),
+    traits: { rconf: t[78 /* RCONF */] ?? 0, rblind: t[77 /* RBLIND */] ?? 0, rlite: t[75 /* RLITE */] ?? 0, rdark: t[76 /* RDARK */] ?? 0, fract: t[86 /* FRACT */] ?? 0, sav: t[57 /* SAV */] ?? 0 }
+  };
+}
+function borgSimulateDanger(ctx, change) {
+  return borgSimulateDangerAnswer(ctx, change)?.danger ?? null;
 }
 
 // src/store/sell.ts
@@ -15290,6 +15498,11 @@ function borgCaution(ctx, flow) {
       if (d) return d;
     }
   }
+  if (borgCfg().usesSwaps && trait3(ctx, 106 /* MAXDEPTH */) < 90 && posDanger > Math.trunc(av2(ctx) / 3)) {
+    const session = getThinkSession(ctx.world);
+    const swap = borgBackupSwap(ctx, posDanger, session.ctx === ctx ? buildItemDeps(session) : void 0);
+    if (swap) return swap;
+  }
   if (ctx.world.self.goal.recalling && borgCheckRest(ctx, flow, ctx.world.self.c.y, ctx.world.self.c.x) && trait3(ctx, 105 /* CDEPTH */) && !trait3(ctx, 109 /* ISHUNGRY */)) {
     ctx.world.self.inShop = false;
     return ctx.act.rest(500);
@@ -15555,8 +15768,13 @@ function buildItemDeps(session) {
   const dangerHere = borgDanger(c, py, px, 1, true, false);
   const fear = getFearCaches(w);
   const res = session.resolvers;
+  const randarts = res.birthRandarts?.();
   return {
     danger: dangerHere,
+    ...randarts !== null && randarts !== void 0 ? { randarts } : {},
+    backupEval: (item, slot) => res.loadoutDangerAnswer?.(c, {
+      wieldAt: [{ item: { from: "gear", handle: item.handle }, slot }]
+    }) ?? null,
     isIdent,
     needsIdent,
     worthId: borgItemWorthId,
@@ -17832,7 +18050,9 @@ function makeCoreResolvers(input) {
     // when there is no live derive behind it (a worldless harness) - so this is
     // correct without asking the host anything.
     loadoutPower: (ctx, change) => borgSimulatePower(ctx, change),
-    loadoutDanger: (ctx, change) => borgSimulateDanger(ctx, change)
+    loadoutDanger: (ctx, change) => borgSimulateDanger(ctx, change),
+    loadoutDangerAnswer: (ctx, change) => borgSimulateDangerAnswer(ctx, change),
+    birthRandarts: () => input.birthRandarts?.() ?? null
   };
 }
 
@@ -18364,6 +18584,8 @@ function simulationView(floors) {
 async function readWorld(api, reads) {
   const known = await valueOf2(api.view.world());
   if (known === null || known.player === null) return null;
+  const options = typeof api.view.options === "function" ? await valueOf2(api.view.options()) : null;
+  const birthRandarts = typeof options?.birth?.birth_randarts === "boolean" ? options.birth.birth_randarts : null;
   const { statics } = reads;
   const player = playerView(known.player, statics.floors);
   const analyze = await itemAnalyzer(api);
@@ -18440,7 +18662,7 @@ async function readWorld(api, reads) {
     inputToken: () => ({ epoch: known.token.epoch, revision: known.token.revision }),
     simulateLoadout: (change) => reads.loadouts.answer(change)
   };
-  return { view, facts: { shopnum: known.player.shopnum, kinds } };
+  return { view, facts: { shopnum: known.player.shopnum, kinds, birthRandarts } };
 }
 
 // src/api2/host.ts
@@ -18503,6 +18725,7 @@ function createBridge(mod2) {
         raceRecord: (ridx) => races.get(ridx),
         raceSymbol: (ridx) => symbols.get(ridx),
         objects,
+        birthRandarts: () => facts.birthRandarts ?? null,
         shopnum: () => facts.shopnum,
         kindCost: (tval, sval) => facts.kinds.get(`${String(tval)}:${String(sval)}`) ?? null,
         blowMethods: blows.map((message) => ({ messages: [message] })),
