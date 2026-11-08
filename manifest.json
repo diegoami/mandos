@@ -4,7 +4,7 @@
   "data": {
     "id": "borg",
     "name": "Borg",
-    "version": "1.4.0-beta.4",
+    "version": "1.4.0-beta.4-port.2",
     "api": ">=2.0.0 <3.0.0",
     "runtime": "in-process",
     "engine": {
@@ -40,7 +40,7 @@
     "description": "Angband's automatic player, ported from the borg in Angband 4.2.6. It plays through the same commands you use, over the frozen agent API, so it is an ordinary mod with no privileged code inside the engine.\n\nInstalling and enabling it does not give it your character. Press Ctrl-Z in play to hand over the keyboard; it warns you and asks you to confirm first. It is deterministic and draws only on its own seeded random number generator, so your save is not flagged as non-reproducible. Only one autoplayer can hold the keyboard at a time.",
     "author": "neostryder",
     "license": "GPL-2.0-only",
-    "repository": "https://github.com/neostryder/neo-angband-mod-borg",
+    "repository": "https://github.com/diegoami/mandos",
     "shape": "plugin",
     "facets": [
       "plugin"

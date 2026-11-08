@@ -1,0 +1,10 @@
+{
+  "schema": "mandos/zoo-lane@1",
+  "name": "port-only",
+  "borgRepository": "diegoami/neo-angband-borg-mod-tracker",
+  "borgSourceCommit": "cc64c1ccc62f7197f5bef24a4a6d23cc96155e5f",
+  "officialBaseCommit": "a10655c3b8113848092a7d66405ca3ec5e2222f9",
+  "includesCTranslations": false,
+  "controllerProfile": "api2-plugin",
+  "commandStreamProfile": "api2-intents-v1"
+}
