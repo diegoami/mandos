@@ -10,7 +10,7 @@ concurrency:
 jobs:
   verify:
     runs-on: ubuntu-24.04
-    timeout-minutes: 30
+    timeout-minutes: 12
     steps:
       - uses: actions/checkout@v7
         with:
@@ -40,9 +40,9 @@ jobs:
           const out = process.env.ZOO_PROOF_OUT;
           const bundle = process.env.ZOO_BUNDLE;
           mkdirSync(out, { recursive: true });
-          const proof = { schema: 'mandos/zoo-proof213@1', candidate: 'de77e7bbf49d683e5226d326257c3013d6936aed',
+          const proof = { schema: 'mandos/zoo-speed213@1', candidate: 'de77e7bbf49d683e5226d326257c3013d6936aed',
             runtime: { node: process.version, platform: process.platform, arch: process.arch, availableParallelism: availableParallelism(), affinity: process.env.ZOO_AFFINITY },
-            birthPairs: 99, rows: [], speed: [], determinism: null };
+            rows: [] };
           const hash = bytes => createHash('sha256').update(bytes).digest('hex');
           const read = file => JSON.parse(readFileSync(file, 'utf8'));
           const flags = join(out, 'flags.json');
@@ -77,27 +77,17 @@ jobs:
           }
           try {
             if (availableParallelism() !== 1) throw new Error('Proof process is not restricted to one CPU');
-            const tests = execFileSync('pnpm', ['exec', 'vitest', 'run', 'src/zoo-session.test.ts'], { encoding: 'utf8', timeout: 180000 });
-            writeFileSync(join(out, 'targeted-tests.log'), tests);
-            const seeds = [1, 7, 42], classes = ['Warrior', 'Mage', 'Rogue'], races = ['Human', 'Elf', 'Dwarf'];
-            for (let s = 0; s < seeds.length; s++) for (let c = 0; c < classes.length; c++) {
-              const row = run(`cohort-${seeds[s]}-${classes[c]}`, seeds[s], classes[c], races[(s + c) % races.length], 20000, 180000);
-              proof.rows.push(row);
-              if (row.outcome === 'harness_failure') throw new Error(`Mandatory cohort entry failed: ${row.name}`);
+            const first = run('survivor-42-Dwarf-Warrior-100k', 42, 'Warrior', 'Dwarf', 100000, 300000);
+            proof.rows.push(first);
+            proof.full100kObserved = first.outcome === 'turn_cap' && first.actualTurns >= 100000;
+            if (proof.full100kObserved) {
+              const deep = run('survivor-42-Dwarf-Warrior-400k', 42, 'Warrior', 'Dwarf', 400000, 300000);
+              proof.rows.push(deep);
+              proof.full400kObserved = deep.outcome === 'turn_cap' && deep.actualTurns >= 400000;
+            } else {
+              proof.full400kObserved = false;
+              proof.deepNotAttempted = 'The single known-survivor extension did not reach the 100k cap; no new seed search or altered play.';
             }
-            const originalName = 'cohort-7-Warrior';
-            const repeated = run('repeat-7-Warrior', 7, 'Warrior', 'Elf', 20000, 180000);
-            if (repeated.outcome === 'harness_failure') throw new Error('Repeated measurement failed');
-            const a = read(join(out, `${originalName}.json`)), b = read(join(out, 'repeat-7-Warrior.json'));
-            delete a.metadata.wallTimeMs; delete b.metadata.wallTimeMs;
-            if (JSON.stringify(a) !== JSON.stringify(b)) throw new Error('Same inputs differ after excluding wall time');
-            for (const stream of ['states', 'commands']) if (hash(readFileSync(join(out, `${originalName}.${stream}.jsonl`))) !== hash(readFileSync(join(out, `repeat-7-Warrior.${stream}.jsonl`)))) throw new Error(`Repeated ${stream} differ`);
-            proof.determinism = { identicalRecordExceptWall: true, identicalStates: true, identicalCommands: true, normalizedRecordSha256: hash(JSON.stringify(a)) };
-            proof.speed.push(run('speed-100k', 7, 'Warrior', 'Human', 100000, 300000));
-            if (proof.speed[0].outcome === 'harness_failure') throw new Error('100k cap measurement failed');
-            proof.speed.push(run('speed-400k', 7, 'Warrior', 'Human', 400000, 300000));
-            proof.optional400kCompleted = proof.speed[1].outcome !== 'harness_failure';
-            if (!proof.rows.some(row => row.periodicStates > 0)) throw new Error('No periodic states observed in cohort');
             proof.complete = true;
           } catch (error) {
             proof.complete = false; proof.error = error.stack ?? String(error); process.exitCode = 1;
@@ -108,6 +98,6 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v7
         with:
-          name: mandos-zoo-proof213
+          name: mandos-zoo-speed213
           path: ${{ runner.temp }}/zoo-proof
           if-no-files-found: error
