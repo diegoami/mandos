@@ -39,11 +39,19 @@ describe('headless API2 host, exact pinned gate',()=>{
   }});}finally{host.dispose();}
  });
  it('translates a positive perceived KnownMonster ID that differs from midx',async()=>{
-  const {game,host}=create();try{
+  // Same seeded dungeon/detection setup used by Core's own known-world tests.
+  const game=Core.startGame(pack,{seed:4242,depth:10});
+  const host=createZooApi2Host(Core,game,records,{},manifest.capabilities,()=>{});
+  try{
    const live=game.state.monsters.filter((mon):mon is Core.Monster=>mon!=null);
    for(const mon of live)mon.mflag.off(Core.MFLAG.VISIBLE);
-   const mon=live.filter(mon=>mon.midx>1&&Core.projectable(game.state.chunk,game.state.actor.grid,mon.grid,Core.PROJECT.NONE,game.state.z.maxRange)).sort((a,b)=>b.midx-a.midx)[0];
-   expect(mon,'ordinary town monster in a projectable detection fixture').toBeDefined();
+   const placed=live.filter(mon=>mon.midx>1).sort((a,b)=>b.midx-a.midx).flatMap(mon=>{
+    const cells=[];for(let dy=-1;dy<=1;dy++)for(let dx=-1;dx<=1;dx++){const at={x:mon.grid.x+dx,y:mon.grid.y+dy};
+     if((dx||dy)&&game.state.chunk.inBoundsFully(at)&&Core.squareIsOpenLive(game.state,at)&&Core.projectable(game.state.chunk,at,mon.grid,Core.PROJECT.NONE,game.state.z.maxRange))cells.push({mon,at});}
+    return cells;
+   })[0];
+   expect(placed,'public Core detection fixture has a legal projectable neighbor').toBeDefined();
+   const mon=placed!.mon;game.state.actor.grid={...placed!.at};
    mon!.mflag.on(Core.MFLAG.VISIBLE);mon!.mflag.off(Core.MFLAG.CAMOUFLAGE);
    const known=Core.knownMonsters(game.state).find(known=>Core.knownMonsterMidx(game.state,known.id)===mon!.midx)!;
    expect(known.id).not.toBe(mon!.midx);
