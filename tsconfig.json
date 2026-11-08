@@ -32,10 +32,12 @@
     "types": [
       "node"
     ],
-    "noEmit": true
+    "noEmit": true,
+    "allowImportingTsExtensions": true
   },
   "include": [
     "*.ts",
-    "src/**/*.ts"
+    "src/**/*.ts",
+    "tools/**/*.ts"
   ]
 }

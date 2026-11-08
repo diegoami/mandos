@@ -18,6 +18,10 @@ what kind of change it is. Lists appear in this order and each is omitted
 when empty for a release: Added, Changed, Removed, Fixed. Earlier entries
 were not retagged.
 
+## 1.4.0-beta.4-upstream.a10655c3-zoo.1 - 2026-11-08
+
+Measurement snapshot with an exact target Borg policy projection and shared API2 zoo harness. No C corrections or Borg decision changes.
+
 ## [Unreleased]
 
 ### Fixed

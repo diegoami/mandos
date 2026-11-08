@@ -1,0 +1,10 @@
+{
+  "schema": "mandos/zoo-lane@1",
+  "name": "upstream",
+  "borgRepository": "neostryder/neo-angband-mod-borg",
+  "borgSourceCommit": "a10655c3b8113848092a7d66405ca3ec5e2222f9",
+  "officialBaseCommit": "a10655c3b8113848092a7d66405ca3ec5e2222f9",
+  "includesCTranslations": false,
+  "controllerProfile": "api2-plugin",
+  "commandStreamProfile": "api2-intents-v1"
+}

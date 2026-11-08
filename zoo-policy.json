@@ -1,0 +1,755 @@
+{
+  "schema": "mandos/zoo-policy@1",
+  "sourceCommit": "a10655c3b8113848092a7d66405ca3ec5e2222f9",
+  "gitProjectionSha256": "c18bd814874401d76fab4c22536abddfacc9d744b311f0d44adbb5477edb0ffa",
+  "files": {
+    "plugin.js": {
+      "mode": "100644",
+      "blob": "ad0ee25aeba699708caa4ec93718e9dc975ae4e3"
+    },
+    "plugin.ts": {
+      "mode": "100644",
+      "blob": "5e13181efb30ece667572aaded60407e085e2aad"
+    },
+    "src/activate.test.ts": {
+      "mode": "100644",
+      "blob": "5bf1694c25e515b9c16b41b392029e21bf232d90"
+    },
+    "src/activate.ts": {
+      "mode": "100644",
+      "blob": "795ff0f44e10f501fec0ad4254004de3967718f6"
+    },
+    "src/adapter-boundary.test.ts": {
+      "mode": "100644",
+      "blob": "9e9b32a8ae2e022d3e058514270da19a0541790b"
+    },
+    "src/api2/act.ts": {
+      "mode": "100644",
+      "blob": "ea315cc15808a6e184f1dee9175615ce12e01583"
+    },
+    "src/api2/bridge.test.ts": {
+      "mode": "100644",
+      "blob": "222fbc24abbdb056732fff61eb493223c15455f7"
+    },
+    "src/api2/caches.ts": {
+      "mode": "100644",
+      "blob": "691a1c6dcc0cf630c513d753dcc82d346b9b5109"
+    },
+    "src/api2/controller.test.ts": {
+      "mode": "100644",
+      "blob": "02818e5d3eaf1349da7e4b0b55dd8413fbd80e29"
+    },
+    "src/api2/controller.ts": {
+      "mode": "100644",
+      "blob": "e5fc7b132c2c5f40442f91f8d6e1bc1d5b0ce39f"
+    },
+    "src/api2/feed.ts": {
+      "mode": "100644",
+      "blob": "d08665829170e5c13434655067536501d55d9c2b"
+    },
+    "src/api2/host.ts": {
+      "mode": "100644",
+      "blob": "bf9d91e7f7434bd43e2413c7366dc1f6de9b5658"
+    },
+    "src/api2/records.ts": {
+      "mode": "100644",
+      "blob": "af4ad4d1806083311c869e53037734a35d2dbe06"
+    },
+    "src/api2/truth.ts": {
+      "mode": "100644",
+      "blob": "4984e79ea04f1dd26e4f3b3753f4b0741033ed49"
+    },
+    "src/api2/world.ts": {
+      "mode": "100644",
+      "blob": "dbd0e58a0d895a2e329677fbd9cc14aea9dd072d"
+    },
+    "src/context.ts": {
+      "mode": "100644",
+      "blob": "e3e7f3739088a7eb3174685cd6ee2f4984d5bbfa"
+    },
+    "src/controller.ts": {
+      "mode": "100644",
+      "blob": "260df0fa8cfe27f294b7616170bffb8702265d09"
+    },
+    "src/core-api.ts": {
+      "mode": "100644",
+      "blob": "0b6cd5c1da3ef19a23415c73d0fd017a812daa94"
+    },
+    "src/core-import-census.test.ts": {
+      "mode": "100644",
+      "blob": "72fc9fe761430aec24d8046e35e959fda2a57cc2"
+    },
+    "src/danger/danger.test.ts": {
+      "mode": "100644",
+      "blob": "b7bcd3b67a7f2ed68cf41a5d7a4187679c4b0b16"
+    },
+    "src/danger/danger.ts": {
+      "mode": "100644",
+      "blob": "57096dcc4fcee99adb0789ff68929a1fe6978d15"
+    },
+    "src/danger/facts.ts": {
+      "mode": "100644",
+      "blob": "8c6fcdf020e0a5067645db554c23245dba4c41bf"
+    },
+    "src/danger/fear.ts": {
+      "mode": "100644",
+      "blob": "77dad637766bf0e503042152806202cbd0df24ce"
+    },
+    "src/danger/geometry.ts": {
+      "mode": "100644",
+      "blob": "9a6eda064c831f4639bf13158d507a17d7ee414e"
+    },
+    "src/danger/globals.ts": {
+      "mode": "100644",
+      "blob": "42f9c6b22060a96d5063eb05e36bebdf44578f4f"
+    },
+    "src/danger/index.ts": {
+      "mode": "100644",
+      "blob": "903a28cf30f1fea6000e7cb6e523796f5619dd48"
+    },
+    "src/danger/state.ts": {
+      "mode": "100644",
+      "blob": "6a8528f685715f1bfcb5d941ee5686a9ea9c5eab"
+    },
+    "src/danger/tables.ts": {
+      "mode": "100644",
+      "blob": "a1cb56f3e21ab027454c44b25795c445ff94959e"
+    },
+    "src/fight/attack.ts": {
+      "mode": "100644",
+      "blob": "7f5455c04811d7e03438c736cafdecfd0cd9f782"
+    },
+    "src/fight/bf-census.test.ts": {
+      "mode": "100644",
+      "blob": "6c952f930996b0896f1b803006364f715a691365"
+    },
+    "src/fight/bf.ts": {
+      "mode": "100644",
+      "blob": "79662cab874360626d6cba2c18f1f4567e4503e4"
+    },
+    "src/fight/caution.ts": {
+      "mode": "100644",
+      "blob": "fe684f671143a4dde0b0f21b1d08883e7baa6b2f"
+    },
+    "src/fight/defend.ts": {
+      "mode": "100644",
+      "blob": "9a5b920e96ac35227035cf6f5a0b8543b9b5454b"
+    },
+    "src/fight/escape-stair.test.ts": {
+      "mode": "100644",
+      "blob": "9a395f18a614c1e31a0b32c0cf85fdab827eb9fa"
+    },
+    "src/fight/escape.ts": {
+      "mode": "100644",
+      "blob": "cf70bb910e34a4e73e3a3ee7cf124e1ddc0c6154"
+    },
+    "src/fight/fight.test.ts": {
+      "mode": "100644",
+      "blob": "b8eb1c13bb6303b783d7f8c49c2076e2c45b1253"
+    },
+    "src/fight/index.ts": {
+      "mode": "100644",
+      "blob": "177ceb3b235ce77390106420fbcae93afbac3152"
+    },
+    "src/fight/munchkin.ts": {
+      "mode": "100644",
+      "blob": "1799c589d528453755c1290cda2ef0154de1438b"
+    },
+    "src/fight/perm.ts": {
+      "mode": "100644",
+      "blob": "0917618a3729c38426550c2fc5aefe1a784a11fe"
+    },
+    "src/fight/projection.ts": {
+      "mode": "100644",
+      "blob": "8c96850e351dd4b1e038c15246df2a2c37c20501"
+    },
+    "src/fight/state.ts": {
+      "mode": "100644",
+      "blob": "da0d01bff5598663e35ec7c0db88053ec4839a22"
+    },
+    "src/flow/flow-consts.ts": {
+      "mode": "100644",
+      "blob": "3974118f364d1d00495d3281454d1125c1bb7af6"
+    },
+    "src/flow/flow-dark.ts": {
+      "mode": "100644",
+      "blob": "1dc77ce875eac7db6c012de72f7b9b1170e875c6"
+    },
+    "src/flow/flow-glyph.ts": {
+      "mode": "100644",
+      "blob": "baaa8d22f18bca812ae12cc374c8c7ead77f6fbc"
+    },
+    "src/flow/flow-kill.ts": {
+      "mode": "100644",
+      "blob": "a503493ad4f2eb8a894937cd2efb95514315a28e"
+    },
+    "src/flow/flow-misc.ts": {
+      "mode": "100644",
+      "blob": "3362a5b2e65ba89144e1d5d67544c7be4ea98453"
+    },
+    "src/flow/flow-recover.test.ts": {
+      "mode": "100644",
+      "blob": "a7e4acc92e695245368683b6a65f9567b316eacb"
+    },
+    "src/flow/flow-stairs.ts": {
+      "mode": "100644",
+      "blob": "4dea4fe9200453546f7e85cb39100e9083016fd4"
+    },
+    "src/flow/flow-take.ts": {
+      "mode": "100644",
+      "blob": "53265011e2e274d82a0989a94e474c7dd4a7b2f8"
+    },
+    "src/flow/flow.test.ts": {
+      "mode": "100644",
+      "blob": "e96dfc26b0dee83274b6a500e94febc8ecc412dd"
+    },
+    "src/flow/flow.ts": {
+      "mode": "100644",
+      "blob": "eb3075418b8d53bf068363e46da547a812b76987"
+    },
+    "src/flow/index.ts": {
+      "mode": "100644",
+      "blob": "3c4249bbf01bce2772b8ad80e6db60e389fb6d27"
+    },
+    "src/flow/play-step.test.ts": {
+      "mode": "100644",
+      "blob": "dd12321dc072910d3984e5de532a95959614692a"
+    },
+    "src/foundation.test.ts": {
+      "mode": "100644",
+      "blob": "337607f1abc4016b838dcff805d100c7a2868b5a"
+    },
+    "src/hallucination.test.ts": {
+      "mode": "100644",
+      "blob": "78b9878bd97081a3825e9ab92098a995966f8b60"
+    },
+    "src/harness-api2.ts": {
+      "mode": "100644",
+      "blob": "96e2692315ee2f92f1bcecaa0f5d3dfaa5414000"
+    },
+    "src/harness.ts": {
+      "mode": "100644",
+      "blob": "22f15a39135871f6fa3d46e0210e2d7feccac7c2"
+    },
+    "src/index.ts": {
+      "mode": "100644",
+      "blob": "19135465d6de64bc7469af6e7fd6f0dd124b5ffe"
+    },
+    "src/item/deps.ts": {
+      "mode": "100644",
+      "blob": "cf1dab144698a25b834cc7ca1d708effa4096cc3"
+    },
+    "src/item/index.ts": {
+      "mode": "100644",
+      "blob": "5234a97f8f30d3b220a81e7f4681b1e36c8fe4bd"
+    },
+    "src/item/item-decurse.ts": {
+      "mode": "100644",
+      "blob": "2e9c266b5eb3c242f1cee7cc1a9082c21e93e696"
+    },
+    "src/item/item-enchant.ts": {
+      "mode": "100644",
+      "blob": "a9a20def582a0e14f2b43d85bbee4f500d503f5d"
+    },
+    "src/item/item-id.ts": {
+      "mode": "100644",
+      "blob": "04d240c1bb026a674c2276ef75fbb9b2998fe36c"
+    },
+    "src/item/item-use.ts": {
+      "mode": "100644",
+      "blob": "74560c2314706850b419cf9af5f82e2a9ae2d84e"
+    },
+    "src/item/item-wear.ts": {
+      "mode": "100644",
+      "blob": "fda7137d18fd3bc2a40d9a053eab7e6d116ef24a"
+    },
+    "src/item/item.test.ts": {
+      "mode": "100644",
+      "blob": "63e86067f50d5fbc244ce660c5fcc1f888bfbb0c"
+    },
+    "src/item/junk-space.test.ts": {
+      "mode": "100644",
+      "blob": "384256db6c03d2ffd96f478d6de21c41487c46c8"
+    },
+    "src/item/junk-space.ts": {
+      "mode": "100644",
+      "blob": "0b789d68a5ddc87171a1b578ae625c87d74908cb"
+    },
+    "src/item/junk.ts": {
+      "mode": "100644",
+      "blob": "1aa7ea000b3c6a3fa5b006e0db34a664349cc5dd"
+    },
+    "src/item/light.ts": {
+      "mode": "100644",
+      "blob": "1d5ec0c8c541cba6554e19c48d1c32b53c27ddb3"
+    },
+    "src/item/magic-play.test.ts": {
+      "mode": "100644",
+      "blob": "81f74d9f49031adeb4c47479656026bac3ef1e49"
+    },
+    "src/item/magic-play.ts": {
+      "mode": "100644",
+      "blob": "3e3b3776bcd298b24234701a14e4b421bb4894d2"
+    },
+    "src/item/magic.ts": {
+      "mode": "100644",
+      "blob": "e26ce5b479d844b6bd30a6ffb0e90985df16e5e1"
+    },
+    "src/item/necro-light.test.ts": {
+      "mode": "100644",
+      "blob": "82d9602e9a03c80ce588a2ce5407f7bb9b1df648"
+    },
+    "src/item/no-light.test.ts": {
+      "mode": "100644",
+      "blob": "a3c3c4eed9f5912033fe5019f91bb1b149d16fbb"
+    },
+    "src/item/recover.ts": {
+      "mode": "100644",
+      "blob": "19402358bd0fe15e9ba2c2080750698b51c6cc1e"
+    },
+    "src/item/svals.ts": {
+      "mode": "100644",
+      "blob": "40ea6346913ff58f29234491806e17a9b8108514"
+    },
+    "src/item/types.ts": {
+      "mode": "100644",
+      "blob": "a869baad683548fb34ba9f8690c2ebf713f600ab"
+    },
+    "src/manifest-capabilities.test.ts": {
+      "mode": "100644",
+      "blob": "d319151a86fa7cbe79abd052b83dc15937fc94c8"
+    },
+    "src/manifest-tunables.test.ts": {
+      "mode": "100644",
+      "blob": "f9ce03954cc5cf77e5ae9e7091c895571f01c391"
+    },
+    "src/perceive-facts.ts": {
+      "mode": "100644",
+      "blob": "17f3c35f4adf3a83be527314e97a0cbd45b6af80"
+    },
+    "src/perceive-messages.ts": {
+      "mode": "100644",
+      "blob": "addd932d98f9ffa523108e71ca82b36322f5310e"
+    },
+    "src/perceive.test.ts": {
+      "mode": "100644",
+      "blob": "7ff002335f096f919664abdbbc7a3a736a84a0aa"
+    },
+    "src/perceive.ts": {
+      "mode": "100644",
+      "blob": "c3a3d84ef333a586a0cee8bb8ee49db1405e5be9"
+    },
+    "src/play.test.ts": {
+      "mode": "100644",
+      "blob": "169adf65d0ec2a5c0ff1b7724f5271c9813e948a"
+    },
+    "src/position-history.test.ts": {
+      "mode": "100644",
+      "blob": "38748b799b6238c4ee65af878d174d16c0cc5519"
+    },
+    "src/recall.test.ts": {
+      "mode": "100644",
+      "blob": "eb4863f1abfe0443b3de30511f883639ed3cf99d"
+    },
+    "src/resolvers.test.ts": {
+      "mode": "100644",
+      "blob": "a0fdf243e3aa34d451ecd4413cf8f78cdb2be9b5"
+    },
+    "src/resolvers.ts": {
+      "mode": "100644",
+      "blob": "2194a137bfc72675d144c172a62c2ea79b9925e1"
+    },
+    "src/rest-and-store-verification.test.ts": {
+      "mode": "100644",
+      "blob": "616c24c2b6e2578092995975e033a94b618e9743"
+    },
+    "src/rest.test.ts": {
+      "mode": "100644",
+      "blob": "772a0e0d912c92ec085cf185ab15700204820fba"
+    },
+    "src/rng.ts": {
+      "mode": "100644",
+      "blob": "30a72f8a3f614d2920804d048a27d658fc3629f3"
+    },
+    "src/settings.test.ts": {
+      "mode": "100644",
+      "blob": "3aa0a3ffa7bbcfc08eaa211616386880a3136401"
+    },
+    "src/store/armour-backup-capacity.test.ts": {
+      "mode": "100644",
+      "blob": "885e2a91f4c3461f48b8de8f550d889f9f162516"
+    },
+    "src/store/armour-backup.test.ts": {
+      "mode": "100644",
+      "blob": "ad6248fdbd3eb06d8683755e8eee6916e5005159"
+    },
+    "src/store/armour-curse.test.ts": {
+      "mode": "100644",
+      "blob": "b46d0a639dd86ccdcab4e75ddfa6e90a9e00f87f"
+    },
+    "src/store/buy.ts": {
+      "mode": "100644",
+      "blob": "f51ce4441eaf7a7631f9aba080ac3fa547cbda5d"
+    },
+    "src/store/home-random-power.test.ts": {
+      "mode": "100644",
+      "blob": "5aa34d125b8a515d477a8e15cb65150fb5dc8371"
+    },
+    "src/store/home.ts": {
+      "mode": "100644",
+      "blob": "8adec70f59e7f87f7d5ced9b9f14243e0f8ef51f"
+    },
+    "src/store/index.ts": {
+      "mode": "100644",
+      "blob": "56f2e02961e298bc70ca3c16772e911a91886178"
+    },
+    "src/store/knowledge.test.ts": {
+      "mode": "100644",
+      "blob": "8a787c4cff276bdea847455aafe44b7660257f10"
+    },
+    "src/store/sell.ts": {
+      "mode": "100644",
+      "blob": "1c57056237928451dde723b2faa65f3cbde54dc2"
+    },
+    "src/store/store.test.ts": {
+      "mode": "100644",
+      "blob": "710ac75dbaea61bb32e3507019eddef664a08e11"
+    },
+    "src/store/store.ts": {
+      "mode": "100644",
+      "blob": "6fb8b84740bf26ccc78d294161d61f59666063fd"
+    },
+    "src/store/think-store.ts": {
+      "mode": "100644",
+      "blob": "c22092d3be3de31a74f80832d9a7f4a2fbbfc235"
+    },
+    "src/store/weapon-backup-capacity.test.ts": {
+      "mode": "100644",
+      "blob": "4929a5d4a74412b371ad451c5cf0147b0efa1ae9"
+    },
+    "src/store/weapon-backup.test.ts": {
+      "mode": "100644",
+      "blob": "fef28cad68425b4dbf6e65b32fa901a56d5f92a4"
+    },
+    "src/test-bind-core.ts": {
+      "mode": "100644",
+      "blob": "82f60406debc83bbdcafef1cc494fde6ba57b49d"
+    },
+    "src/think-ladder.ts": {
+      "mode": "100644",
+      "blob": "3d326e1956346ef20b6219a6894dce019a71cbeb"
+    },
+    "src/think-session.test.ts": {
+      "mode": "100644",
+      "blob": "2f649e09f1ecc2564cee1762228dc3bbff45a88e"
+    },
+    "src/think-session.ts": {
+      "mode": "100644",
+      "blob": "57648eed67bdedc07c99806faeda8d17d4a94709"
+    },
+    "src/think.test.ts": {
+      "mode": "100644",
+      "blob": "ade896633d064ee01a51d8c95115b501f6b2f50c"
+    },
+    "src/think.ts": {
+      "mode": "100644",
+      "blob": "5c865cf7802ca4195919c1ad41785785a311b4da"
+    },
+    "src/time-to-stay.test.ts": {
+      "mode": "100644",
+      "blob": "86885159602b3dc85bdd06a2bf2fe6bcfa9d8874"
+    },
+    "src/top-level-core-use.test.ts": {
+      "mode": "100644",
+      "blob": "e4db8bb030da077b61b9c2a781f4f1ef60560289"
+    },
+    "src/trait/armour-swap.ts": {
+      "mode": "100644",
+      "blob": "da43b2128d16cf7e1adc0ee05bda586d21645434"
+    },
+    "src/trait/buff-timers.test.ts": {
+      "mode": "100644",
+      "blob": "2a7c7a91c4cf35febd5f3ec9e6fc638bb130a771"
+    },
+    "src/trait/buff-timers.ts": {
+      "mode": "100644",
+      "blob": "5c3c9eb112d1fd94567a1de9a890bdb790388c83"
+    },
+    "src/trait/config.ts": {
+      "mode": "100644",
+      "blob": "ac5160da6d3e84aeacdf4845bb87a827e05d1016"
+    },
+    "src/trait/index.ts": {
+      "mode": "100644",
+      "blob": "664cc09d5dbadd211ac4fe75d5b312ac7f1b261b"
+    },
+    "src/trait/item-util.ts": {
+      "mode": "100644",
+      "blob": "2be90cba71e81ce5a2c985da0dd0a05b7f611ab7"
+    },
+    "src/trait/light-base.test.ts": {
+      "mode": "100644",
+      "blob": "e956ac0ea33a07f3d53e390bbd0df17bab433dc7"
+    },
+    "src/trait/notice-swap.test.ts": {
+      "mode": "100644",
+      "blob": "e5bceaf4d46fde9810d42b9798ebf0547315f780"
+    },
+    "src/trait/player-flags.ts": {
+      "mode": "100644",
+      "blob": "dea4f056b0a2e44faa11df9b0c59d19d030ba9e9"
+    },
+    "src/trait/power.ts": {
+      "mode": "100644",
+      "blob": "b1ee4555b81df9a28abc10dca2a40e67ffbb4149"
+    },
+    "src/trait/prepared.ts": {
+      "mode": "100644",
+      "blob": "b45fc95d9e009dabba15874179bf09cdc9eac770"
+    },
+    "src/trait/simulate.ts": {
+      "mode": "100644",
+      "blob": "a9f2346e8e0f0850d7e89e15572e620d1fe0c369"
+    },
+    "src/trait/state.ts": {
+      "mode": "100644",
+      "blob": "6b2640045040eddc17cbbec5a6926aceb78925bc"
+    },
+    "src/trait/tables.ts": {
+      "mode": "100644",
+      "blob": "d85986edc6e392c03ebc5f78ed005ed97dfec35e"
+    },
+    "src/trait/trait-index.ts": {
+      "mode": "100644",
+      "blob": "3cfcd2b7db6fd643f477c48da19524b725a2b397"
+    },
+    "src/trait/trait.test.ts": {
+      "mode": "100644",
+      "blob": "d773a0b6858eb5c1605b211796c543974be83916"
+    },
+    "src/trait/trait.ts": {
+      "mode": "100644",
+      "blob": "194fd57d67bbfc3435cacc71e9ade26fabd95ce6"
+    },
+    "src/trait/weapon-swap.test.ts": {
+      "mode": "100644",
+      "blob": "f4e8fe651cd26aa0821f6a8fb838f27056c16c67"
+    },
+    "src/trait/weapon-swap.ts": {
+      "mode": "100644",
+      "blob": "419a26388071a93a65e2ed8d4c1aa403337bf560"
+    },
+    "src/truth-allowlist.test.ts": {
+      "mode": "100644",
+      "blob": "96ed7b3162fe18ef8833f360b512e3df84785d56"
+    },
+    "src/vault.test.ts": {
+      "mode": "100644",
+      "blob": "1c54189197ef2559ad4ed1cf4210052b89f99040"
+    },
+    "src/wiring-allowlist.ts": {
+      "mode": "100644",
+      "blob": "0191cf29b8aae2b8d20fe4250c6418cad923bf6d"
+    },
+    "src/wiring.test.ts": {
+      "mode": "100644",
+      "blob": "fc4e7a110b1d8a6bc8aa040f978518eb2e936e6a"
+    },
+    "src/world/grid.ts": {
+      "mode": "100644",
+      "blob": "dbaed2813aa30230c4601d6a6fe2e4c643014001"
+    },
+    "src/world/kill.test.ts": {
+      "mode": "100644",
+      "blob": "8d755dc49616831f39c2528f78dcd5c58e4ebe7d"
+    },
+    "src/world/kill.ts": {
+      "mode": "100644",
+      "blob": "ab1a6311d87d31088a8e258a9ce74af0d5a23b03"
+    },
+    "src/world/model.ts": {
+      "mode": "100644",
+      "blob": "52737a5ca44e4ff79d86495dd8b2555be15b265f"
+    },
+    "src/world/panel.test.ts": {
+      "mode": "100644",
+      "blob": "6e6fc4dda09b370e35b2e04433684663aeebf011"
+    },
+    "src/world/panel.ts": {
+      "mode": "100644",
+      "blob": "51e73495ffe27b3138540e76fbb87b923919adf7"
+    },
+    "src/world/take.ts": {
+      "mode": "100644",
+      "blob": "aee86cc8846bb966e74e8c6ff64579a18dbab6cb"
+    },
+    "test/fixtures/known-light.ts": {
+      "mode": "100644",
+      "blob": "858ca8dae293b55dfd63e251a797d9915ccedc33"
+    },
+    "test/fixtures/registered-items.ts": {
+      "mode": "100644",
+      "blob": "08de70c63df9eb9b6245dce93bfbe6279e738c07"
+    },
+    "title.ts": {
+      "mode": "100644",
+      "blob": "f0aa81ac08ec5e2b6ddb6aa6767f353b7b4e4b5c"
+    }
+  },
+  "baseManifest": {
+    "format": "neo-angband/mod/manifest",
+    "schemaVersion": 2,
+    "data": {
+      "id": "borg",
+      "name": "Borg",
+      "api": ">=2.0.0 <3.0.0",
+      "runtime": "in-process",
+      "engine": {
+        "range": ">=1.23.0-beta.1",
+        "because": "The first Neo Angband release with mod API 2, the truth domain the Borg reads perceived monsters through, and the loadout simulation."
+      },
+      "dependencies": {
+        "required": {
+          "core": {
+            "range": "*"
+          }
+        }
+      },
+      "capabilities": [
+        "command:add",
+        "state:player.read",
+        "state:monsters.read",
+        "state:map.read",
+        "state:inventory.read",
+        "state:floor.read",
+        "state:stores.read",
+        "state:spells.read",
+        "state:turn.read",
+        "state:monsters-actual.read",
+        "state:interaction.read",
+        "input:intent",
+        "input:prompt.reply",
+        "event:message",
+        "ui:title",
+        "profiles:manage",
+        "saves:manage"
+      ],
+      "description": "Angband's automatic player, ported from the borg in Angband 4.2.6. It plays through the same commands you use, over the frozen agent API, so it is an ordinary mod with no privileged code inside the engine.\n\nInstalling and enabling it does not give it your character. Press Ctrl-Z in play to hand over the keyboard; it warns you and asks you to confirm first. It is deterministic and draws only on its own seeded random number generator, so your save is not flagged as non-reproducible. Only one autoplayer can hold the keyboard at a time.",
+      "author": "neostryder",
+      "license": "GPL-2.0-only",
+      "shape": "plugin",
+      "facets": [
+        "plugin"
+      ],
+      "rules": [
+        {
+          "flag": "borg.playsRisky",
+          "title": "Play risky",
+          "description": "borg_plays_risky. Skip the early hit-point and character-level gates that hold the Borg above a depth, wait longer before drinking a cure, and back away later in a losing fight. It reaches deeper sooner and dies more.",
+          "default": false,
+          "requiresReload": true
+        },
+        {
+          "flag": "borg.worshipsDamage",
+          "title": "Value melee and missile damage",
+          "description": "borg_worships_damage. Add weight to weapon and bow damage when the Borg scores a set of gear, so a trade that costs armour for damage looks better than it otherwise would.",
+          "default": false,
+          "requiresReload": true
+        },
+        {
+          "flag": "borg.worshipsSpeed",
+          "title": "Value speed",
+          "description": "borg_worships_speed. Add weight to a speed bonus when scoring gear.",
+          "default": false,
+          "requiresReload": true
+        },
+        {
+          "flag": "borg.worshipsHp",
+          "title": "Value hit points",
+          "description": "borg_worships_hp. Add weight to constitution and hit points when scoring gear.",
+          "default": false,
+          "requiresReload": true
+        },
+        {
+          "flag": "borg.worshipsMana",
+          "title": "Value spell points",
+          "description": "borg_worships_mana. Add weight to spell points when scoring gear. Has no effect on a warrior, who has no spell points.",
+          "default": false,
+          "requiresReload": true
+        },
+        {
+          "flag": "borg.worshipsAc",
+          "title": "Value armour class",
+          "description": "borg_worships_ac. Add weight to armour class when scoring gear.",
+          "default": false,
+          "requiresReload": true
+        },
+        {
+          "flag": "borg.worshipsGold",
+          "title": "Value gold",
+          "description": "borg_worships_gold. Sell harder, walk down rather than pay for a recall, and put off the first deep recall. It buys better equipment sooner and spends longer in town doing it. Upstream stops applying this past character level 20.",
+          "default": false,
+          "requiresReload": true
+        },
+        {
+          "flag": "borg.selfScum",
+          "title": "Save up for something it wants",
+          "description": "borg_self_scum. Let the Borg set itself a gold target and work in town until it can afford one item it has decided it needs. It only does this from character level 10, with a permanent light source and food in the pack.",
+          "default": true,
+          "requiresReload": true
+        },
+        {
+          "flag": "borg.munchkinStart",
+          "title": "Skimp on stockpiles for an early munchkin run",
+          "description": "borg_munchkin_start. Below character level borg_munchkin_level (12), value stockpiles of resist poison and speed potions, phase door, word of recall and the deeper cures less than it normally would, on the assumption that a young character is cashing out early. Upstream, this setting also makes the Borg stair-scum for loot to sell at this stage. That part is not ported, so here it changes what the Borg carries and leaves how it dives alone.",
+          "default": false,
+          "requiresReload": true
+        }
+      ]
+    }
+  },
+  "basePackage": {
+    "name": "neo-angband-mod-borg",
+    "private": true,
+    "description": "Borg: Angband 4.2.6's automatic player, ported faithfully and shipped as a mod",
+    "license": "GPL-2.0-only",
+    "author": "neostryder (RPGM Tools)",
+    "type": "module",
+    "packageManager": "pnpm@12.16.1",
+    "//private": [
+      "Not published to npm, and not intended to be. A mod is distributed as a FOLDER the",
+      "game fetches - manifest.json plus plugin.js, at a tag, verified against a digest",
+      "that ships inside the game. npm is not in that path, and publishing would create a",
+      "second way to get this mod that nothing checks."
+    ],
+    "//dependencies": [
+      "The engine is a devDependency, never a dependency. plugin.js receives it as",
+      "ctx.core at load time; a runtime dependency would mean a second copy of the",
+      "engine's module state living inside the mod, which the builder refuses outright.",
+      "So it is here for TYPES and for the tests, which boot a real game against the",
+      "PUBLISHED engine rather than a workspace build - the version a player runs.",
+      "The mod SDK is a devDependency for the same reason: tools/build.mjs runs its",
+      "plugin builder, and the tests import its plugin types. Depending on a published",
+      "SDK pins a version that tracks the engine a player actually runs."
+    ],
+    "scripts": {
+      "build": "node tools/build.mjs",
+      "check": "node tools/build.mjs --check",
+      "typecheck": "tsc --noEmit",
+      "test": "vitest run",
+      "verify": "pnpm typecheck && pnpm test && pnpm check"
+    },
+    "devDependencies": {
+      "@rpgm-tools/neo-angband-content": "1.23.0-beta.3",
+      "@rpgm-tools/neo-angband-core": "1.23.0-beta.3",
+      "@rpgm-tools/neo-angband-mod-sdk": "1.23.0-beta.3",
+      "@types/node": "^22.20.1",
+      "esbuild": "^0.28.1",
+      "typescript": "^5.9.3",
+      "vitest": "^4.1.10"
+    },
+    "engines": {
+      "node": ">=22"
+    }
+  }
+}
